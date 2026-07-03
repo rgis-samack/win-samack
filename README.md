@@ -22,6 +22,12 @@ Abra o seu PowerShell como **Administrador** e execute o seguinte comando:
 irm https://raw.githubusercontent.com/rgis-samack/win-samack/refs/heads/main/win-samack.ps1 | iex
 ```
 
+Ou se preferir o link encurtado:
+
+```powershell
+irm https://bit.ly/win-samack | iex
+```
+
 > 💡 **Nota de Compatibilidade:** O link acima utiliza um carregador especial em código ASCII puro que contorna erros de codificação de caracteres em qualquer versão do Windows, puxando o script em codificação UTF-8 pura direto da memória.
 
 ---
