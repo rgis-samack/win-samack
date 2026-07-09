@@ -52,6 +52,7 @@ irm https://bit.ly/win-samack | iex
 * **Remoção de Arquivos Temporários:** Varre e exclui pastas temporárias do usuário (`%temp%`) e do sistema (`C:\Windows\Temp`).
 * **Limpeza do Windows Update:** Limpa a pasta `SoftwareDistribution` (cache de atualizações antigas), o que costuma liberar vários gigabytes de espaço em disco após grandes atualizações do sistema.
 * **Cache do Sistema:** Apaga arquivos de cache antigos (Prefetch, Log files, Error reports, Memory dumps) que ficam acumulados no disco rígido sem utilidade.
+* **Backup de Drivers do Sistema:** Identifica a versão do Windows e exporta todos os drivers de terceiros (não-Microsoft) instalados no PC. O backup é salvo no Desktop em uma pasta nomeada com o usuário, máquina, sistema operacional e data de criação.
 
 #### 📥 5. Instalar Apps (Central de Downloads)
 * **Instalação Silenciosa e Automatizada:** Interface gráfica intuitiva integrada ao gerenciador de pacotes oficial do Windows (WinGet) que permite selecionar e instalar dezenas de aplicativos populares (como Chrome, Firefox, VSCode, VLC, Discord, Steam) de forma totalmente automatizada e sem telas de instaladores chatos.
@@ -126,6 +127,7 @@ irm https://bit.ly/win-samack | iex
 * **Temp File Cleaner:** Cleans user temporary directories (`%temp%`) and system temp folders (`C:\Windows\Temp`).
 * **Windows Update Cleanup:** Clears the `SoftwareDistribution` cache to recover gigabytes of storage after major Windows updates.
 * **System Cache Removal:** Wipes useless log files, error reports, system dumps, and prefetch files.
+* **System Drivers Backup:** Detects the installed Windows version and exports all installed third-party (non-Microsoft) drivers. The backup is saved to the Desktop in an organized folder named with the username, computer name, OS version, and creation date.
 
 #### 📥 5. Install Apps (Batch Downloader)
 * **Silent & Automated Installation:** A clean UI wrapper around Windows Package Manager (WinGet), enabling you to install dozens of popular tools (Chrome, Firefox, VSCode, Discord, VLC, Steam) simultaneously without installer prompts.
