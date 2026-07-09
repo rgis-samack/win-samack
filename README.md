@@ -71,14 +71,27 @@ irm https://bit.ly/win-samack | iex
 
 #### 🔑 8. Ativação de Licenças (MAS)
 * **Microsoft Activation Scripts (MAS):** Executa de forma segura e interativa o ativador oficial MAS em um terminal externo.
-* ** HWID:** Ativa permanentemente o Windows 10 e Windows 11 com licenças digitais gratuitas vinculadas à placa-mãe.
+* **HWID:** Ativa permanentemente o Windows 10 e Windows 11 com licenças digitais gratuitas vinculadas à placa-mãe.
 * **Ohook:** Ativa de forma definitiva todas as versões instaladas localmente do Microsoft Office.
 
 #### 📦 9. Downloads do Office
 * **Downloads Diretos Oficiais:** Baixe as imagens originais de instalação do **Microsoft Office 2019** e **Microsoft Office 2021** diretamente dos servidores da Microsoft.
 * **Links Espelho Alternativos:** Botões integrados com os encurtadores TinyURL, Bitly e Abre.ai para garantir que você sempre consiga baixar os instaladores mesmo que um dos links caia.
 
-#### 📜 10. Logs de Execução
+#### 🛠️ 10. Dism++ Integrado (Limpeza & Toolkit Nativo)
+* **Limpeza de Componentes & Caches (Estilo NCleaner):** Realiza a limpeza de forma 100% nativa sem abrir utilitários externos.
+  * *WinSxS & Windows.old:* Remove assemblies antigos substituídos do WinSxS e resquícios de atualizações do Windows.
+  * *Caches Gerais:* Limpa o histórico de downloads do Windows Update, Delivery Optimization, caches RDP, otimização de assemblies .NET (NGEN), prefetch, cookies/cache web e miniaturas.
+  * *Histórico e Logs:* Deleta relatórios de erros (WER), logs de eventos do sistema, histórico do Windows Defender, lixeira e arquivos crash dump (`.dmp`).
+* **Caixa de Ferramentas (Toolkit):** Executa ações administrativas integradas ao sistema operacional:
+  * *Criar Ponto de Restauração:* Backup completo do estado atual do computador.
+  * *Restaurar Sistema:* Atalho para abrir o painel de restauração nativo (`rstrui.exe`).
+  * *Gerenciar Contas Locais:* Gerenciamento de contas de usuário locais avançado (`netplwiz.exe`).
+  * *Reparar Inicialização:* Reconstrói e atualiza o código do setor de inicialização do sistema (`bootsect.exe /nt60 sys /force`).
+  * *Ativar Modo Deus:* Cria a pasta do "Modo Deus" (God Mode) contendo todos os ajustes do sistema no Desktop do usuário.
+  * *Editar Arquivo Hosts:* Abre o arquivo hosts do sistema (`C:\Windows\System32\drivers\etc\hosts`) no Bloco de Notas para edição.
+
+#### 📜 11. Logs de Execução
 * **Auditoria de Ações:** Registra cada clique e comando executado com carimbo de data/hora, exibindo logs formatados com cores (INFO, SUCCESS, WARNING, ERROR) para que você saiba exatamente o que foi alterado.
 
 ---
@@ -153,7 +166,20 @@ irm https://bit.ly/win-samack | iex
 * **Official Downloads:** Download untouched setups of **Microsoft Office 2019** and **Microsoft Office 2021** directly from Microsoft CDN servers.
 * **Alternative Mirror Links:** Quick buttons utilizing TinyURL, Bitly, and Abre.ai shortlinks to guarantee download availability.
 
-#### 📜 10. Execution Logs
+#### 🛠️ 10. Integrated Dism++ (Cleanup & Native Toolkit)
+* **Component Store & Cache Cleanup (NCleaner style):** Runs 100% natively without opening external tools.
+  * *WinSxS & Windows.old:* Deletes obsolete component store files and residual folders from previous Windows versions.
+  * *System Caches:* Clears Windows Update download cache, Delivery Optimization cache, RDP client cache, .NET assembly NGEN optimization, prefetch files, web cookies/cache, and thumbnails.
+  * *Logs and History:* Removes Windows error reports (WER), event log files, Windows Defender detection history, recycle bin files, and memory crash dumps (`.dmp`).
+* **Toolkit Utilities:** Performs system-wide administrative tasks:
+  * *Create Restore Point:* Full system state backup.
+  * *System Restore:* Shortcut to open the native system restore panel (`rstrui.exe`).
+  * *Local User Accounts:* Shortcut to open the local user accounts wizard (`netplwiz.exe`).
+  * *Startup Repair:* Updates master boot code configuration (`bootsect.exe /nt60 sys /force`).
+  * *Enable God Mode:* Creates the "God Mode" shortcut containing all Control Panel items on the user's Desktop.
+  * *Edit Hosts File:* Opens the system hosts file (`C:\Windows\System32\drivers\etc\hosts`) directly in Notepad.
+
+#### 📜 11. Execution Logs
 * **System Auditing:** Records actions with exact timestamps, categorizing logs with colors (INFO, SUCCESS, WARNING, ERROR) so you can review exactly what adjustments were made.
 
 ---
