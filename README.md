@@ -12,6 +12,20 @@ O **Samack WinUtil** é uma suíte completa e portátil de otimização, debloat
 
 ---
 
+
+<img width="997" height="675" alt="image" src="https://github.com/user-attachments/assets/f2bfbfdd-261d-48e4-a1a0-7e4fe47e6ae2" />
+<img width="999" height="681" alt="image" src="https://github.com/user-attachments/assets/df3e8178-97ba-4c95-97cf-ee24fbc51001" />
+<img width="999" height="678" alt="image" src="https://github.com/user-attachments/assets/7d28a8a1-9738-416f-87a8-a220a10657ea" />
+<img width="1001" height="678" alt="image" src="https://github.com/user-attachments/assets/4aa4a9f9-7b37-47e6-b95e-cedb022394c4" />
+<img width="999" height="678" alt="image" src="https://github.com/user-attachments/assets/fdbc7fe4-6894-4501-ba84-8760747e5605" />
+<img width="998" height="683" alt="image" src="https://github.com/user-attachments/assets/fd6b71ae-db1f-41e7-8e1d-c0c99cbd49b5" />
+<img width="998" height="678" alt="image" src="https://github.com/user-attachments/assets/a2694bbb-2172-4ab6-9a2d-4173681d1dca" />
+<img width="999" height="678" alt="image" src="https://github.com/user-attachments/assets/c0706858-d947-4be3-a1bb-11cf435a0285" />
+<img width="998" height="674" alt="image" src="https://github.com/user-attachments/assets/0f047dd1-1c3f-4d0b-86a2-33522cbc1675" />
+<img width="998" height="679" alt="image" src="https://github.com/user-attachments/assets/ccc13aca-0ed2-4464-975a-bda72aea306b" />
+
+
+
 ### 🚀 Como Executar Online (Sem Baixar Arquivos)
 
 Abra o seu PowerShell como **Administrador** e execute o seguinte comando:
