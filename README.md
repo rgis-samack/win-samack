@@ -38,21 +38,24 @@ irm https://bit.ly/win-samack | iex
 ### 📋 Guia Detalhado de Funcionalidades
 
 #### 💻 1. Painel Principal (Dashboard)
-<img width="999" height="681" alt="image" src="https://github.com/user-attachments/assets/df3e8178-97ba-4c95-97cf-ee24fbc51001" />
+<img width="997" height="686" alt="image" src="https://github.com/user-attachments/assets/33fdff6e-ca8d-425b-8791-0dcea58e7e8e" />
+
 
 * **Monitoramento em Tempo Real:** Acompanhe gráficos simples de consumo do processador (CPU), uso de memória RAM (tanto em porcentagem quanto em GB consumidos) e tempo de atividade do sistema (Uptime).
 * **Limpeza Rápida de Memória RAM:** Libera os conjuntos de trabalho (Working Sets) de todos os processos em segundo plano, liberando imediatamente espaço na RAM física sem fechar os seus aplicativos abertos.
 * **Processos de Alto Consumo:** Lista em tempo real os processos que mais estão consumindo CPU e Memória RAM no momento, permitindo que você identifique rapidamente gargalos de desempenho.
 
 #### 🧹 2. Debloat (Remoção de Aplicativos Nativos)
-<img width="999" height="678" alt="image" src="https://github.com/user-attachments/assets/7d28a8a1-9738-416f-87a8-a220a10657ea" />
+<img width="995" height="680" alt="image" src="https://github.com/user-attachments/assets/251950ea-118d-4242-8ab8-7f09109c97e1" />
+
 
 * **Desinstalação de Bloatware:** Remova aplicativos nativos do Windows que vêm pré-instalados de fábrica e que raramente são usados, como Cortana, Bing Weather, Xbox App, OneDrive, e outros utilitários redundantes.
 * **Desativação de Telemetria:** Desativa serviços e chaves de registro responsáveis por coletar e enviar dados de diagnóstico para a Microsoft, melhorando a privacidade do usuário e reduzindo o tráfego de rede em segundo plano.
 * **Otimização de Serviços:** Desativa serviços secundários desnecessários que iniciam junto com o Windows para acelerar a inicialização do sistema.
 
 #### 🎮 3. Desempenho & Jogos (Tweaks)
-<img width="1001" height="678" alt="image" src="https://github.com/user-attachments/assets/4aa4a9f9-7b37-47e6-b95e-cedb022394c4" />
+<img width="996" height="678" alt="image" src="https://github.com/user-attachments/assets/61ecc891-961d-4a13-b3be-8b4f9f78b91f" />
+
 
 * **Plano de Energia de Alto Desempenho:** Habilita e ativa o perfil de energia "Desempenho Máximo" (Ultimate Performance) oculto do Windows para garantir que o processador trabalhe sem limitações.
 * **Otimização de Latência (Input Lag):** Aplica ajustes de registro no subsistema do mouse e do teclado para reduzir o atraso de resposta física nos comandos.
@@ -60,7 +63,8 @@ irm https://bit.ly/win-samack | iex
 * **Agendamento de GPU (HAGS):** Ativa ou otimiza o Agendamento de GPU Acelerado por Hardware nas chaves de registro do Windows para placas de vídeo compatíveis.
 
 #### 🧹 4. Limpeza de Disco (Disk Cleanup)
-<img width="999" height="678" alt="image" src="https://github.com/user-attachments/assets/fdbc7fe4-6894-4501-ba84-8760747e5605" />
+<img width="999" height="675" alt="image" src="https://github.com/user-attachments/assets/8d76800d-fc84-4c2d-b0a5-45fdc0342f0e" />
+
 
 * **Remoção de Arquivos Temporários:** Varre e exclui pastas temporárias do usuário (`%temp%`) e do sistema (`C:\Windows\Temp`).
 * **Limpeza do Windows Update:** Limpa a pasta `SoftwareDistribution` (cache de atualizações antigas), o que costuma liberar vários gigabytes de espaço em disco após grandes atualizações do sistema.
@@ -68,19 +72,22 @@ irm https://bit.ly/win-samack | iex
 * **Backup de Drivers do Sistema:** Identifica a versão do Windows e exporta todos os drivers de terceiros (não-Microsoft) instalados no PC. O backup é salvo no Desktop em uma pasta nomeada com o usuário, máquina, sistema operacional e data de criação.
 
 #### 📥 5. Instalar Apps (Central de Downloads)
-<img width="998" height="683" alt="image" src="https://github.com/user-attachments/assets/fd6b71ae-db1f-41e7-8e1d-c0c99cbd49b5" />
+<img width="1002" height="678" alt="image" src="https://github.com/user-attachments/assets/0a26a6ed-e2fa-4b26-aeba-b1e2d22cd396" />
+
 
 * **Instalação Silenciosa e Automatizada:** Interface gráfica intuitiva integrada ao gerenciador de pacotes oficial do Windows (WinGet) que permite selecionar e instalar dezenas de aplicativos populares (como Chrome, Firefox, VSCode, VLC, Discord, Steam) de forma totalmente automatizada e sem telas de instaladores chatos.
 
 #### 🗑️ 6. Desinstalar Apps (Desinstalador Avançado)
-<img width="998" height="678" alt="image" src="https://github.com/user-attachments/assets/a2694bbb-2172-4ab6-9a2d-4173681d1dca" />
+<img width="1002" height="677" alt="image" src="https://github.com/user-attachments/assets/56259e77-f8f2-4d2f-9ee4-0cd0aed70fff" />
+
 
 * **Varredura Completa de Registro:** Detecta todos os softwares instalados em nível de usuário e máquina (32-bit e 64-bit).
 * **Filtro em Tempo Real:** Caixa de busca rápida para localizar softwares pelo nome instantaneamente.
 * **Limpeza Profunda:** Diferente do desinstalador padrão do Windows, esta ferramenta remove pastas órfãs nas pastas `AppData` e limpa chaves redundantes remanescentes no registro.
 
 #### 🌐 7. Ferramentas de Rede
-<img width="999" height="678" alt="image" src="https://github.com/user-attachments/assets/c0706858-d947-4be3-a1bb-11cf435a0285" />
+<img width="1002" height="684" alt="image" src="https://github.com/user-attachments/assets/30f80b7c-4909-479d-93ad-3e3d922c966f" />
+
 
 * **Configurações de IP (IPConfig):** Exibe as informações completas de IP, gateway e máscara de todos os adaptadores de rede.
 * **Ping e Tracert (Assíncronos):** Teste a latência e trace a rota de conexões em tempo real. O processo roda de forma independente, permitindo que a interface do aplicativo continue fluida e responsiva sem congelar a tela.
@@ -89,19 +96,24 @@ irm https://bit.ly/win-samack | iex
 * **Reset de Rede:** Restaura completamente as tabelas de roteamento IP e reinicializa a pilha Winsock para os valores padrão de fábrica.
 
 #### 🔑 8. Ativação de Licenças (MAS)
-<img width="998" height="674" alt="image" src="https://github.com/user-attachments/assets/0f047dd1-1c3f-4d0b-86a2-33522cbc1675" />
+<img width="999" height="680" alt="image" src="https://github.com/user-attachments/assets/5459f312-cd92-4cb3-9728-88735c750da5" />
+
 
 * **Microsoft Activation Scripts (MAS):** Executa de forma segura e interativa o ativador oficial MAS em um terminal externo.
 * **HWID:** Ativa permanentemente o Windows 10 e Windows 11 com licenças digitais gratuitas vinculadas à placa-mãe.
 * **Ohook:** Ativa de forma definitiva todas as versões instaladas localmente do Microsoft Office.
 
 #### 📦 9. Downloads do Office
-<img width="998" height="679" alt="image" src="https://github.com/user-attachments/assets/ccc13aca-0ed2-4464-975a-bda72aea306b" />
+<img width="1001" height="687" alt="image" src="https://github.com/user-attachments/assets/66efe740-635f-4ac8-ac1a-cddff7566e73" />
+
 
 * **Downloads Diretos Oficiais:** Baixe as imagens originais de instalação do **Microsoft Office 2019** e **Microsoft Office 2021** diretamente dos servidores da Microsoft.
 * **Links Espelho Alternativos:** Botões integrados com os encurtadores TinyURL, Bitly e Abre.ai para garantir que você sempre consiga baixar os instaladores mesmo que um dos links caia.
 
 #### 🛠️ 10. Dism++ Integrado (Limpeza & Toolkit Nativo)
+<img width="996" height="679" alt="image" src="https://github.com/user-attachments/assets/0d855387-0dd4-4933-82ce-9dffcbd9c5ce" />
+
+
 * **Limpeza de Componentes & Caches (Estilo NCleaner):** Realiza a limpeza de forma 100% nativa sem abrir utilitários externos.
   * *WinSxS & Windows.old:* Remove assemblies antigos substituídos do WinSxS e resquícios de atualizações do Windows.
   * *Caches Gerais:* Limpa o histórico de downloads do Windows Update, Delivery Optimization, caches RDP, otimização de assemblies .NET (NGEN), prefetch, cookies/cache web e miniaturas.
