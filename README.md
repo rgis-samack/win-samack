@@ -5,6 +5,21 @@
 > 🎁 **Ajude a manter o projeto vivo! Faça uma doação via PIX clicando no botão "Doação" dentro do aplicativo ou escaneando o QR Code na barra de status.**
 
 ---
+### 🚀 Como Executar Online (Sem Baixar Arquivos)
+
+Abra o seu PowerShell como **Administrador** e execute o seguinte comando:
+
+```powershell
+irm https://raw.githubusercontent.com/rgis-samack/win-samack/refs/heads/main/win-samack.ps1 | iex
+```
+
+Ou através do link encurtado oficial:
+
+```powershell
+irm https://bit.ly/win-samack | iex
+```
+
+> 💡 **Nota de Compatibilidade:** O carregador em código ASCII puro contorna erros de codificação de caracteres em qualquer versão do Windows, puxando o script em codificação UTF-8 com BOM direto da memória.
 
 ## 🇧🇷 Português
 
