@@ -27,6 +27,7 @@ public class MemoryCleaner {
             try {
                 long before = process.WorkingSet64;
                 if (EmptyWorkingSet(process.Handle)) {
+                    process.Refresh();
                     long after = process.WorkingSet64;
                     if (before > after) {
                         bytesFreed += (before - after);
@@ -51,7 +52,7 @@ try {
     $cpuInfo = Get-CimInstance Win32_Processor -ErrorAction SilentlyContinue
     $osName = $osInfo.Caption
     $cpuName = ($cpuInfo | Select-Object -First 1).Name
-    $totalRamGB = [Math]::Round($osInfo.TotalVisibleMemorySize / 1MB, 1)
+    $totalRamGB = [Math]::Round(($osInfo.TotalVisibleMemorySize * 1KB) / 1GB, 1)
 } catch {
     $osName = "Windows (Erro de Leitura)"
     $cpuName = "Processador Genérico"
@@ -1932,8 +1933,8 @@ function Action-OptimizeRAM {
         $pct = [Math]::Round(($used / $total) * 100, 0)
         $barRAM.Value = $pct
         $lblRAM.Text = "$pct%"
-        $usedGB = [Math]::Round($used / 1MB, 1)
-        $totalGB = [Math]::Round($total / 1MB, 1)
+        $usedGB = [Math]::Round(($used * 1KB) / 1GB, 1)
+        $totalGB = [Math]::Round(($total * 1KB) / 1GB, 1)
         $lblRAMDetail.Text = "$usedGB GB usados de $totalGB GB"
     }
     
@@ -1985,14 +1986,22 @@ function Action-RunDebloat {
             Write-Log "Pesquisando pacote: $pkg..."
             $apps = Get-AppxPackage -AllUsers -Name $pkg -ErrorAction SilentlyContinue
             foreach ($app in $apps) {
-                Write-Log "Removendo pacote do usuário: $($app.PackageFullName)"
-                Remove-AppxPackage -Package $app.PackageFullName -ErrorAction SilentlyContinue
+                try {
+                    Remove-AppxPackage -Package $app.PackageFullName -ErrorAction Stop
+                    Write-Log "Removido pacote: $($app.PackageFullName)" "SUCCESS"
+                } catch {
+                    Write-Log "Falha ao remover pacote $($app.PackageFullName): $_" "WARNING"
+                }
             }
             
             $provApps = Get-AppxProvisionedPackage -Online | Where-Object { $_.DisplayName -like $pkg }
             foreach ($prov in $provApps) {
-                Write-Log "Removendo provisão do sistema: $($prov.PackageName)"
-                Remove-AppxProvisionedPackage -Online -PackageName $prov.PackageName -ErrorAction SilentlyContinue
+                try {
+                    Remove-AppxProvisionedPackage -Online -PackageName $prov.PackageName -ErrorAction Stop
+                    Write-Log "Removida provisão: $($prov.PackageName)" "SUCCESS"
+                } catch {
+                    Write-Log "Falha ao remover provisão $($prov.PackageName): $_" "WARNING"
+                }
             }
         }
     }
@@ -2044,9 +2053,13 @@ function Action-RunTweaks {
     if ($chkTweakGameMode.IsChecked) {
         if ($global:isWindows10Or11) {
             Write-Log "Ativando Modo de Jogo do Windows..."
-            New-Item -Path "HKCU:\Software\Microsoft\GameBar" -Force | Out-Null
-            Set-ItemProperty -Path "HKCU:\Software\Microsoft\GameBar" -Name "AllowAutoGameMode" -Value 1 -Type DWord -ErrorAction SilentlyContinue
-            Write-Log "Modo de Jogo ativado com sucesso."
+            try {
+                New-Item -Path "HKCU:\Software\Microsoft\GameBar" -Force | Out-Null
+                Set-ItemProperty -Path "HKCU:\Software\Microsoft\GameBar" -Name "AllowAutoGameMode" -Value 1 -Type DWord -ErrorAction Stop
+                Write-Log "Modo de Jogo ativado com sucesso." "SUCCESS"
+            } catch {
+                Write-Log "Falha ao ativar Modo de Jogo: $_" "WARNING"
+            }
         } else {
             Write-Log "Aviso: Modo de Jogo não é aplicável nesta versão do Windows." "WARNING"
         }
@@ -2056,12 +2069,15 @@ function Action-RunTweaks {
     if ($chkTweakGameDVR.IsChecked) {
         if ($global:isWindows10Or11) {
             Write-Log "Desativando gravação de tela em segundo plano (Game DVR)..."
-            New-Item -Path "HKCU:\System\GameConfigStore" -Force | Out-Null
-            Set-ItemProperty -Path "HKCU:\System\GameConfigStore" -Name "GameDVR_Enabled" -Value 0 -Type DWord -ErrorAction SilentlyContinue
-            
-            New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\GameDVR" -Force | Out-Null
-            Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\GameDVR" -Name "AllowGameDVR" -Value 0 -Type DWord -ErrorAction SilentlyContinue
-            Write-Log "Game DVR desativado."
+            try {
+                New-Item -Path "HKCU:\System\GameConfigStore" -Force | Out-Null
+                Set-ItemProperty -Path "HKCU:\System\GameConfigStore" -Name "GameDVR_Enabled" -Value 0 -Type DWord -ErrorAction Stop
+                New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\GameDVR" -Force | Out-Null
+                Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\GameDVR" -Name "AllowGameDVR" -Value 0 -Type DWord -ErrorAction Stop
+                Write-Log "Game DVR desativado." "SUCCESS"
+            } catch {
+                Write-Log "Falha ao desativar Game DVR: $_" "WARNING"
+            }
         } else {
             Write-Log "Aviso: Game DVR não é aplicável nesta versão do Windows." "WARNING"
         }
@@ -2528,9 +2544,11 @@ function Action-RunDismCleanup {
         foreach ($path in $werPaths) {
             if (Test-Path $path) {
                 try {
-                    Remove-Item -Path "$path\*" -Recurse -Force -ErrorAction SilentlyContinue
+                    Remove-Item -Path "$path\*" -Recurse -Force -ErrorAction Stop
                     Write-Log "Limpo: $path" "SUCCESS"
-                } catch {}
+                } catch {
+                    Write-Log "Limpeza parcial em $path (alguns itens em uso pelo sistema): $_" "WARNING"
+                }
             }
         }
     }
@@ -2602,7 +2620,7 @@ function Action-RunDismCleanup {
             Stop-Service -Name "wuauserv" -Force -ErrorAction SilentlyContinue
             $downloadPath = "C:\Windows\SoftwareDistribution\Download"
             if (Test-Path $downloadPath) {
-                Remove-Item -Path "$downloadPath\*" -Recurse -Force -ErrorAction SilentlyContinue
+                Remove-Item -Path "$downloadPath\*" -Recurse -Force -ErrorAction Stop
                 Write-Log "Cache de download do Windows Update limpo." "SUCCESS"
             }
             Start-Service -Name "wuauserv" -ErrorAction SilentlyContinue
@@ -2617,9 +2635,11 @@ function Action-RunDismCleanup {
         $doPath = "C:\Windows\ServiceProfiles\NetworkService\AppData\Local\Microsoft\Windows\DeliveryOptimization\Cache"
         if (Test-Path $doPath) {
             try {
-                Remove-Item -Path "$doPath\*" -Recurse -Force -ErrorAction SilentlyContinue
+                Remove-Item -Path "$doPath\*" -Recurse -Force -ErrorAction Stop
                 Write-Log "Delivery Optimization Cache limpo." "SUCCESS"
-            } catch {}
+            } catch {
+                Write-Log "Limpeza parcial do Delivery Optimization (alguns itens em uso): $_" "WARNING"
+            }
         }
     }
 
@@ -2628,9 +2648,11 @@ function Action-RunDismCleanup {
         $rdpPath = "$env:USERPROFILE\AppData\Local\Microsoft\Terminal Server Client\Cache"
         if (Test-Path $rdpPath) {
             try {
-                Remove-Item -Path "$rdpPath\*" -Recurse -Force -ErrorAction SilentlyContinue
+                Remove-Item -Path "$rdpPath\*" -Recurse -Force -ErrorAction Stop
                 Write-Log "Cache de RDP Terminal Server limpo." "SUCCESS"
-            } catch {}
+            } catch {
+                Write-Log "Limpeza parcial do cache RDP (alguns itens em uso): $_" "WARNING"
+            }
         }
     }
 
@@ -2650,9 +2672,11 @@ function Action-RunDismCleanup {
     if ($chkDismPrefetch.IsChecked) {
         Write-Log "Limpando pasta Prefetch do Windows..." "INFO"
         try {
-            Remove-Item -Path "C:\Windows\Prefetch\*" -Force -ErrorAction SilentlyContinue
+            Remove-Item -Path "C:\Windows\Prefetch\*" -Force -ErrorAction Stop
             Write-Log "Prefetch do Windows limpo." "SUCCESS"
-        } catch {}
+        } catch {
+            Write-Log "Limpeza parcial do Prefetch (alguns itens em uso): $_" "WARNING"
+        }
     }
 
     if ($chkDismThumbnails.IsChecked) {
@@ -2660,9 +2684,11 @@ function Action-RunDismCleanup {
         $thumbPath = "$env:LOCALAPPDATA\Microsoft\Windows\Explorer"
         if (Test-Path $thumbPath) {
             try {
-                Remove-Item -Path "$thumbPath\thumbcache_*.db" -Force -ErrorAction SilentlyContinue
-                Write-Log "Cache de miniaturas removido (alguns podem ser apagados no próximo reinício)." "SUCCESS"
-            } catch {}
+                Remove-Item -Path "$thumbPath\thumbcache_*.db" -Force -ErrorAction Stop
+                Write-Log "Cache de miniaturas removido." "SUCCESS"
+            } catch {
+                Write-Log "Limpeza parcial do cache de miniaturas (alguns arquivos serão removidos no próximo reinício): $_" "WARNING"
+            }
         }
     }
 
@@ -2671,7 +2697,9 @@ function Action-RunDismCleanup {
         try {
             Start-Process -FilePath "RunDll32.exe" -ArgumentList "InetCpl.cpl,ClearMyTracksByProcess 8" -Wait
             Write-Log "Cache Web do WinINet limpo." "SUCCESS"
-        } catch {}
+        } catch {
+            Write-Log "Erro ao limpar cache Web do WinINet: $_" "WARNING"
+        }
     }
 
     if ($chkDismCookies.IsChecked) {
@@ -2679,7 +2707,9 @@ function Action-RunDismCleanup {
         try {
             Start-Process -FilePath "RunDll32.exe" -ArgumentList "InetCpl.cpl,ClearMyTracksByProcess 2" -Wait
             Write-Log "Cookies do WinINet limpos." "SUCCESS"
-        } catch {}
+        } catch {
+            Write-Log "Erro ao limpar Cookies do WinINet: $_" "WARNING"
+        }
     }
 
     # 4. Aplicações
@@ -2688,9 +2718,11 @@ function Action-RunDismCleanup {
         $pkgPath = "C:\ProgramData\Package Cache"
         if (Test-Path $pkgPath) {
             try {
-                Remove-Item -Path "$pkgPath\*" -Recurse -Force -ErrorAction SilentlyContinue
+                Remove-Item -Path "$pkgPath\*" -Recurse -Force -ErrorAction Stop
                 Write-Log "Package Cache de pacotes de instalação limpo." "SUCCESS"
-            } catch {}
+            } catch {
+                Write-Log "Limpeza parcial do Package Cache (alguns itens em uso): $_" "WARNING"
+            }
         }
     }
 
@@ -2699,9 +2731,11 @@ function Action-RunDismCleanup {
         $defPath = "C:\ProgramData\Microsoft\Windows Defender\Scans\History\Service\DetectionHistory"
         if (Test-Path $defPath) {
             try {
-                Remove-Item -Path "$defPath\*" -Recurse -Force -ErrorAction SilentlyContinue
+                Remove-Item -Path "$defPath\*" -Recurse -Force -ErrorAction Stop
                 Write-Log "Histórico de varreduras do Windows Defender limpo." "SUCCESS"
-            } catch {}
+            } catch {
+                Write-Log "Limpeza parcial do histórico do Defender (alguns itens protegidos): $_" "WARNING"
+            }
         }
     }
 
@@ -2711,16 +2745,20 @@ function Action-RunDismCleanup {
         try {
             Start-Process dism.exe -ArgumentList "/Online /Cleanup-Image /StartComponentCleanup" -NoNewWindow -Wait
             Write-Log "Limpeza básica do componente WinSxS concluída." "SUCCESS"
-        } catch {}
+        } catch {
+            Write-Log "Erro na limpeza do WinSxS: $_" "WARNING"
+        }
     }
 
     if ($chkDismLogs.IsChecked) {
         Write-Log "Removendo logs redundantes do Windows..." "INFO"
         try {
-            Remove-Item -Path "C:\Windows\*.log" -Force -ErrorAction SilentlyContinue
-            Remove-Item -Path "C:\Windows\System32\wbem\Repository\*.log" -Force -ErrorAction SilentlyContinue
+            Remove-Item -Path "C:\Windows\*.log" -Force -ErrorAction Stop
+            Remove-Item -Path "C:\Windows\System32\wbem\Repository\*.log" -Force -ErrorAction Stop
             Write-Log "Arquivos de log do Windows removidos." "SUCCESS"
-        } catch {}
+        } catch {
+            Write-Log "Limpeza parcial de logs do Windows (alguns em uso): $_" "WARNING"
+        }
     }
 
     if ($chkDismTemp.IsChecked) {
@@ -2729,8 +2767,10 @@ function Action-RunDismCleanup {
         foreach ($path in $tempPaths) {
             if (Test-Path $path) {
                 try {
-                    Remove-Item -Path "$path\*" -Recurse -Force -ErrorAction SilentlyContinue
-                } catch {}
+                    Remove-Item -Path "$path\*" -Recurse -Force -ErrorAction Stop
+                } catch {
+                    Write-Log "Alguns itens temporários em $path estão em uso e foram preservados." "WARNING"
+                }
             }
         }
         Write-Log "Pastas Temp limpas." "SUCCESS"
@@ -2739,20 +2779,24 @@ function Action-RunDismCleanup {
     if ($chkDismRecycleBin.IsChecked) {
         Write-Log "Esvaziando Estação de Reciclagem (Lixeira)..." "INFO"
         try {
-            Clear-RecycleBin -Confirm:$false -ErrorAction SilentlyContinue
+            Clear-RecycleBin -Confirm:$false -ErrorAction Stop
             Write-Log "Lixeira esvaziada com sucesso." "SUCCESS"
-        } catch {}
+        } catch {
+            Write-Log "Lixeira já estava vazia ou erro ao esvaziar: $_" "WARNING"
+        }
     }
 
     if ($chkDismDmp.IsChecked) {
         Write-Log "Removendo relatórios de crash (Arquivos dump .dmp)..." "INFO"
         try {
-            Remove-Item -Path "C:\Windows\Minidump\*" -Force -ErrorAction SilentlyContinue
+            Remove-Item -Path "C:\Windows\Minidump\*" -Force -ErrorAction Stop
             if (Test-Path "C:\Windows\MEMORY.DMP") {
-                Remove-Item -Path "C:\Windows\MEMORY.DMP" -Force -ErrorAction SilentlyContinue
+                Remove-Item -Path "C:\Windows\MEMORY.DMP" -Force -ErrorAction Stop
             }
             Write-Log "Arquivos de despejo de memória (Dumps) apagados." "SUCCESS"
-        } catch {}
+        } catch {
+            Write-Log "Limpeza parcial de dumps (alguns arquivos em uso ou protegidos): $_" "WARNING"
+        }
     }
 
     Write-Log "=== LIMPEZA NATIVA CONCLUÍDA ===" "SUCCESS"
@@ -2962,7 +3006,7 @@ function Action-RunLimpeza {
             $files = Get-ChildItem -Path $userTemp -Recurse -ErrorAction SilentlyContinue
             foreach ($file in $files) {
                 try {
-                    Remove-Item $file.FullName -Force -Recurse -ErrorAction SilentlyContinue
+                    Remove-Item $file.FullName -Force -Recurse -ErrorAction Stop
                 } catch {
                     $hasErrors = $true
                 }
@@ -2979,7 +3023,7 @@ function Action-RunLimpeza {
             $files = Get-ChildItem -Path $sysTemp -Recurse -ErrorAction SilentlyContinue
             foreach ($file in $files) {
                 try {
-                    Remove-Item $file.FullName -Force -Recurse -ErrorAction SilentlyContinue
+                    Remove-Item $file.FullName -Force -Recurse -ErrorAction Stop
                 } catch {
                     $hasErrors = $true
                 }
@@ -2996,7 +3040,7 @@ function Action-RunLimpeza {
             $files = Get-ChildItem -Path $prefetch -Recurse -ErrorAction SilentlyContinue
             foreach ($file in $files) {
                 try {
-                    Remove-Item $file.FullName -Force -Recurse -ErrorAction SilentlyContinue
+                    Remove-Item $file.FullName -Force -Recurse -ErrorAction Stop
                 } catch {
                     $hasErrors = $true
                 }
@@ -3016,7 +3060,7 @@ function Action-RunLimpeza {
         
         foreach ($log in $logFiles) {
             try {
-                Remove-Item $log.FullName -Force -Confirm:$false -ErrorAction SilentlyContinue
+                Remove-Item $log.FullName -Force -Confirm:$false -ErrorAction Stop
             } catch {
                 $hasErrors = $true
             }
@@ -3044,7 +3088,7 @@ function Action-RunLimpeza {
             $files = Get-ChildItem -Path $updateDownload -Recurse -ErrorAction SilentlyContinue
             foreach ($file in $files) {
                 try {
-                    Remove-Item $file.FullName -Force -Recurse -ErrorAction SilentlyContinue
+                    Remove-Item $file.FullName -Force -Recurse -ErrorAction Stop
                 } catch {
                     $hasErrors = $true
                 }
@@ -3148,7 +3192,11 @@ function Action-InstallApps {
             
             # Lê a saída enquanto instala
             while (-not $process.HasExited) {
-                $line = $process.StandardOutput.ReadLine()
+                if ($process.StandardOutput.Peek() -ne -1) {
+                    $line = $process.StandardOutput.ReadLine()
+                } else {
+                    $line = $null
+                }
                 if ($line) {
                     $cleanLine = $line -replace '\x1b\[[0-9;]*[a-zA-Z]', ''
                     $cleanLine = $cleanLine -replace '[\b\r\n]', ''
@@ -3333,7 +3381,8 @@ function Action-ScanLeftovers {
                     if ($child.Name -like "*$term*") {
                         $folderSize = 0
                         try {
-                            $folderSize = (Get-ChildItem -Path $child.FullName -Recurse -File -ErrorAction SilentlyContinue | Measure-Object -Property Length -Sum).Sum
+                            $measure = Get-ChildItem -Path $child.FullName -Recurse -File -ErrorAction SilentlyContinue | Measure-Object -Property Length -Sum
+                            $folderSize = if ($measure.Sum) { $measure.Sum } else { 0 }
                         } catch {}
                         $sizeMB = [Math]::Round($folderSize / 1MB, 2)
                         $global:currentLeftovers += [PSCustomObject]@{
@@ -3377,7 +3426,8 @@ function Action-ScanLeftovers {
         if (-not $alreadyFound) {
             $folderSize = 0
             try {
-                $folderSize = (Get-ChildItem -Path $sel.InstallLocation -Recurse -File -ErrorAction SilentlyContinue | Measure-Object -Property Length -Sum).Sum
+                $measure = Get-ChildItem -Path $sel.InstallLocation -Recurse -File -ErrorAction SilentlyContinue | Measure-Object -Property Length -Sum
+                $folderSize = if ($measure.Sum) { $measure.Sum } else { 0 }
             } catch {}
             $sizeMB = [Math]::Round($folderSize / 1MB, 2)
             $global:currentLeftovers += [PSCustomObject]@{
@@ -3669,6 +3719,10 @@ if ($null -ne $imgQrCode) {
 $Window.add_Closing({
     param($sender, $e)
     
+    # Para os timers para evitar erros de referência nula durante o fechamento
+    $hardwareTimer.Stop()
+    $processTimer.Stop()
+    
     # Detecção dinâmica do SO do usuário para piadas personalizadas
     $osName = "Windows"
     $osInfo = Get-CimInstance Win32_OperatingSystem -ErrorAction SilentlyContinue
@@ -3784,6 +3838,7 @@ $btnRedePing.Add_Click({
         Start-Sleep -Milliseconds 100
     }
     $txtRedePingResult.Text = Get-Content $tmpFile -Raw
+    Remove-Item -Path $tmpFile -Force -ErrorAction SilentlyContinue
     Set-Status "Pronto"
 })
 
@@ -3859,6 +3914,7 @@ $btnRedeTracert.Add_Click({
         Start-Sleep -Milliseconds 100
     }
     $txtRedeTracertResult.Text = Get-Content $tmpFile -Raw
+    Remove-Item -Path $tmpFile -Force -ErrorAction SilentlyContinue
     Set-Status "Pronto"
 })
 
@@ -4057,14 +4113,16 @@ $hardwareTimer.Add_Tick({
             $BarRAM.Value = $pct
             $lblRAM.Text = "$pct%"
             
-            $usedGB = [Math]::Round($used / 1MB, 1)
-            $totalGB = [Math]::Round($total / 1MB, 1)
+            $usedGB = [Math]::Round(($used * 1KB) / 1GB, 1)
+            $totalGB = [Math]::Round(($total * 1KB) / 1GB, 1)
             $lblRAMDetail.Text = "$usedGB GB usados de $totalGB GB"
         }
         
-        # Atualiza Tempo de Atividade (Uptime)
-        $uptime = (Get-Date) - ([Management.ManagementDateTimeConverter]::ToDateTime((Get-CimInstance Win32_OperatingSystem).LastBootUpTime))
-        $txtUptime.Text = "$($uptime.Days)d $($uptime.Hours)h $($uptime.Minutes)m"
+        # Atualiza Tempo de Atividade (Uptime) - reutiliza a query WMI já feita acima
+        if ($os) {
+            $uptime = (Get-Date) - ([Management.ManagementDateTimeConverter]::ToDateTime($os.LastBootUpTime))
+            $txtUptime.Text = "$($uptime.Days)d $($uptime.Hours)h $($uptime.Minutes)m"
+        }
     } catch {
         # Ignora falhas temporarias de leitura de contadores
     }
