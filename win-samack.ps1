@@ -982,45 +982,69 @@ $xaml = @"
                                 
                                 <Border Style="{StaticResource CardBorder}" Margin="0,0,0,16">
                                     <StackPanel>
-                                        <TextBlock Text="⚡ Microsoft Activation Scripts (MAS)" FontSize="15" FontWeight="Bold" Foreground="#10B981" Margin="0,0,0,10"/>
-                                        <TextBlock Text="Esta funcionalidade utiliza a ferramenta oficial e de código aberto MAS (Microsoft Activation Scripts) para realizar ativações seguras, permanentes e sem vírus." FontSize="12" Foreground="#CBD5E1" TextWrapping="Wrap" Margin="0,0,0,15"/>
+                                        <TextBlock Text="⚡ Microsoft Activation Scripts (MAS Integrado)" FontSize="16" FontWeight="Bold" Foreground="#10B981" Margin="0,0,0,8"/>
+                                        <TextBlock Text="Selecione abaixo a opção desejada para executar a ativação diretamente no aplicativo sem abrir janelas pretas de terminal." FontSize="12" Foreground="#CBD5E1" TextWrapping="Wrap" Margin="0,0,0,16"/>
 
-                                        <!-- Grid com Detalhes dos Métodos -->
-                                        <Grid Margin="0,0,0,20">
+                                        <!-- Ativações Principais (Grid 2 colunas) -->
+                                        <TextBlock Text="🚀 Opções de Ativação Direta:" FontSize="13" FontWeight="Bold" Foreground="#F8FAFC" Margin="0,0,0,10"/>
+                                        
+                                        <Grid Margin="0,0,0,15">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="15"/>
+                                                <ColumnDefinition Width="10"/>
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="10"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
 
-                                            <!-- Métodos à Esquerda -->
-                                            <StackPanel Grid.Column="0">
-                                                <TextBlock Text="Métodos de Ativação:" FontSize="12" FontWeight="Bold" Foreground="#F8FAFC" Margin="0,0,0,8"/>
-                                                <TextBlock Text="• HWID (Windows 10/11):" FontSize="11" FontWeight="Bold" Foreground="#E2E8F0"/>
-                                                <TextBlock Text="  Ativação digital permanente vinculada à placa-mãe." FontSize="11" Foreground="#94A3B8" Margin="0,0,0,8" TextWrapping="Wrap"/>
-                                                
-                                                <TextBlock Text="• Ohook (Office):" FontSize="11" FontWeight="Bold" Foreground="#E2E8F0"/>
-                                                <TextBlock Text="  Ativação permanente de todas as edições do Office local." FontSize="11" Foreground="#94A3B8" Margin="0,0,0,8" TextWrapping="Wrap"/>
-                                            </StackPanel>
+                                            <!-- [1] HWID Windows -->
+                                            <Button Grid.Row="0" Grid.Column="0" x:Name="BtnMasHWID" Style="{StaticResource ModernButton}" Background="#059669" Height="42" Padding="10,0">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="⚡ [1] HWID - Windows 10/11" FontWeight="Bold" FontSize="12" VerticalAlignment="Center"/>
+                                                </StackPanel>
+                                            </Button>
 
-                                            <!-- Métodos à Direita -->
-                                            <StackPanel Grid.Column="2">
-                                                <TextBlock Text="Outros Recursos:" FontSize="12" FontWeight="Bold" Foreground="#F8FAFC" Margin="0,0,0,8"/>
-                                                <TextBlock Text="• KMS38 (Win Server / LTSC):" FontSize="11" FontWeight="Bold" Foreground="#E2E8F0"/>
-                                                <TextBlock Text="  Ativa o Windows Enterprise ou LTSC até o ano de 2038." FontSize="11" Foreground="#94A3B8" Margin="0,0,0,8" TextWrapping="Wrap"/>
-                                                
-                                                <TextBlock Text="• Status da Licença:" FontSize="11" FontWeight="Bold" Foreground="#E2E8F0"/>
-                                                <TextBlock Text="  Permite checar a expiração ou validade atual das chaves." FontSize="11" Foreground="#94A3B8" Margin="0,0,0,8" TextWrapping="Wrap"/>
-                                            </StackPanel>
+                                            <!-- [2] Ohook Office -->
+                                            <Button Grid.Row="0" Grid.Column="2" x:Name="BtnMasOhook" Style="{StaticResource ModernButton}" Background="#2563EB" Height="42" Padding="10,0">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="⚡ [2] Ohook - Office (Todas Edições)" FontWeight="Bold" FontSize="12" VerticalAlignment="Center"/>
+                                                </StackPanel>
+                                            </Button>
+
+                                            <!-- [3] TSforge / KMS38 -->
+                                            <Button Grid.Row="2" Grid.Column="0" x:Name="BtnMasTSforge" Style="{StaticResource ModernButton}" Background="#7C3AED" Height="42" Padding="10,0">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="⚡ [3] TSforge / KMS38 (Win/Office/2038)" FontWeight="Bold" FontSize="12" VerticalAlignment="Center"/>
+                                                </StackPanel>
+                                            </Button>
+
+                                            <!-- [4] Online KMS -->
+                                            <Button Grid.Row="2" Grid.Column="2" x:Name="BtnMasKMS" Style="{StaticResource ModernButton}" Background="#D97706" Height="42" Padding="10,0">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="⚡ [4] Online KMS (Windows &amp; Office)" FontWeight="Bold" FontSize="12" VerticalAlignment="Center"/>
+                                                </StackPanel>
+                                            </Button>
                                         </Grid>
 
-                                        <Border BorderBrush="#334155" BorderThickness="0,1,0,0" Padding="0,15,0,0">
-                                            <StackPanel>
-                                                <TextBlock Text="Como funciona?" FontSize="11" FontWeight="Bold" Foreground="#F59E0B" Margin="0,0,0,5"/>
-                                                <TextBlock Text="Ao clicar no botão abaixo, uma nova janela de terminal segura do PowerShell será aberta para carregar e executar interativamente a ferramenta. Siga as instruções numéricas exibidas no console preto para ativar o que deseja." FontSize="11" Foreground="#94A3B8" TextWrapping="Wrap" Margin="0,0,0,15"/>
-                                                
-                                                <Button x:Name="BtnRunActivation" Content="⚡ Iniciar Ativador (MAS)" Style="{StaticResource AccentButton}" Background="#059669" Height="36" FontSize="13" FontWeight="Bold" HorizontalAlignment="Left" Padding="25,0"/>
-                                            </StackPanel>
+                                        <!-- Recursos Adicionais e Utilitários -->
+                                        <TextBlock Text="🛠️ Status e Utilitários:" FontSize="13" FontWeight="Bold" Foreground="#F8FAFC" Margin="0,10,0,10"/>
+                                        
+                                        <WrapPanel Margin="0,0,0,15">
+                                            <!-- [5] Status -->
+                                            <Button x:Name="BtnMasCheck" Content="🔍 [5] Verificar Status da Licença" Style="{StaticResource ModernButton}" Background="#0284C7" Height="36" Margin="0,0,8,8" Padding="15,0"/>
+                                            
+                                            <!-- [8] Troubleshoot -->
+                                            <Button x:Name="BtnMasTroubleshoot" Content="🛠️ [8] Reparar Licenciamento" Style="{StaticResource ModernButton}" Background="#475569" Height="36" Margin="0,0,8,8" Padding="15,0"/>
+                                            
+                                            <!-- Modo Clássico -->
+                                            <Button x:Name="BtnMasInteractive" Content="💻 Abrir Console CMD Clássico" Style="{StaticResource ModernButton}" Background="#334155" Height="36" Margin="0,0,0,8" Padding="15,0"/>
+                                        </WrapPanel>
+
+                                        <Border BorderBrush="#334155" BorderThickness="0,1,0,0" Padding="0,12,0,0">
+                                            <TextBlock Text="ℹ️ Todas as ativações acima utilizam o projeto oficial de código aberto MAS (MassGrave). Os resultados e o progresso em tempo real serão exibidos na aba 'Logs' do Samack WinUtil." FontSize="11" Foreground="#94A3B8" TextWrapping="Wrap"/>
                                         </Border>
                                     </StackPanel>
                                 </Border>
@@ -1614,6 +1638,13 @@ $gridDism = $Window.FindName("GridDism")
 
 # Mapeando controles da tela de Ativação
 $btnRunActivation = $Window.FindName("BtnRunActivation")
+$btnMasHWID = $Window.FindName("BtnMasHWID")
+$btnMasOhook = $Window.FindName("BtnMasOhook")
+$btnMasTSforge = $Window.FindName("BtnMasTSforge")
+$btnMasKMS = $Window.FindName("BtnMasKMS")
+$btnMasCheck = $Window.FindName("BtnMasCheck")
+$btnMasTroubleshoot = $Window.FindName("BtnMasTroubleshoot")
+$btnMasInteractive = $Window.FindName("BtnMasInteractive")
 
 # Mapeando controles da tela de Office
 $btnOffice2021Tiny = $Window.FindName("BtnOffice2021Tiny")
@@ -3801,19 +3832,120 @@ $Window.add_Closing({
 })
 
 # ── Ativação (MAS) ──────────────────────────────────────────────────────────
-$btnRunActivation.Add_Click({
+function Invoke-MASAction {
+    param(
+        [string]$actionTitle,
+        [string]$masSwitch
+    )
     Register-Action "ativacao"
-    Set-Status "Iniciando Microsoft Activation Scripts..."
-    Write-Log "Iniciando Microsoft Activation Scripts (MAS) em console externo..." "INFO"
+    Set-Status "Executando $actionTitle..."
+    Switch-Tab "Logs"
+    Write-Log "=== $actionTitle (MICROSOFT ACTIVATION SCRIPTS) ===" "INFO"
+    Write-Log "Iniciando processo silencioso em segundo plano..." "INFO"
+    
+    $masCommand = "& ([ScriptBlock]::Create((curl.exe -s --doh-url https://1.1.1.1/dns-query https://get.activated.win | Out-String))) $masSwitch"
+    
+    $processInfo = New-Object System.Diagnostics.ProcessStartInfo
+    $processInfo.FileName = "powershell.exe"
+    $processInfo.Arguments = "-NoProfile -ExecutionPolicy Bypass -Command `"$masCommand`""
+    $processInfo.RedirectStandardOutput = $true
+    $processInfo.RedirectStandardError = $true
+    $processInfo.UseShellExecute = $false
+    $processInfo.CreateNoWindow = $true
+    
+    $process = New-Object System.Diagnostics.Process
+    $process.StartInfo = $processInfo
+    
     try {
-        $masArgs = @("-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "iex (curl.exe -s --doh-url https://1.1.1.1/dns-query https://get.activated.win | Out-String)")
-        $null = Start-Process powershell.exe -ArgumentList $masArgs
-        Write-Log "MAS iniciado com sucesso em janela de console externa." "SUCCESS"
+        [void]$process.Start()
+        
+        while (-not $process.HasExited) {
+            if ($process.StandardOutput.Peek() -ne -1) {
+                $line = $process.StandardOutput.ReadLine()
+                if ($line) {
+                    $cleanLine = $line -replace '\x1b\[[0-9;]*[a-zA-Z]', ''
+                    $cleanLine = $cleanLine -replace '[\b\r\n]', ''
+                    $cleanLine = $cleanLine.Trim()
+                    if (-not [string]::IsNullOrWhiteSpace($cleanLine)) {
+                        Write-Log "  [MAS] $cleanLine" "INFO"
+                    }
+                }
+            }
+            Out-DoEvents
+            Start-Sleep -Milliseconds 10
+        }
+        
+        if ($process.ExitCode -eq 0) {
+            Write-Log "$actionTitle concluído com SUCESSO!" "SUCCESS"
+        } else {
+            Write-Log "$actionTitle finalizado. Código de saída: $($process.ExitCode)" "WARNING"
+        }
     } catch {
-        Write-Log "Erro ao iniciar MAS: $_" "ERROR"
+        Write-Log "Erro ao executar $($actionTitle): $_" "ERROR"
     }
+    
     Set-Status "Pronto"
-})
+}
+
+if ($null -ne $btnMasHWID) {
+    $btnMasHWID.Add_Click({ Invoke-MASAction "Ativação Digital HWID (Windows 10/11)" "/HWID" })
+}
+if ($null -ne $btnMasOhook) {
+    $btnMasOhook.Add_Click({ Invoke-MASAction "Ativação Permanente Ohook (Office)" "/Ohook" })
+}
+if ($null -ne $btnMasTSforge) {
+    $btnMasTSforge.Add_Click({ Invoke-MASAction "Ativação KMS38 / TSforge (Win Server / LTSC / ESU)" "/KMS38" })
+}
+if ($null -ne $btnMasKMS) {
+    $btnMasKMS.Add_Click({ Invoke-MASAction "Ativação Online KMS (Windows & Office)" "/KMS-All" })
+}
+if ($null -ne $btnMasCheck) {
+    $btnMasCheck.Add_Click({
+        Register-Action "ativacao"
+        Set-Status "Verificando status das licenças..."
+        Switch-Tab "Logs"
+        Write-Log "=== VERIFICAÇÃO DE STATUS DE LICENÇAS (NATIVO & MAS) ===" "INFO"
+        
+        # 1. Checagem Nativa do Windows via slmgr
+        try {
+            Write-Log "Consultando Licença do Windows via slmgr.vbs..." "INFO"
+            $slmgrOut = cscript //nologo C:\Windows\System32\slmgr.vbs /dli
+            foreach ($l in $slmgrOut) {
+                if (-not [string]::IsNullOrWhiteSpace($l)) {
+                    Write-Log "  [slmgr] $l" "INFO"
+                }
+            }
+        } catch {
+            Write-Log "Aviso ao consultar slmgr.vbs: $_" "WARNING"
+        }
+        
+        # 2. Checagem via MAS
+        Invoke-MASAction "Verificação Detalhada de Licença MAS" "/Check"
+    })
+}
+if ($null -ne $btnMasTroubleshoot) {
+    $btnMasTroubleshoot.Add_Click({ Invoke-MASAction "Solução de Problemas / Reparo de Licenciamento MAS" "/Troubleshoot" })
+}
+if ($null -ne $btnMasInteractive) {
+    $btnMasInteractive.Add_Click({
+        Register-Action "ativacao"
+        Set-Status "Iniciando MAS em janela de console externa..."
+        Write-Log "Iniciando Microsoft Activation Scripts (MAS) em janela externa..." "INFO"
+        try {
+            $masArgs = @("-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "iex (curl.exe -s --doh-url https://1.1.1.1/dns-query https://get.activated.win | Out-String)")
+            $null = Start-Process powershell.exe -ArgumentList $masArgs
+            Write-Log "MAS interativo aberto em console externo." "SUCCESS"
+        } catch {
+            Write-Log "Erro ao iniciar console interativo do MAS: $_" "ERROR"
+        }
+        Set-Status "Pronto"
+    })
+}
+if ($null -ne $btnRunActivation) {
+    $btnRunActivation.Add_Click({
+        Invoke-MASAction "Ativação Digital HWID (Windows 10/11)" "/HWID"
+    })
+}
 
 # ── Ferramentas de Rede ──────────────────────────────────────────────────────
 $btnRedeIPConfig.Add_Click({
