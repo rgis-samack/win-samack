@@ -2793,6 +2793,7 @@ function Action-RunDismCleanup {
     Set-Status "Executando Limpeza Integrada..."
     Switch-Tab "Logs"
     Write-Log "=== INICIANDO LIMPEZA NATIVA (ESTILO NCLEANER) ===" "INFO"
+    Out-DoEvents
 
     $driveC = Get-PSDrive C -ErrorAction SilentlyContinue
     $driveCBefore = if ($null -ne $driveC) { [double]$driveC.Free } else { [double]0 }
@@ -2803,8 +2804,13 @@ function Action-RunDismCleanup {
     # 1. Arquivos Expirados
     if ($chkDismWinSxS.IsChecked) {
         Write-Log "Limpando Component Store (WinSxS Assemblies Substituídos)..." "INFO"
+        Out-DoEvents
         try {
-            $proc = Start-Process dism.exe -ArgumentList "/Online /Cleanup-Image /StartComponentCleanup /ResetBase" -NoNewWindow -PassThru -Wait
+            $proc = Start-Process dism.exe -ArgumentList "/Online /Cleanup-Image /StartComponentCleanup /ResetBase" -NoNewWindow -PassThru
+            while (-not $proc.HasExited) {
+                Start-Sleep -Milliseconds 300
+                Out-DoEvents
+            }
             if ($proc.ExitCode -eq 0) {
                 Write-Log "Limpeza do WinSxS concluída com sucesso." "SUCCESS"
             } else {
@@ -2814,10 +2820,12 @@ function Action-RunDismCleanup {
         } catch {
             Write-Log "Erro ao limpar Component Store (WinSxS): $_" "ERROR"
         }
+        Out-DoEvents
     }
 
     if ($chkDismWindowsOld.IsChecked) {
         Write-Log "Removendo arquivos residuais de instalações anteriores (Windows.old)..." "INFO"
+        Out-DoEvents
         try {
             if (Test-Path "C:\Windows.old") {
                 $oldRes = Remove-TrackedFiles -Path "C:\Windows.old" -Recurse
@@ -2832,11 +2840,13 @@ function Action-RunDismCleanup {
         } catch {
             Write-Log "Erro ao remover a pasta Windows.old: $_" "ERROR"
         }
+        Out-DoEvents
     }
 
     # 2. Sistema
     if ($chkDismWer.IsChecked) {
         Write-Log "Limpando Relatórios de Erros do Windows (WER)..." "INFO"
+        Out-DoEvents
         $werPaths = @(
             "C:\ProgramData\Microsoft\Windows\WER\ReportQueue",
             "C:\ProgramData\Microsoft\Windows\WER\ReportArchive",
@@ -2852,22 +2862,26 @@ function Action-RunDismCleanup {
                 $szStr = Format-DiskSize $werRes.Bytes
                 $cnt = $werRes.Count
                 Write-Log "Limpo: $path ($cnt arquivos, $szStr)." "SUCCESS"
+                Out-DoEvents
             }
         }
     }
 
     if ($chkDismEventLogs.IsChecked) {
         Write-Log "Limpando Logs de Eventos do Windows..." "INFO"
+        Out-DoEvents
         try {
-            wevtutil el | ForEach-Object { wevtutil cl "$_" 2>$null }
+            wevtutil.exe el 2>$null | ForEach-Object { wevtutil.exe cl "$_" 2>$null }
             Write-Log "Logs de Eventos do Windows limpos com sucesso." "SUCCESS"
         } catch {
             Write-Log "Erro ao limpar Logs de Eventos: $_" "ERROR"
         }
+        Out-DoEvents
     }
 
     if ($chkDismWUHistory.IsChecked) {
         Write-Log "Limpando cache de histórico do Windows Update..." "INFO"
+        Out-DoEvents
         try {
             Stop-Service -Name "wuauserv" -Force -ErrorAction SilentlyContinue
             Stop-Service -Name "bits" -Force -ErrorAction SilentlyContinue
@@ -2890,10 +2904,12 @@ function Action-RunDismCleanup {
             Start-Service -Name "cryptsvc" -ErrorAction SilentlyContinue
             Start-Service -Name "wuauserv" -ErrorAction SilentlyContinue
         }
+        Out-DoEvents
     }
 
     if ($chkDismAppx.IsChecked) {
         Write-Log "Limpando e reparando pacotes AppX corrompidos..." "INFO"
+        Out-DoEvents
         try {
             $apps = Get-AppxPackage -AllUsers -ErrorAction SilentlyContinue
             if ($null -ne $apps) {
@@ -2908,21 +2924,25 @@ function Action-RunDismCleanup {
         } catch {
             Write-Log "Não foi possível reparar todos os pacotes AppX (alguns são protegidos pelo sistema)." "WARNING"
         }
+        Out-DoEvents
     }
 
     if ($chkDismRestorePoints.IsChecked) {
         Write-Log "Removendo pontos de restauração antigos (Shadow Copies)..." "INFO"
+        Out-DoEvents
         try {
             vssadmin delete shadows /for=c: /all /quiet
             Write-Log "Pontos de restauração do sistema antigos limpos." "SUCCESS"
         } catch {
             Write-Log "Erro ao deletar Shadow Copies: $_" "ERROR"
         }
+        Out-DoEvents
     }
 
     # 3. Caches
     if ($chkDismWUDownload.IsChecked) {
         Write-Log "Limpando Cache de Downloads do Windows Update..." "INFO"
+        Out-DoEvents
         try {
             Stop-Service -Name "wuauserv" -Force -ErrorAction SilentlyContinue
             $wuRes = Remove-TrackedFiles -Path "C:\Windows\SoftwareDistribution\Download" -Recurse
@@ -2936,10 +2956,12 @@ function Action-RunDismCleanup {
             Write-Log "Erro ao limpar cache de download: $_" "ERROR"
             Start-Service -Name "wuauserv" -ErrorAction SilentlyContinue
         }
+        Out-DoEvents
     }
 
     if ($chkDismDeliveryOpt.IsChecked) {
         Write-Log "Limpando Cache do Delivery Optimization..." "INFO"
+        Out-DoEvents
         $doPath = "C:\Windows\ServiceProfiles\NetworkService\AppData\Local\Microsoft\Windows\DeliveryOptimization\Cache"
         if (Test-Path $doPath) {
             $doRes = Remove-TrackedFiles -Path $doPath -Recurse
@@ -2949,10 +2971,12 @@ function Action-RunDismCleanup {
             $cnt = $doRes.Count
             Write-Log "Delivery Optimization Cache limpo ($cnt arquivos, $szStr)." "SUCCESS"
         }
+        Out-DoEvents
     }
 
     if ($chkDismRdpCache.IsChecked) {
         Write-Log "Limpando Caches de Clientes RDP (Terminal Server Client)..." "INFO"
+        Out-DoEvents
         $rdpPath = "$env:USERPROFILE\AppData\Local\Microsoft\Terminal Server Client\Cache"
         if (Test-Path $rdpPath) {
             $rdpRes = Remove-TrackedFiles -Path $rdpPath -Recurse
@@ -2962,33 +2986,43 @@ function Action-RunDismCleanup {
             $cnt = $rdpRes.Count
             Write-Log "Cache de RDP Terminal Server limpo ($cnt arquivos, $szStr)." "SUCCESS"
         }
+        Out-DoEvents
     }
 
     if ($chkDismNetAssembly.IsChecked) {
         Write-Log "Recompilando e otimizando Cache do .NET Assembly (NGEN)..." "INFO"
+        Out-DoEvents
         try {
             $ngen64 = "C:\Windows\Microsoft.NET\Framework64\v4.0.30319\ngen.exe"
             if (Test-Path $ngen64) {
-                Start-Process -FilePath $ngen64 -ArgumentList "executeQueuedItems", "/queue:3" -NoNewWindow -Wait
+                $proc = Start-Process -FilePath $ngen64 -ArgumentList "executeQueuedItems", "/queue:3" -NoNewWindow -PassThru
+                while (-not $proc.HasExited) {
+                    Start-Sleep -Milliseconds 200
+                    Out-DoEvents
+                }
                 Write-Log "Cache do .NET Assembly otimizado via NGEN." "SUCCESS"
             }
         } catch {
             Write-Log "Erro ao otimizar NGEN: $_" "ERROR"
         }
+        Out-DoEvents
     }
 
     if ($chkDismPrefetch.IsChecked) {
         Write-Log "Limpando pasta Prefetch do Windows..." "INFO"
+        Out-DoEvents
         $prefRes = Remove-TrackedFiles -Path "C:\Windows\Prefetch" -Recurse
         $dismFreedBytes += $prefRes.Bytes
         $dismFilesCount += $prefRes.Count
         $szStr = Format-DiskSize $prefRes.Bytes
         $cnt = $prefRes.Count
         Write-Log "Prefetch do Windows limpo ($cnt arquivos, $szStr)." "SUCCESS"
+        Out-DoEvents
     }
 
     if ($chkDismThumbnails.IsChecked) {
         Write-Log "Removendo cache de miniaturas (Thumbnail Cache)..." "INFO"
+        Out-DoEvents
         $thumbPath = "$env:LOCALAPPDATA\Microsoft\Windows\Explorer"
         if (Test-Path $thumbPath) {
             $thRes = Remove-TrackedFiles -Path $thumbPath -Filter "thumbcache_*.db"
@@ -2998,31 +3032,37 @@ function Action-RunDismCleanup {
             $cnt = $thRes.Count
             Write-Log "Cache de miniaturas removido ($cnt arquivos, $szStr)." "SUCCESS"
         }
+        Out-DoEvents
     }
 
     if ($chkDismWebCache.IsChecked) {
         Write-Log "Limpando cache da Web do WinINet..." "INFO"
+        Out-DoEvents
         try {
             Start-Process -FilePath "RunDll32.exe" -ArgumentList "InetCpl.cpl,ClearMyTracksByProcess 8" -Wait
             Write-Log "Cache Web do WinINet limpo." "SUCCESS"
         } catch {
             Write-Log "Erro ao limpar cache Web do WinINet: $_" "WARNING"
         }
+        Out-DoEvents
     }
 
     if ($chkDismCookies.IsChecked) {
         Write-Log "Limpando Cookies do WinINet..." "INFO"
+        Out-DoEvents
         try {
             Start-Process -FilePath "RunDll32.exe" -ArgumentList "InetCpl.cpl,ClearMyTracksByProcess 2" -Wait
             Write-Log "Cookies do WinINet limpos." "SUCCESS"
         } catch {
             Write-Log "Erro ao limpar Cookies do WinINet: $_" "WARNING"
         }
+        Out-DoEvents
     }
 
     # 4. Aplicações
     if ($chkDismPkgCache.IsChecked) {
         Write-Log "Limpando cache de pacotes de instalação (Package Cache)..." "INFO"
+        Out-DoEvents
         $pkgPath = "C:\ProgramData\Package Cache"
         if (Test-Path $pkgPath) {
             $pkgRes = Remove-TrackedFiles -Path $pkgPath -Recurse
@@ -3032,10 +3072,12 @@ function Action-RunDismCleanup {
             $cnt = $pkgRes.Count
             Write-Log "Package Cache limpo ($cnt arquivos, $szStr)." "SUCCESS"
         }
+        Out-DoEvents
     }
 
     if ($chkDismDefenderHistory.IsChecked) {
         Write-Log "Limpando histórico de detecções do Windows Defender..." "INFO"
+        Out-DoEvents
         $defPath = "C:\ProgramData\Microsoft\Windows Defender\Scans\History\Service\DetectionHistory"
         if (Test-Path $defPath) {
             $defRes = Remove-TrackedFiles -Path $defPath -Recurse
@@ -3045,33 +3087,43 @@ function Action-RunDismCleanup {
             $cnt = $defRes.Count
             Write-Log "Histórico de varreduras do Windows Defender limpo ($cnt arquivos, $szStr)." "SUCCESS"
         }
+        Out-DoEvents
     }
 
     # 5. Arquivos Temporários
     if ($chkDismWinSxSTemp.IsChecked) {
         Write-Log "Executando limpeza de arquivos temporários do WinSxS..." "INFO"
+        Out-DoEvents
         try {
-            Start-Process dism.exe -ArgumentList "/Online /Cleanup-Image /StartComponentCleanup" -NoNewWindow -Wait
+            $proc = Start-Process dism.exe -ArgumentList "/Online /Cleanup-Image /StartComponentCleanup" -NoNewWindow -PassThru
+            while (-not $proc.HasExited) {
+                Start-Sleep -Milliseconds 300
+                Out-DoEvents
+            }
             Write-Log "Limpeza básica do componente WinSxS concluída." "SUCCESS"
         } catch {
             Write-Log "Erro na limpeza do WinSxS: $_" "WARNING"
         }
+        Out-DoEvents
     }
 
     if ($chkDismLogs.IsChecked) {
         Write-Log "Removendo logs redundantes do Windows..." "INFO"
+        Out-DoEvents
         $log1 = Remove-TrackedFiles -Path "C:\Windows" -Filter "*.log"
-        $log2 = Remove-TrackedFiles -Path "C:\Windows\System32\wbem\Repository" -Filter "*.log"
+        $log2 = Remove-TrackedFiles -Path "C:\Windows\Logs\CBS" -Filter "*.log"
         $dismFreedBytes += ($log1.Bytes + $log2.Bytes)
         $dismFilesCount += ($log1.Count + $log2.Count)
         $totLogBytes = $log1.Bytes + $log2.Bytes
         $totLogCnt = $log1.Count + $log2.Count
         $szStr = Format-DiskSize $totLogBytes
         Write-Log "Arquivos de log do Windows removidos ($totLogCnt arquivos, $szStr)." "SUCCESS"
+        Out-DoEvents
     }
 
     if ($chkDismTemp.IsChecked) {
         Write-Log "Limpando pastas temporárias do usuário e do sistema..." "INFO"
+        Out-DoEvents
         $tempPaths = @($env:TEMP, "C:\Windows\Temp")
         foreach ($path in $tempPaths) {
             if (Test-Path $path) {
@@ -3081,6 +3133,7 @@ function Action-RunDismCleanup {
             }
         }
         Write-Log "Pastas Temp limpas." "SUCCESS"
+        Out-DoEvents
     }
 
     if ($chkDismRecycleBin.IsChecked) {
@@ -3105,6 +3158,7 @@ function Action-RunDismCleanup {
 
     if ($chkDismDmp.IsChecked) {
         Write-Log "Removendo relatórios de crash (Arquivos dump .dmp)..." "INFO"
+        Out-DoEvents
         $dmpRes = Remove-TrackedFiles -Path "C:\Windows\Minidump" -Recurse
         $dismFreedBytes += $dmpRes.Bytes
         $dismFilesCount += $dmpRes.Count
@@ -3120,6 +3174,7 @@ function Action-RunDismCleanup {
         }
         $szStr = Format-DiskSize $dismFreedBytes
         Write-Log "Arquivos de despejo de memória (Dumps) apagados ($dismFilesCount arquivos, $szStr)." "SUCCESS"
+        Out-DoEvents
     }
 
     # Mede o espaço livre no disco C após a limpeza
@@ -4641,6 +4696,21 @@ $btnApplyFeatures.Add_Click({ Action-ApplyFeatures })
 $btnApplyDNS.Add_Click({ Action-ApplyDNS })
 $btnRunSystemRepair.Add_Click({ Action-RunSystemRepair })
 $btnBackupDrivers.Add_Click({ Action-BackupDrivers })
+
+# Eventos da Aba Dism++ (Limpeza Avançada & Toolkit)
+if ($null -ne $btnRunDismClean) { $btnRunDismClean.Add_Click({ Action-RunDismCleanup }) }
+if ($null -ne $btnDismBackup) { $btnDismBackup.Add_Click({ Action-DismBackup }) }
+if ($null -ne $btnDismRestore) { $btnDismRestore.Add_Click({ Action-DismRestore }) }
+if ($null -ne $btnDismAccounts) { $btnDismAccounts.Add_Click({ Action-DismAccounts }) }
+if ($null -ne $btnDismRepairBoot) { $btnDismRepairBoot.Add_Click({ Action-DismRepairBoot }) }
+if ($null -ne $btnDismGodMode) { $btnDismGodMode.Add_Click({ Action-DismGodMode }) }
+if ($null -ne $btnDismHosts) { $btnDismHosts.Add_Click({ Action-DismHosts }) }
+
+# Eventos da Aba Office (Downloads Oficiais do Office)
+if ($null -ne $btnOffice2021Tiny) { $btnOffice2021Tiny.Add_Click({ Start-Process "https://officecdn.microsoft.com/pr/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/pt-br/ProPlus2021Retail.img" }) }
+if ($null -ne $btnOffice2021Bitly) { $btnOffice2021Bitly.Add_Click({ Start-Process "https://officecdn.microsoft.com/pr/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/pt-br/ProPlus2021Retail.img" }) }
+if ($null -ne $btnOffice2019Abre) { $btnOffice2019Abre.Add_Click({ Start-Process "https://officecdn.microsoft.com/pr/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/pt-br/ProPlus2019Retail.img" }) }
+if ($null -ne $btnOffice2019Tiny) { $btnOffice2019Tiny.Add_Click({ Start-Process "https://officecdn.microsoft.com/pr/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/pt-br/ProPlus2019Retail.img" }) }
 
 # 9. Inicialização dos Timers de Monitoramento de Hardware
 
