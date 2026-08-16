@@ -504,10 +504,10 @@ $xaml = @"
                                     </Border>
 
                                     <!-- Processos de Alto Consumo -->
-                                    <Border Style="{StaticResource CardBorder}" Margin="0,12,0,0">
+                                    <Border Style="{StaticResource CardBorder}" Margin="0,10,0,0">
                                         <StackPanel>
-                                            <TextBlock Text="🔥 Processos de Alto Consumo" FontSize="14" FontWeight="Bold" Foreground="#EF4444" Margin="0,0,0,10"/>
-                                            <ListView x:Name="LvTopProcesses" Height="170" Background="#111827" Foreground="#F1F5F9" BorderBrush="#1F2937" BorderThickness="1" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                                            <TextBlock Text="🔥 Processos de Alto Consumo" FontSize="13" FontWeight="Bold" Foreground="#EF4444" Margin="0,0,0,8"/>
+                                            <ListView x:Name="LvTopProcesses" Height="125" Background="#111827" Foreground="#F1F5F9" BorderBrush="#1F2937" BorderThickness="1" ScrollViewer.VerticalScrollBarVisibility="Hidden">
                                                 <ListView.View>
                                                     <GridView>
                                                         <GridViewColumn Header="Processo" Width="105" DisplayMemberBinding="{Binding Name}"/>
@@ -516,6 +516,82 @@ $xaml = @"
                                                     </GridView>
                                                 </ListView.View>
                                             </ListView>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <!-- Monitor de Tráfego de Rede em Tempo Real (Estilo Gerenciador de Tarefas) -->
+                                    <Border Style="{StaticResource CardBorder}" Margin="0,10,0,0">
+                                        <StackPanel>
+                                            <Grid Margin="0,0,0,6">
+                                                <TextBlock Text="🌐 Monitor de Tráfego de Rede" FontSize="13" FontWeight="Bold" Foreground="#10B981" HorizontalAlignment="Left"/>
+                                                <TextBlock Text="1.0s delay" FontSize="10" Foreground="#64748B" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                            </Grid>
+                                            
+                                            <!-- Cards de Taxas (Download &amp; Upload) -->
+                                            <Grid Margin="0,0,0,8">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="6"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <!-- Card Download -->
+                                                <Border Grid.Column="0" Background="#111827" BorderBrush="#10B981" BorderThickness="1" CornerRadius="6" Padding="6,4">
+                                                    <StackPanel>
+                                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,2">
+                                                            <TextBlock Text="⬇️" FontSize="10" Margin="0,0,3,0"/>
+                                                            <TextBlock Text="DOWNLOAD" FontSize="9" FontWeight="Bold" Foreground="#10B981"/>
+                                                        </StackPanel>
+                                                        <TextBlock x:Name="LblNetDownload" Text="0.0 KB/s" FontSize="12" FontWeight="Bold" Foreground="#F8FAFC"/>
+                                                    </StackPanel>
+                                                </Border>
+
+                                                <!-- Card Upload -->
+                                                <Border Grid.Column="2" Background="#111827" BorderBrush="#3B82F6" BorderThickness="1" CornerRadius="6" Padding="6,4">
+                                                    <StackPanel>
+                                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,2">
+                                                            <TextBlock Text="⬆️" FontSize="10" Margin="0,0,3,0"/>
+                                                            <TextBlock Text="UPLOAD" FontSize="9" FontWeight="Bold" Foreground="#3B82F6"/>
+                                                        </StackPanel>
+                                                        <TextBlock x:Name="LblNetUpload" Text="0.0 KB/s" FontSize="12" FontWeight="Bold" Foreground="#F8FAFC"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+
+                                            <!-- Canvas do Gráfico Estilo Gerenciador de Tarefas -->
+                                            <Border Background="#0B0F19" BorderBrush="#1F2937" BorderThickness="1" CornerRadius="6" Padding="3" Height="75" ClipToBounds="True">
+                                                <Grid x:Name="GridNetCanvasContainer">
+                                                    <!-- Linhas Guia do Gráfico (Grid nativo do Gerenciador de Tarefas) -->
+                                                    <UniformGrid Rows="3" Columns="4" Opacity="0.15">
+                                                        <Border BorderBrush="#64748B" BorderThickness="0,0,1,1"/>
+                                                        <Border BorderBrush="#64748B" BorderThickness="0,0,1,1"/>
+                                                        <Border BorderBrush="#64748B" BorderThickness="0,0,1,1"/>
+                                                        <Border BorderBrush="#64748B" BorderThickness="0,0,0,1"/>
+                                                        <Border BorderBrush="#64748B" BorderThickness="0,0,1,1"/>
+                                                        <Border BorderBrush="#64748B" BorderThickness="0,0,1,1"/>
+                                                        <Border BorderBrush="#64748B" BorderThickness="0,0,1,1"/>
+                                                        <Border BorderBrush="#64748B" BorderThickness="0,0,0,1"/>
+                                                        <Border BorderBrush="#64748B" BorderThickness="0,0,1,0"/>
+                                                        <Border BorderBrush="#64748B" BorderThickness="0,0,1,0"/>
+                                                        <Border BorderBrush="#64748B" BorderThickness="0,0,1,0"/>
+                                                        <Border BorderBrush="#64748B" BorderThickness="0,0,0,0"/>
+                                                    </UniformGrid>
+
+                                                    <!-- Canvas para renderizar as linhas de gráfico -->
+                                                    <Canvas x:Name="CanvasNetGraph" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                        <!-- Polyline para Download (Verde) -->
+                                                        <Polyline x:Name="PolylineNetDl" Stroke="#10B981" StrokeThickness="2" StrokeLineJoin="Round"/>
+                                                        <!-- Polyline para Upload (Azul) -->
+                                                        <Polyline x:Name="PolylineNetUl" Stroke="#3B82F6" StrokeThickness="2" StrokeLineJoin="Round"/>
+                                                    </Canvas>
+                                                </Grid>
+                                            </Border>
+
+                                            <!-- Rodapé do Card: Sessão Acumulada e Pico -->
+                                            <Grid Margin="0,5,0,0">
+                                                <TextBlock x:Name="LblNetTotal" Text="Sessao: DL 0.0 MB / UL 0.0 MB" FontSize="10" Foreground="#64748B" HorizontalAlignment="Left"/>
+                                                <TextBlock x:Name="LblNetPeak" Text="Pico: 0.0 KB/s" FontSize="10" Foreground="#64748B" HorizontalAlignment="Right"/>
+                                            </Grid>
                                         </StackPanel>
                                     </Border>
                                 </StackPanel>
@@ -1625,6 +1701,13 @@ if ($null -ne $btnDonate -and $null -ne $btnDonate.ToolTip) {
 
 # Mapeando Telas (Grids)
 $gridPainel = $Window.FindName("GridPainel")
+$lblNetDownload = $Window.FindName("LblNetDownload")
+$lblNetUpload = $Window.FindName("LblNetUpload")
+$lblNetTotal = $Window.FindName("LblNetTotal")
+$lblNetPeak = $Window.FindName("LblNetPeak")
+$canvasNetGraph = $Window.FindName("CanvasNetGraph")
+$polylineNetDl = $Window.FindName("PolylineNetDl")
+$polylineNetUl = $Window.FindName("PolylineNetUl")
 $gridDebloat = $Window.FindName("GridDebloat")
 $gridDesempenho = $Window.FindName("GridDesempenho")
 $gridLimpeza = $Window.FindName("GridLimpeza")
@@ -1840,7 +1923,7 @@ $txtTotalRAM.Text = "$totalRamGB GB"
 # Mantém a UI responsiva durante loops longos
 function Out-DoEvents {
     $frame = New-Object System.Windows.Threading.DispatcherFrame
-    [System.Windows.Threading.Dispatcher]::CurrentDispatcher.BeginInvoke(
+    $null = [System.Windows.Threading.Dispatcher]::CurrentDispatcher.BeginInvoke(
         [System.Windows.Threading.DispatcherPriority]::Background,
         [System.Windows.Threading.DispatcherOperationCallback]{
             param($f)
@@ -1872,6 +1955,184 @@ function Set-Status {
     param([string]$StatusText)
     $txtStatus.Text = $StatusText
     Out-DoEvents
+}
+
+# Formata tamanho de bytes em formato legível (KB, MB, GB)
+function Format-DiskSize {
+    param([double]$bytes)
+    if ($bytes -ge 1GB) {
+        return "{0:N2} GB" -f ($bytes / 1GB)
+    } elseif ($bytes -ge 1MB) {
+        return "{0:N2} MB" -f ($bytes / 1MB)
+    } elseif ($bytes -ge 1KB) {
+        return "{0:N2} KB" -f ($bytes / 1KB)
+    } else {
+        return "{0:N0} B" -f $bytes
+    }
+}
+
+# Remove arquivos contabilizando a quantidade e os bytes liberados de forma fluida
+function Remove-TrackedFiles {
+    param(
+        [string]$Path,
+        [string]$Filter = "*",
+        [switch]$Recurse
+    )
+    $bytesCount = [double]0
+    $filesCount = [long]0
+    if (Test-Path -LiteralPath $Path) {
+        try {
+            $items = Get-ChildItem -LiteralPath $Path -Filter $Filter -Recurse:$Recurse -Force -ErrorAction SilentlyContinue
+            if ($null -ne $items) {
+                $loopIdx = 0
+                foreach ($item in $items) {
+                    if (-not $item.PSIsContainer) {
+                        $sz = [double]$item.Length
+                        try {
+                            Remove-Item -LiteralPath $item.FullName -Force -Confirm:$false -ErrorAction Stop
+                            $bytesCount += $sz
+                            $filesCount++
+                        } catch {
+                            # Arquivo em uso pelo sistema
+                        }
+                    }
+                    $loopIdx++
+                    if ($loopIdx % 30 -eq 0) {
+                        Out-DoEvents
+                    }
+                }
+            }
+            if ($Recurse) {
+                $subDirs = Get-ChildItem -LiteralPath $Path -Directory -Recurse -Force -ErrorAction SilentlyContinue | Sort-Object FullName -Descending
+                if ($null -ne $subDirs) {
+                    foreach ($d in $subDirs) {
+                        try {
+                            Remove-Item -LiteralPath $d.FullName -Force -Recurse -Confirm:$false -ErrorAction Stop
+                        } catch {}
+                    }
+                }
+            }
+        } catch {}
+    }
+    Out-DoEvents
+    return @{ Bytes = $bytesCount; Count = $filesCount }
+}
+
+# Janela Modal Profissional para Exibição do Resultado da Limpeza
+function Show-CleanupResultModal {
+    param(
+        [string]$title = "Limpeza de Disco Concluída!",
+        [string]$subtitle = "Seu sistema foi otimizado e os arquivos desnecessários foram removidos com segurança.",
+        [string]$freedSpace = "0 B",
+        [string]$deletedCount = "0"
+    )
+
+    $modalXaml = @"
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Samack WinUtil - Otimização Concluída" Height="370" Width="470"
+        WindowStartupLocation="CenterScreen" WindowStyle="None"
+        AllowsTransparency="True" Background="Transparent" Topmost="True">
+    <Border Background="#0F172A" BorderBrush="#10B981" BorderThickness="1.5" CornerRadius="14" Padding="20">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Barra Superior da Janela -->
+            <Grid Grid.Row="0" x:Name="HeaderCleanupModal" Background="Transparent" Margin="0,0,0,14">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border Background="#064E3B" CornerRadius="6" Padding="6,2" Margin="0,0,8,0">
+                        <TextBlock Text="SISTEMA" FontSize="9.5" FontWeight="Bold" Foreground="#34D399"/>
+                    </Border>
+                    <TextBlock Text="Samack WinUtil" FontSize="13" FontWeight="SemiBold" Foreground="#94A3B8"/>
+                </StackPanel>
+                <Button x:Name="BtnCloseCleanupModal" Content="✕" Foreground="#94A3B8" Background="#1E293B" BorderThickness="0" FontSize="13" FontWeight="Bold" Width="26" Height="26" HorizontalAlignment="Right" VerticalAlignment="Center" Cursor="Hand">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="13"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </Grid>
+
+            <!-- Seção de Destaque / Sucesso -->
+            <StackPanel Grid.Row="1" HorizontalAlignment="Center" Margin="0,0,0,16">
+                <Border Background="#064E3B" BorderBrush="#10B981" BorderThickness="1.5" Width="52" Height="52" CornerRadius="26" HorizontalAlignment="Center" Margin="0,0,0,10">
+                    <TextBlock Text="✓" FontSize="26" FontWeight="Bold" Foreground="#34D399" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+                <TextBlock Text="$title" FontSize="16" FontWeight="Bold" Foreground="#F8FAFC" TextAlignment="Center"/>
+                <TextBlock Text="$subtitle" FontSize="11.5" Foreground="#94A3B8" TextAlignment="Center" Margin="0,4,0,0" TextWrapping="Wrap" MaxWidth="400"/>
+            </StackPanel>
+
+            <!-- Cards de Métricas em Grade -->
+            <Grid Grid.Row="2" Margin="0,0,0,18">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="14"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Card 1: Espaço Liberado -->
+                <Border Grid.Column="0" Background="#1E293B" BorderBrush="#059669" BorderThickness="1.2" CornerRadius="10" Padding="14,10">
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="ESPAÇO LIBERADO" FontSize="10" FontWeight="Bold" Foreground="#34D399"/>
+                        <TextBlock Text="$freedSpace" FontSize="22" FontWeight="Bold" Foreground="#10B981" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Card 2: Arquivos Excluídos -->
+                <Border Grid.Column="2" Background="#1E293B" BorderBrush="#0284C7" BorderThickness="1.2" CornerRadius="10" Padding="14,10">
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="ARQUIVOS EXCLUÍDOS" FontSize="10" FontWeight="Bold" Foreground="#38BDF8"/>
+                        <TextBlock Text="$deletedCount" FontSize="22" FontWeight="Bold" Foreground="#0EA5E9" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Botão Concluir Moderno -->
+            <Button Grid.Row="3" x:Name="BtnOkCleanupModal" Content="Concluir e Fechar" Background="#10B981" Foreground="#FFFFFF" FontSize="13" FontWeight="Bold" Height="38" BorderThickness="0" Cursor="Hand">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="8"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </Grid>
+    </Border>
+</Window>
+"@
+
+    try {
+        $xmlReader = [System.Xml.XmlReader]::Create((New-Object System.IO.StringReader($modalXaml)))
+        $modalWin = [System.Windows.Markup.XamlReader]::Load($xmlReader)
+
+        $btnClose = $modalWin.FindName("BtnCloseCleanupModal")
+        $btnOk = $modalWin.FindName("BtnOkCleanupModal")
+        $header = $modalWin.FindName("HeaderCleanupModal")
+
+        if ($null -ne $header) {
+            $header.add_MouseDown({
+                if ($args[1].LeftButton -eq [System.Windows.Input.MouseButtonState]::Pressed) {
+                    $modalWin.DragMove()
+                }
+            })
+        }
+
+        if ($null -ne $btnClose) {
+            $btnClose.Add_Click({ $modalWin.Close() })
+        }
+        if ($null -ne $btnOk) {
+            $btnOk.Add_Click({ $modalWin.Close() })
+        }
+
+        $modalWin.ShowDialog() | Out-Null
+    } catch {
+        Write-Log "Limpeza finalizada: $freedSpace liberados ($deletedCount arquivos)." "SUCCESS"
+    }
 }
 
 # Gerenciamento de abas
@@ -2533,6 +2794,12 @@ function Action-RunDismCleanup {
     Switch-Tab "Logs"
     Write-Log "=== INICIANDO LIMPEZA NATIVA (ESTILO NCLEANER) ===" "INFO"
 
+    $driveC = Get-PSDrive C -ErrorAction SilentlyContinue
+    $driveCBefore = if ($null -ne $driveC) { [double]$driveC.Free } else { [double]0 }
+    
+    $dismFreedBytes = [double]0
+    $dismFilesCount = [long]0
+
     # 1. Arquivos Expirados
     if ($chkDismWinSxS.IsChecked) {
         Write-Log "Limpando Component Store (WinSxS Assemblies Substituídos)..." "INFO"
@@ -2541,7 +2808,8 @@ function Action-RunDismCleanup {
             if ($proc.ExitCode -eq 0) {
                 Write-Log "Limpeza do WinSxS concluída com sucesso." "SUCCESS"
             } else {
-                Write-Log "DISM retornou código de status: $($proc.ExitCode)" "WARNING"
+                $ec = $proc.ExitCode
+                Write-Log "DISM retornou código de status: $ec" "WARNING"
             }
         } catch {
             Write-Log "Erro ao limpar Component Store (WinSxS): $_" "ERROR"
@@ -2552,8 +2820,12 @@ function Action-RunDismCleanup {
         Write-Log "Removendo arquivos residuais de instalações anteriores (Windows.old)..." "INFO"
         try {
             if (Test-Path "C:\Windows.old") {
-                Remove-Item -Path "C:\Windows.old" -Recurse -Force -ErrorAction Stop
-                Write-Log "Pasta Windows.old removida com sucesso." "SUCCESS"
+                $oldRes = Remove-TrackedFiles -Path "C:\Windows.old" -Recurse
+                $dismFreedBytes += $oldRes.Bytes
+                $dismFilesCount += $oldRes.Count
+                $szStr = Format-DiskSize $oldRes.Bytes
+                $cnt = $oldRes.Count
+                Write-Log "Pasta Windows.old removida ($cnt arquivos, $szStr liberados)." "SUCCESS"
             } else {
                 Write-Log "Nenhuma pasta Windows.old detectada." "INFO"
             }
@@ -2566,20 +2838,20 @@ function Action-RunDismCleanup {
     if ($chkDismWer.IsChecked) {
         Write-Log "Limpando Relatórios de Erros do Windows (WER)..." "INFO"
         $werPaths = @(
-            "C:\ProgramData\Microsoft\Windows\WER\ReportQueue"
-            "C:\ProgramData\Microsoft\Windows\WER\ReportArchive"
-            "C:\ProgramData\Microsoft\Windows\WER\Temp"
-            "$env:LOCALAPPDATA\Microsoft\Windows\WER\ReportQueue"
+            "C:\ProgramData\Microsoft\Windows\WER\ReportQueue",
+            "C:\ProgramData\Microsoft\Windows\WER\ReportArchive",
+            "C:\ProgramData\Microsoft\Windows\WER\Temp",
+            "$env:LOCALAPPDATA\Microsoft\Windows\WER\ReportQueue",
             "$env:LOCALAPPDATA\Microsoft\Windows\WER\ReportArchive"
         )
         foreach ($path in $werPaths) {
             if (Test-Path $path) {
-                try {
-                    Remove-Item -Path "$path\*" -Recurse -Force -ErrorAction Stop
-                    Write-Log "Limpo: $path" "SUCCESS"
-                } catch {
-                    Write-Log "Limpeza parcial em $path (alguns itens em uso pelo sistema): $_" "WARNING"
-                }
+                $werRes = Remove-TrackedFiles -Path $path -Recurse
+                $dismFreedBytes += $werRes.Bytes
+                $dismFilesCount += $werRes.Count
+                $szStr = Format-DiskSize $werRes.Bytes
+                $cnt = $werRes.Count
+                Write-Log "Limpo: $path ($cnt arquivos, $szStr)." "SUCCESS"
             }
         }
     }
@@ -2587,7 +2859,6 @@ function Action-RunDismCleanup {
     if ($chkDismEventLogs.IsChecked) {
         Write-Log "Limpando Logs de Eventos do Windows..." "INFO"
         try {
-            # Redireciona o stream de erros (2>$null) para silenciar logs protegidos/bloqueados do kernel
             wevtutil el | ForEach-Object { wevtutil cl "$_" 2>$null }
             Write-Log "Logs de Eventos do Windows limpos com sucesso." "SUCCESS"
         } catch {
@@ -2604,6 +2875,11 @@ function Action-RunDismCleanup {
             Start-Sleep -Milliseconds 500
             $dbPath = "C:\Windows\SoftwareDistribution\DataStore\DataStore.edb"
             if (Test-Path $dbPath) {
+                $dbItem = Get-Item $dbPath -ErrorAction SilentlyContinue
+                if ($null -ne $dbItem) {
+                    $dismFreedBytes += $dbItem.Length
+                    $dismFilesCount++
+                }
                 Remove-Item -Path $dbPath -Force -ErrorAction Stop
                 Write-Log "Banco de dados do histórico do Windows Update limpo." "SUCCESS"
             }
@@ -2649,11 +2925,12 @@ function Action-RunDismCleanup {
         Write-Log "Limpando Cache de Downloads do Windows Update..." "INFO"
         try {
             Stop-Service -Name "wuauserv" -Force -ErrorAction SilentlyContinue
-            $downloadPath = "C:\Windows\SoftwareDistribution\Download"
-            if (Test-Path $downloadPath) {
-                Remove-Item -Path "$downloadPath\*" -Recurse -Force -ErrorAction Stop
-                Write-Log "Cache de download do Windows Update limpo." "SUCCESS"
-            }
+            $wuRes = Remove-TrackedFiles -Path "C:\Windows\SoftwareDistribution\Download" -Recurse
+            $dismFreedBytes += $wuRes.Bytes
+            $dismFilesCount += $wuRes.Count
+            $szStr = Format-DiskSize $wuRes.Bytes
+            $cnt = $wuRes.Count
+            Write-Log "Cache de download do Windows Update limpo ($cnt arquivos, $szStr)." "SUCCESS"
             Start-Service -Name "wuauserv" -ErrorAction SilentlyContinue
         } catch {
             Write-Log "Erro ao limpar cache de download: $_" "ERROR"
@@ -2665,12 +2942,12 @@ function Action-RunDismCleanup {
         Write-Log "Limpando Cache do Delivery Optimization..." "INFO"
         $doPath = "C:\Windows\ServiceProfiles\NetworkService\AppData\Local\Microsoft\Windows\DeliveryOptimization\Cache"
         if (Test-Path $doPath) {
-            try {
-                Remove-Item -Path "$doPath\*" -Recurse -Force -ErrorAction Stop
-                Write-Log "Delivery Optimization Cache limpo." "SUCCESS"
-            } catch {
-                Write-Log "Limpeza parcial do Delivery Optimization (alguns itens em uso): $_" "WARNING"
-            }
+            $doRes = Remove-TrackedFiles -Path $doPath -Recurse
+            $dismFreedBytes += $doRes.Bytes
+            $dismFilesCount += $doRes.Count
+            $szStr = Format-DiskSize $doRes.Bytes
+            $cnt = $doRes.Count
+            Write-Log "Delivery Optimization Cache limpo ($cnt arquivos, $szStr)." "SUCCESS"
         }
     }
 
@@ -2678,12 +2955,12 @@ function Action-RunDismCleanup {
         Write-Log "Limpando Caches de Clientes RDP (Terminal Server Client)..." "INFO"
         $rdpPath = "$env:USERPROFILE\AppData\Local\Microsoft\Terminal Server Client\Cache"
         if (Test-Path $rdpPath) {
-            try {
-                Remove-Item -Path "$rdpPath\*" -Recurse -Force -ErrorAction Stop
-                Write-Log "Cache de RDP Terminal Server limpo." "SUCCESS"
-            } catch {
-                Write-Log "Limpeza parcial do cache RDP (alguns itens em uso): $_" "WARNING"
-            }
+            $rdpRes = Remove-TrackedFiles -Path $rdpPath -Recurse
+            $dismFreedBytes += $rdpRes.Bytes
+            $dismFilesCount += $rdpRes.Count
+            $szStr = Format-DiskSize $rdpRes.Bytes
+            $cnt = $rdpRes.Count
+            Write-Log "Cache de RDP Terminal Server limpo ($cnt arquivos, $szStr)." "SUCCESS"
         }
     }
 
@@ -2702,24 +2979,24 @@ function Action-RunDismCleanup {
 
     if ($chkDismPrefetch.IsChecked) {
         Write-Log "Limpando pasta Prefetch do Windows..." "INFO"
-        try {
-            Remove-Item -Path "C:\Windows\Prefetch\*" -Force -ErrorAction Stop
-            Write-Log "Prefetch do Windows limpo." "SUCCESS"
-        } catch {
-            Write-Log "Limpeza parcial do Prefetch (alguns itens em uso): $_" "WARNING"
-        }
+        $prefRes = Remove-TrackedFiles -Path "C:\Windows\Prefetch" -Recurse
+        $dismFreedBytes += $prefRes.Bytes
+        $dismFilesCount += $prefRes.Count
+        $szStr = Format-DiskSize $prefRes.Bytes
+        $cnt = $prefRes.Count
+        Write-Log "Prefetch do Windows limpo ($cnt arquivos, $szStr)." "SUCCESS"
     }
 
     if ($chkDismThumbnails.IsChecked) {
         Write-Log "Removendo cache de miniaturas (Thumbnail Cache)..." "INFO"
         $thumbPath = "$env:LOCALAPPDATA\Microsoft\Windows\Explorer"
         if (Test-Path $thumbPath) {
-            try {
-                Remove-Item -Path "$thumbPath\thumbcache_*.db" -Force -ErrorAction Stop
-                Write-Log "Cache de miniaturas removido." "SUCCESS"
-            } catch {
-                Write-Log "Limpeza parcial do cache de miniaturas (alguns arquivos serão removidos no próximo reinício): $_" "WARNING"
-            }
+            $thRes = Remove-TrackedFiles -Path $thumbPath -Filter "thumbcache_*.db"
+            $dismFreedBytes += $thRes.Bytes
+            $dismFilesCount += $thRes.Count
+            $szStr = Format-DiskSize $thRes.Bytes
+            $cnt = $thRes.Count
+            Write-Log "Cache de miniaturas removido ($cnt arquivos, $szStr)." "SUCCESS"
         }
     }
 
@@ -2748,12 +3025,12 @@ function Action-RunDismCleanup {
         Write-Log "Limpando cache de pacotes de instalação (Package Cache)..." "INFO"
         $pkgPath = "C:\ProgramData\Package Cache"
         if (Test-Path $pkgPath) {
-            try {
-                Remove-Item -Path "$pkgPath\*" -Recurse -Force -ErrorAction Stop
-                Write-Log "Package Cache de pacotes de instalação limpo." "SUCCESS"
-            } catch {
-                Write-Log "Limpeza parcial do Package Cache (alguns itens em uso): $_" "WARNING"
-            }
+            $pkgRes = Remove-TrackedFiles -Path $pkgPath -Recurse
+            $dismFreedBytes += $pkgRes.Bytes
+            $dismFilesCount += $pkgRes.Count
+            $szStr = Format-DiskSize $pkgRes.Bytes
+            $cnt = $pkgRes.Count
+            Write-Log "Package Cache limpo ($cnt arquivos, $szStr)." "SUCCESS"
         }
     }
 
@@ -2761,12 +3038,12 @@ function Action-RunDismCleanup {
         Write-Log "Limpando histórico de detecções do Windows Defender..." "INFO"
         $defPath = "C:\ProgramData\Microsoft\Windows Defender\Scans\History\Service\DetectionHistory"
         if (Test-Path $defPath) {
-            try {
-                Remove-Item -Path "$defPath\*" -Recurse -Force -ErrorAction Stop
-                Write-Log "Histórico de varreduras do Windows Defender limpo." "SUCCESS"
-            } catch {
-                Write-Log "Limpeza parcial do histórico do Defender (alguns itens protegidos): $_" "WARNING"
-            }
+            $defRes = Remove-TrackedFiles -Path $defPath -Recurse
+            $dismFreedBytes += $defRes.Bytes
+            $dismFilesCount += $defRes.Count
+            $szStr = Format-DiskSize $defRes.Bytes
+            $cnt = $defRes.Count
+            Write-Log "Histórico de varreduras do Windows Defender limpo ($cnt arquivos, $szStr)." "SUCCESS"
         }
     }
 
@@ -2783,13 +3060,14 @@ function Action-RunDismCleanup {
 
     if ($chkDismLogs.IsChecked) {
         Write-Log "Removendo logs redundantes do Windows..." "INFO"
-        try {
-            Remove-Item -Path "C:\Windows\*.log" -Force -ErrorAction Stop
-            Remove-Item -Path "C:\Windows\System32\wbem\Repository\*.log" -Force -ErrorAction Stop
-            Write-Log "Arquivos de log do Windows removidos." "SUCCESS"
-        } catch {
-            Write-Log "Limpeza parcial de logs do Windows (alguns em uso): $_" "WARNING"
-        }
+        $log1 = Remove-TrackedFiles -Path "C:\Windows" -Filter "*.log"
+        $log2 = Remove-TrackedFiles -Path "C:\Windows\System32\wbem\Repository" -Filter "*.log"
+        $dismFreedBytes += ($log1.Bytes + $log2.Bytes)
+        $dismFilesCount += ($log1.Count + $log2.Count)
+        $totLogBytes = $log1.Bytes + $log2.Bytes
+        $totLogCnt = $log1.Count + $log2.Count
+        $szStr = Format-DiskSize $totLogBytes
+        Write-Log "Arquivos de log do Windows removidos ($totLogCnt arquivos, $szStr)." "SUCCESS"
     }
 
     if ($chkDismTemp.IsChecked) {
@@ -2797,11 +3075,9 @@ function Action-RunDismCleanup {
         $tempPaths = @($env:TEMP, "C:\Windows\Temp")
         foreach ($path in $tempPaths) {
             if (Test-Path $path) {
-                try {
-                    Remove-Item -Path "$path\*" -Recurse -Force -ErrorAction Stop
-                } catch {
-                    Write-Log "Alguns itens temporários em $path estão em uso e foram preservados." "WARNING"
-                }
+                $tmpRes = Remove-TrackedFiles -Path $path -Recurse
+                $dismFreedBytes += $tmpRes.Bytes
+                $dismFilesCount += $tmpRes.Count
             }
         }
         Write-Log "Pastas Temp limpas." "SUCCESS"
@@ -2809,30 +3085,60 @@ function Action-RunDismCleanup {
 
     if ($chkDismRecycleBin.IsChecked) {
         Write-Log "Esvaziando Estação de Reciclagem (Lixeira)..." "INFO"
+        Out-DoEvents
         try {
-            Clear-RecycleBin -Confirm:$false -ErrorAction Stop
+            if (Get-Command Clear-RecycleBin -ErrorAction SilentlyContinue) {
+                Clear-RecycleBin -Force -Confirm:$false -ErrorAction SilentlyContinue
+            } else {
+                $shell = New-Object -ComObject Shell.Application
+                $bin = $shell.Namespace(0xA)
+                if ($null -ne $bin) {
+                    $bin.Items() | ForEach-Object { Remove-Item $_.Path -Recurse -Force -ErrorAction SilentlyContinue }
+                }
+            }
             Write-Log "Lixeira esvaziada com sucesso." "SUCCESS"
         } catch {
-            Write-Log "Lixeira já estava vazia ou erro ao esvaziar: $_" "WARNING"
+            Write-Log "Lixeira já estava vazia ou limpa." "INFO"
         }
+        Out-DoEvents
     }
 
     if ($chkDismDmp.IsChecked) {
         Write-Log "Removendo relatórios de crash (Arquivos dump .dmp)..." "INFO"
-        try {
-            Remove-Item -Path "C:\Windows\Minidump\*" -Force -ErrorAction Stop
-            if (Test-Path "C:\Windows\MEMORY.DMP") {
+        $dmpRes = Remove-TrackedFiles -Path "C:\Windows\Minidump" -Recurse
+        $dismFreedBytes += $dmpRes.Bytes
+        $dismFilesCount += $dmpRes.Count
+        if (Test-Path "C:\Windows\MEMORY.DMP") {
+            try {
+                $memItem = Get-Item "C:\Windows\MEMORY.DMP" -ErrorAction SilentlyContinue
+                if ($null -ne $memItem) {
+                    $dismFreedBytes += $memItem.Length
+                    $dismFilesCount++
+                }
                 Remove-Item -Path "C:\Windows\MEMORY.DMP" -Force -ErrorAction Stop
-            }
-            Write-Log "Arquivos de despejo de memória (Dumps) apagados." "SUCCESS"
-        } catch {
-            Write-Log "Limpeza parcial de dumps (alguns arquivos em uso ou protegidos): $_" "WARNING"
+            } catch {}
         }
+        $szStr = Format-DiskSize $dismFreedBytes
+        Write-Log "Arquivos de despejo de memória (Dumps) apagados ($dismFilesCount arquivos, $szStr)." "SUCCESS"
     }
 
-    Write-Log "=== LIMPEZA NATIVA CONCLUÍDA ===" "SUCCESS"
-    Set-Status "Pronto"
-    [System.Windows.MessageBox]::Show("Limpeza profunda de caches e componentes concluída!", "Dism++ Integrado", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Information)
+    # Mede o espaço livre no disco C após a limpeza
+    $driveCAfter = (Get-PSDrive C -ErrorAction SilentlyContinue).Free
+    $driveDelta = if ($null -ne $driveCAfter -and $driveCAfter -gt $driveCBefore) { [double]($driveCAfter - $driveCBefore) } else { [double]0 }
+    
+    $finalDismFreedBytes = [Math]::Max($dismFreedBytes, $driveDelta)
+    $finalDismFreedFormatted = Format-DiskSize $finalDismFreedBytes
+
+    Write-Log "════════════════════════════════════════════════════════" "SUCCESS"
+    Write-Log "🎉 Limpeza Nativa Concluída com Sucesso!" "SUCCESS"
+    Write-Log "• Total de Arquivos Excluídos: $dismFilesCount" "SUCCESS"
+    Write-Log "• Espaço Total Liberado no Disco: $finalDismFreedFormatted" "SUCCESS"
+    Write-Log "════════════════════════════════════════════════════════" "SUCCESS"
+    
+    Set-Status "Pronto - $finalDismFreedFormatted liberados ($dismFilesCount arquivos)"
+    Out-DoEvents
+    
+    Show-CleanupResultModal -title "Limpeza Nativa Concluída!" -subtitle "Componentes obsoletos, caches do sistema e arquivos temporários foram limpos com sucesso." -freedSpace $finalDismFreedFormatted -deletedCount "$dismFilesCount"
 }
 
 function Action-DismBackup {
@@ -3026,129 +3332,154 @@ function Action-RunLimpeza {
     Set-Status "Executando limpeza de disco..."
     Switch-Tab "Logs"
     Write-Log "Iniciando Limpeza Completa de Disco..."
+    Out-DoEvents
     
+    $driveC = Get-PSDrive C -ErrorAction SilentlyContinue
+    $driveCBefore = if ($null -ne $driveC) { [double]$driveC.Free } else { [double]0 }
+    
+    $totalFreedBytes = [double]0
+    $totalFilesDeleted = [long]0
     $hasErrors = $false
 
-    # Temporários de Usuário
+    # 1. Temporários de Usuário
     if ($chkCleanUserTemp.IsChecked) {
         Write-Log "Limpando arquivos temporários do Usuário..."
-        $userTemp = $env:TEMP
-        if (Test-Path $userTemp) {
-            $files = Get-ChildItem -Path $userTemp -Recurse -ErrorAction SilentlyContinue
-            foreach ($file in $files) {
-                try {
-                    Remove-Item $file.FullName -Force -Recurse -ErrorAction Stop
-                } catch {
-                    $hasErrors = $true
-                }
-            }
-        }
-        Write-Log "Temporários do Usuário limpos."
+        $userRes = Remove-TrackedFiles -Path $env:TEMP -Recurse
+        $totalFreedBytes += $userRes.Bytes
+        $totalFilesDeleted += $userRes.Count
+        $szStr = Format-DiskSize $userRes.Bytes
+        $cnt = $userRes.Count
+        Write-Log "Temporários do Usuário limpos ($cnt arquivos, $szStr liberados)." "INFO"
+        Out-DoEvents
     }
 
-    # Temporários do Sistema
+    # 2. Temporários do Sistema
     if ($chkCleanSysTemp.IsChecked) {
         Write-Log "Limpando arquivos temporários do Sistema..."
-        $sysTemp = "$env:SystemRoot\Temp"
-        if (Test-Path $sysTemp) {
-            $files = Get-ChildItem -Path $sysTemp -Recurse -ErrorAction SilentlyContinue
-            foreach ($file in $files) {
-                try {
-                    Remove-Item $file.FullName -Force -Recurse -ErrorAction Stop
-                } catch {
-                    $hasErrors = $true
-                }
-            }
-        }
-        Write-Log "Temporários do Sistema limpos."
+        $sysRes = Remove-TrackedFiles -Path "$env:SystemRoot\Temp" -Recurse
+        $totalFreedBytes += $sysRes.Bytes
+        $totalFilesDeleted += $sysRes.Count
+        $szStr = Format-DiskSize $sysRes.Bytes
+        $cnt = $sysRes.Count
+        Write-Log "Temporários do Sistema limpos ($cnt arquivos, $szStr liberados)." "INFO"
+        Out-DoEvents
     }
 
-    # Prefetch
+    # 3. Prefetch
     if ($chkCleanPrefetch.IsChecked) {
         Write-Log "Limpando pasta Prefetch..."
-        $prefetch = "$env:SystemRoot\Prefetch"
-        if (Test-Path $prefetch) {
-            $files = Get-ChildItem -Path $prefetch -Recurse -ErrorAction SilentlyContinue
-            foreach ($file in $files) {
-                try {
-                    Remove-Item $file.FullName -Force -Recurse -ErrorAction Stop
-                } catch {
-                    $hasErrors = $true
-                }
-            }
-        }
-        Write-Log "Pasta Prefetch limpa."
+        $prefRes = Remove-TrackedFiles -Path "$env:SystemRoot\Prefetch" -Recurse
+        $totalFreedBytes += $prefRes.Bytes
+        $totalFilesDeleted += $prefRes.Count
+        $szStr = Format-DiskSize $prefRes.Bytes
+        $cnt = $prefRes.Count
+        Write-Log "Pasta Prefetch limpa ($cnt arquivos, $szStr liberados)." "INFO"
+        Out-DoEvents
     }
 
-    # Logs do Windows e Visualizador de Eventos
+    # 4. Logs do Windows e Visualizador de Eventos (Seguro, Rápido e Não Bloqueante)
     if ($chkCleanLogs.IsChecked) {
         Write-Log "Limpando arquivos de Log do Windows (.log)..."
-        # Coleta arquivos de log em locais seguros e específicos
-        $logFiles = @()
-        $logFiles += Get-ChildItem -Path "$env:SystemRoot\*.log" -ErrorAction SilentlyContinue | Where-Object { -not $_.PSIsContainer }
-        $logFiles += Get-ChildItem -Path "$env:SystemRoot\Logs\*" -Recurse -ErrorAction SilentlyContinue | Where-Object { -not $_.PSIsContainer }
-        $logFiles += Get-ChildItem -Path "$env:SystemRoot\system32\LogFiles\*" -Recurse -ErrorAction SilentlyContinue | Where-Object { -not $_.PSIsContainer }
+        $logBytes = [double]0
+        $logCount = [long]0
         
-        foreach ($log in $logFiles) {
-            try {
-                Remove-Item $log.FullName -Force -Confirm:$false -ErrorAction Stop
-            } catch {
-                $hasErrors = $true
+        # Limpa logs na raiz de C:\Windows (sem varredura recursiva que bloqueia o kernel)
+        $rootLogs = Remove-TrackedFiles -Path $env:SystemRoot -Filter "*.log"
+        $logBytes += $rootLogs.Bytes
+        $logCount += $rootLogs.Count
+        Out-DoEvents
+
+        # Locais seguros para limpeza direta de logs
+        $safeLogDirs = @(
+            "$env:SystemRoot\Logs\CBS",
+            "$env:SystemRoot\Panther",
+            "$env:SystemRoot\Debug"
+        )
+        foreach ($dir in $safeLogDirs) {
+            if (Test-Path $dir) {
+                $dirRes = Remove-TrackedFiles -Path $dir -Filter "*.log"
+                $logBytes += $dirRes.Bytes
+                $logCount += $dirRes.Count
+                Out-DoEvents
             }
         }
 
+        $totalFreedBytes += $logBytes
+        $totalFilesDeleted += $logCount
+        $szStr = Format-DiskSize $logBytes
+        Write-Log "Arquivos de Log limpos ($logCount arquivos, $szStr liberados)." "INFO"
+
         Write-Log "Limpando logs do Visualizador de Eventos..."
-        # Limpeza de logs de Eventos do Windows
+        Out-DoEvents
         try {
-            wevtutil.exe el | ForEach-Object { wevtutil.exe cl "$_" 2>$null }
-            Write-Log "Todos os registros do Visualizador de Eventos limpos."
+            wevtutil.exe el 2>$null | ForEach-Object { 
+                wevtutil.exe cl "$_" 2>$null 
+            }
+            Write-Log "Registros do Visualizador de Eventos limpos." "INFO"
         } catch {
-            Write-Log "Erro ao limpar alguns logs do Visualizador de Eventos." "WARNING"
+            Write-Log "Limpeza do Visualizador de Eventos finalizada." "INFO"
         }
+        Out-DoEvents
     }
 
-    # Cache do Windows Update (SoftwareDistribution\Download)
+    # 5. Cache do Windows Update (SoftwareDistribution\Download)
     if ($chkCleanUpdateCache.IsChecked) {
         Write-Log "Parando serviço do Windows Update temporariamente..."
         Stop-Service -Name "wuauserv" -Force -ErrorAction SilentlyContinue
         Out-DoEvents
         
         Write-Log "Limpando pasta de downloads do Windows Update..."
-        $updateDownload = "$env:SystemRoot\SoftwareDistribution\Download"
-        if (Test-Path $updateDownload) {
-            $files = Get-ChildItem -Path $updateDownload -Recurse -ErrorAction SilentlyContinue
-            foreach ($file in $files) {
-                try {
-                    Remove-Item $file.FullName -Force -Recurse -ErrorAction Stop
-                } catch {
-                    $hasErrors = $true
-                }
-            }
-        }
+        $wuRes = Remove-TrackedFiles -Path "$env:SystemRoot\SoftwareDistribution\Download" -Recurse
+        $totalFreedBytes += $wuRes.Bytes
+        $totalFilesDeleted += $wuRes.Count
         
         Write-Log "Reiniciando serviço do Windows Update..."
         Start-Service -Name "wuauserv" -ErrorAction SilentlyContinue
-        Write-Log "Cache do Windows Update limpo."
+        $szStr = Format-DiskSize $wuRes.Bytes
+        $cnt = $wuRes.Count
+        Write-Log "Cache do Windows Update limpo ($cnt arquivos, $szStr liberados)." "INFO"
+        Out-DoEvents
     }
 
-    # Esvaziar Lixeira
+    # 6. Esvaziar Lixeira (Totalmente compatível com Windows 7, 8, 10 e 11)
     if ($chkCleanRecycleBin.IsChecked) {
         Write-Log "Esvaziando lixeira do Windows..."
+        Out-DoEvents
         try {
-            Clear-RecycleBin -Force -ErrorAction SilentlyContinue
-            Write-Log "Lixeira esvaziada."
+            if (Get-Command Clear-RecycleBin -ErrorAction SilentlyContinue) {
+                Clear-RecycleBin -Force -Confirm:$false -ErrorAction SilentlyContinue
+            } else {
+                $shell = New-Object -ComObject Shell.Application
+                $bin = $shell.Namespace(0xA)
+                if ($null -ne $bin) {
+                    $bin.Items() | ForEach-Object { Remove-Item $_.Path -Recurse -Force -ErrorAction SilentlyContinue }
+                }
+            }
+            Write-Log "Lixeira esvaziada com sucesso." "INFO"
         } catch {
-            Write-Log "Erro ou lixeira já estava vazia." "WARNING"
+            Write-Log "Lixeira já estava vazia ou limpa." "INFO"
         }
+        Out-DoEvents
     }
 
-    if ($hasErrors) {
-        Write-Log "Alguns arquivos ou logs estão em uso ativo pelo sistema e foram mantidos para evitar travamentos." "INFO"
-    }
+    # Mede o espaço livre no disco C após a limpeza
+    $driveCAfter = (Get-PSDrive C -ErrorAction SilentlyContinue).Free
+    $driveDelta = if ($null -ne $driveCAfter -and $driveCAfter -gt $driveCBefore) { [double]($driveCAfter - $driveCBefore) } else { [double]0 }
+    
+    # Se o delta real do disco for maior (por exemplo pela lixeira ou logs do sistema), usamos a medição real
+    $finalFreedBytes = [Math]::Max($totalFreedBytes, $driveDelta)
+    $finalFreedFormatted = Format-DiskSize $finalFreedBytes
 
-    Write-Log "Limpeza de disco concluída com sucesso!" "SUCCESS"
-    Set-Status "Pronto"
-    [System.Windows.MessageBox]::Show("Limpeza de disco concluída!", "Sucesso", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Information)
+    Write-Log "════════════════════════════════════════════════════════" "SUCCESS"
+    Write-Log "🎉 Limpeza de Disco Concluída com Sucesso!" "SUCCESS"
+    Write-Log "• Total de Arquivos Excluídos: $totalFilesDeleted" "SUCCESS"
+    Write-Log "• Espaço Total Liberado no Disco: $finalFreedFormatted" "SUCCESS"
+    Write-Log "════════════════════════════════════════════════════════" "SUCCESS"
+    
+    Set-Status "Pronto - $finalFreedFormatted liberados ($totalFilesDeleted arquivos)"
+    Out-DoEvents
+    
+    Show-CleanupResultModal -title "Limpeza de Disco Concluída!" -subtitle "Seu computador foi otimizado e os arquivos temporários foram removidos com sucesso." -freedSpace $finalFreedFormatted -deletedCount "$totalFilesDeleted"
 }
 
 # Execução da Instalação de Programas via Winget
@@ -3721,38 +4052,126 @@ $btnTabUninstall.Add_Click({ Switch-Tab "Uninstall"; Action-LoadInstalledApps })
 $btnLinkInstagram.Add_Click({ Start-Process "https://www.instagram.com/felipe.samack/" })
 $btnLinkGithub.Add_Click({ Start-Process "https://github.com/rgis-samack/win-samack" })
 $btnDonate.Add_Click({
-    Start-Process "https://nubank.com.br/cobrar/jdnam/6a449332-0732-43dc-9cfe-946bd2eee5fa"
+    Show-DonationWindow -messageText "Muito obrigado por apoiar o desenvolvimento do Samack WinUtil! Sua contribuição voluntária via Pix garante a manutenção e criação de novas ferramentas gratuitas." -title "Apoie o Projeto! 💖"
 })
 
-# Eventos da Tela de Office
-$btnOffice2021Tiny.Add_Click({ Start-Process "https://tinyurl.com/samackoffice2021" })
-$btnOffice2021Bitly.Add_Click({ Start-Process "https://bit.ly/samackoffice" })
-$btnOffice2019Abre.Add_Click({ Start-Process "https://abre.ai/samackofficergis" })
-$btnOffice2019Tiny.Add_Click({ Start-Process "https://tinyurl.com/samackofficergis" })
+# Função para exibir a Janela Modal de Doação com QR Code do Pix
+function Show-DonationWindow {
+    param(
+        [string]$messageText,
+        [string]$title = "Apoie o Samack WinUtil 💖"
+    )
 
-# Eventos da Tela de Dism++
-$btnRunDismClean.Add_Click({ Action-RunDismCleanup })
-$btnDismBackup.Add_Click({ Action-DismBackup })
-$btnDismRestore.Add_Click({ Action-DismRestore })
-$btnDismAccounts.Add_Click({ Action-DismAccounts })
-$btnDismRepairBoot.Add_Click({ Action-DismRepairBoot })
-$btnDismGodMode.Add_Click({ Action-DismGodMode })
-$btnDismHosts.Add_Click({ Action-DismHosts })
+    $donateXaml = @"
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="$title" Height="500" Width="430"
+        WindowStartupLocation="CenterScreen" WindowStyle="None"
+        AllowsTransparency="True" Background="Transparent" Topmost="True">
+    <Border Background="#0F172A" BorderBrush="#8B5CF6" BorderThickness="2" CornerRadius="12" Padding="18">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-# Vincula clique do QR Code se ele foi carregado
-if ($null -ne $imgQrCode) {
-    $imgQrCode.add_MouseDown({
-        Start-Process "https://nubank.com.br/cobrar/jdnam/6a449332-0732-43dc-9cfe-946bd2eee5fa"
-    })
+            <!-- Cabeçalho da Janela -->
+            <Grid Grid.Row="0" x:Name="GridHeaderDonate" Margin="0,0,0,12" Background="Transparent">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <TextBlock Text="💖" FontSize="18" Margin="0,0,8,0"/>
+                    <TextBlock Text="Apoie o Samack WinUtil" FontSize="15" FontWeight="Bold" Foreground="#F8FAFC" VerticalAlignment="Center"/>
+                </StackPanel>
+                <Button x:Name="BtnCloseDonate" Content="✕" Foreground="#94A3B8" Background="#1E293B" BorderThickness="0" FontSize="14" FontWeight="Bold" Width="28" Height="28" HorizontalAlignment="Right" VerticalAlignment="Center" Cursor="Hand">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="14"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </Grid>
+
+            <!-- QR Code do Pix em Destaque -->
+            <Border Grid.Row="1" Background="#1E293B" BorderBrush="#3B82F6" BorderThickness="1.5" CornerRadius="10" Padding="12" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,12">
+                <Image x:Name="ImgDonateQrCode" Width="190" Height="190" Stretch="Uniform"/>
+            </Border>
+
+            <!-- Mensagem Persuasiva / Agradecimento -->
+            <Border Grid.Row="2" Background="#1E1B4B" BorderBrush="#6366F1" BorderThickness="1" CornerRadius="8" Padding="10,8" Margin="0,0,0,12">
+                <TextBlock x:Name="TxtDonateMessage" Text="$messageText" FontSize="11.5" Foreground="#E0E7FF" TextWrapping="Wrap" TextAlignment="Center" LineHeight="16"/>
+            </Border>
+
+            <!-- Instrução Pix -->
+            <StackPanel Grid.Row="3" Margin="0,0,0,14">
+                <TextBlock Text="📱 Escaneie o QR Code acima com o app do seu banco" FontSize="11" Foreground="#A5B4FC" FontWeight="SemiBold" TextAlignment="Center"/>
+                <TextBlock Text="PIX: Apoie a ferramenta voluntária sem anúncios" FontSize="10" Foreground="#64748B" TextAlignment="Center" Margin="0,2,0,0"/>
+            </StackPanel>
+
+            <!-- Botão Concluir -->
+            <Button Grid.Row="4" x:Name="BtnOkDonate" Content="Concluir e Sair" Background="#8B5CF6" Foreground="#FFFFFF" FontSize="13" FontWeight="Bold" Height="36" BorderThickness="0" Cursor="Hand">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="8"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </Grid>
+    </Border>
+</Window>
+"@
+
+    try {
+        $reader = [System.Xml.XmlReader]::Create([System.IO.StringReader]::new($donateXaml))
+        $donateWin = [Windows.Markup.XamlReader]::Load($reader)
+
+        $btnClose = $donateWin.FindName("BtnCloseDonate")
+        $btnOk = $donateWin.FindName("BtnOkDonate")
+        $imgQr = $donateWin.FindName("ImgDonateQrCode")
+        $gridHeader = $donateWin.FindName("GridHeaderDonate")
+
+        if ($gridHeader) {
+            $gridHeader.add_MouseDown({
+                param($s, $e)
+                if ($e.ChangedButton -eq [System.Windows.Input.MouseButton]::Left) {
+                    $donateWin.DragMove()
+                }
+            })
+        }
+
+        # Carrega o QR Code do Pix na imagem do modal
+        if ($base64QrCode) {
+            try {
+                $imageBytes = [System.Convert]::FromBase64String($base64QrCode)
+                $tempFile = Join-Path $env:TEMP "qrcode_samack.jpeg"
+                [System.IO.File]::WriteAllBytes($tempFile, $imageBytes)
+
+                $bitmap = New-Object System.Windows.Media.Imaging.BitmapImage
+                $bitmap.BeginInit()
+                $bitmap.UriSource = New-Object System.Uri($tempFile)
+                $bitmap.CacheOption = [System.Windows.Media.Imaging.BitmapCacheOption]::OnLoad
+                $bitmap.EndInit()
+                $imgQr.Source = $bitmap
+            } catch {}
+        }
+
+        if ($btnClose) { $btnClose.Add_Click({ $donateWin.Close() }) }
+        if ($btnOk) { $btnOk.Add_Click({ $donateWin.Close() }) }
+
+        $donateWin.ShowDialog() | Out-Null
+    } catch {
+        [System.Windows.MessageBox]::Show($messageText, "Apoie o Samack WinUtil", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Information)
+    }
 }
 
-# Interceptação de Fechamento da Janela (25 Frases Baseadas em Ações Reais)
 $Window.add_Closing({
     param($sender, $e)
     
     # Para os timers para evitar erros de referência nula durante o fechamento
     $hardwareTimer.Stop()
     $processTimer.Stop()
+    if ($null -ne $netTimer) { $netTimer.Stop() }
     
     # Detecção dinâmica do SO do usuário para piadas personalizadas
     $osName = "Windows"
@@ -3827,8 +4246,8 @@ $Window.add_Closing({
     }
     $randomFrase = $frasesDisponiveis[(Get-Random -Minimum 0 -Maximum $frasesDisponiveis.Count)]
     
-    # Exibe a caixa de mensagem antes de fechar o processo
-    [System.Windows.MessageBox]::Show($randomFrase, "Apoie o Samack WinUtil", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Information)
+    # Exibe a janela customizada com QR Code do Pix antes de fechar
+    Show-DonationWindow -messageText $randomFrase -title "Apoie o Samack WinUtil 💖"
 })
 
 # ── Ativação (MAS) ──────────────────────────────────────────────────────────
@@ -4260,6 +4679,112 @@ $hardwareTimer.Add_Tick({
     }
 })
 
+# 9.1 Timer Dedicado de 1 segundo (1000ms) para o Gráfico de Rede Estilo Gerenciador de Tarefas
+$global:netHistDl = New-Object System.Collections.Generic.List[double]
+$global:netHistUl = New-Object System.Collections.Generic.List[double]
+$global:maxNetPeakBps = 100 * 1KB
+
+$netTimer = New-Object System.Windows.Threading.DispatcherTimer
+$netTimer.Interval = [TimeSpan]::FromMilliseconds(1000)
+$netTimer.Add_Tick({
+    try {
+        $now = [DateTime]::Now
+        $interfaces = [System.Net.NetworkInformation.NetworkInterface]::GetAllNetworkInterfaces() | Where-Object { 
+            $_.OperationalStatus -eq 'Up' -and $_.NetworkInterfaceType -ne 'Loopback' -and $_.NetworkInterfaceType -ne 'Tunnel' 
+        }
+        
+        $totalRecv = 0
+        $totalSent = 0
+        foreach ($if in $interfaces) {
+            try {
+                $stats = $if.GetIPv4Statistics()
+                $totalRecv += $stats.BytesReceived
+                $totalSent += $stats.BytesSent
+            } catch {}
+        }
+        
+        if ($null -ne $global:lastNetTime) {
+            $timeDiff = ($now - $global:lastNetTime).TotalSeconds
+            if ($timeDiff -gt 0) {
+                $recvDiff = $totalRecv - $global:lastNetBytesRecv
+                $sentDiff = $totalSent - $global:lastNetBytesSent
+                
+                $dlBps = [Math]::Max(0.0, [double]($recvDiff / $timeDiff))
+                $ulBps = [Math]::Max(0.0, [double]($sentDiff / $timeDiff))
+                
+                $dlText = if ($dlBps -ge 1048576) { "{0:N2} MB/s" -f ($dlBps / 1MB) } else { "{0:N1} KB/s" -f ($dlBps / 1KB) }
+                $ulText = if ($ulBps -ge 1048576) { "{0:N2} MB/s" -f ($ulBps / 1MB) } else { "{0:N1} KB/s" -f ($ulBps / 1KB) }
+                
+                if ($null -ne $lblNetDownload) { $lblNetDownload.Text = $dlText }
+                if ($null -ne $lblNetUpload) { $lblNetUpload.Text = $ulText }
+                
+                $global:netHistDl.Add($dlBps)
+                $global:netHistUl.Add($ulBps)
+                if ($global:netHistDl.Count -gt 25) { $global:netHistDl.RemoveAt(0) }
+                if ($global:netHistUl.Count -gt 25) { $global:netHistUl.RemoveAt(0) }
+                
+                if ($dlBps -gt $global:maxNetPeakBps) { $global:maxNetPeakBps = $dlBps }
+                if ($ulBps -gt $global:maxNetPeakBps) { $global:maxNetPeakBps = $ulBps }
+                
+                $peakText = if ($global:maxNetPeakBps -ge 1048576) { "{0:N1} MB/s" -f ($global:maxNetPeakBps / 1MB) } else { "{0:N0} KB/s" -f ($global:maxNetPeakBps / 1KB) }
+                if ($null -ne $lblNetPeak) { $lblNetPeak.Text = "Pico: $peakText" }
+                
+                if ($null -ne $lblNetTotal) {
+                    $sessRecvMB = [Math]::Round(($totalRecv - $global:initNetBytesRecv) / 1MB, 1)
+                    $sessSentMB = [Math]::Round(($totalSent - $global:initNetBytesSent) / 1MB, 1)
+                    $lblNetTotal.Text = "Sessao: DL $sessRecvMB MB / UL $sessSentMB MB"
+                }
+                
+                # Desenha os pontos do gráfico Polyline
+                if ($null -ne $canvasNetGraph -and $null -ne $polylineNetDl -and $null -ne $polylineNetUl) {
+                    $w = $canvasNetGraph.ActualWidth
+                    $h = $canvasNetGraph.ActualHeight
+                    if ($w -le 0) { $w = 230 }
+                    if ($h -le 0) { $h = 75 }
+                    
+                    $maxVal = [Math]::Max($global:maxNetPeakBps, 50 * 1KB)
+                    
+                    # Desenha Polyline de Download (Verde)
+                    $ptsDl = New-Object System.Windows.Media.PointCollection
+                    $countDl = $global:netHistDl.Count
+                    if ($countDl -gt 0) {
+                        $stepX = if ($countDl -gt 1) { $w / ($countDl - 1) } else { $w }
+                        for ($i = 0; $i -lt $countDl; $i++) {
+                            $x = $i * $stepX
+                            $val = $global:netHistDl[$i]
+                            $y = $h - [Math]::Min($h, ($val / $maxVal) * $h)
+                            $ptsDl.Add((New-Object System.Windows.Point($x, $y)))
+                        }
+                    }
+                    $polylineNetDl.Points = $ptsDl
+                    
+                    # Desenha Polyline de Upload (Azul)
+                    $ptsUl = New-Object System.Windows.Media.PointCollection
+                    $countUl = $global:netHistUl.Count
+                    if ($countUl -gt 0) {
+                        $stepX = if ($countUl -gt 1) { $w / ($countUl - 1) } else { $w }
+                        for ($i = 0; $i -lt $countUl; $i++) {
+                            $x = $i * $stepX
+                            $val = $global:netHistUl[$i]
+                            $y = $h - [Math]::Min($h, ($val / $maxVal) * $h)
+                            $ptsUl.Add((New-Object System.Windows.Point($x, $y)))
+                        }
+                    }
+                    $polylineNetUl.Points = $ptsUl
+                }
+            }
+        } else {
+            $global:initNetBytesRecv = $totalRecv
+            $global:initNetBytesSent = $totalSent
+        }
+        
+        $global:lastNetTime = $now
+        $global:lastNetBytesRecv = $totalRecv
+        $global:lastNetBytesSent = $totalSent
+    } catch {}
+})
+$netTimer.Start()
+
 # Adaptações de UI dinâmicas conforme a versão do Windows
 if (-not $global:isWindows10Or11) {
     # Windows 7, 8 ou 8.1: Oculta abas de debloat UWP e instalação de apps WinGet
@@ -4307,7 +4832,8 @@ Write-Log "Sistema inicializado com sucesso. Pronto para execução."
 $Window.ShowDialog() | Out-Null
 $hardwareTimer.Stop()
 $processTimer.Stop()
+if ($null -ne $netTimer) { $netTimer.Stop() }
 
-# Fechar o PowerShell completamente ao sair
-Stop-Process -Id $PID -Force
+# Fechar o PowerShell e processos de forma limpa com código 0
+[System.Environment]::Exit(0)
 
