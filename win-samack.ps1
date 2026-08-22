@@ -494,12 +494,31 @@ $xaml = @"
                                         </StackPanel>
                                     </Border>
 
-                                    <!-- Otimização Instantânea de RAM -->
+                                    <!-- Otimização Instantânea e Contínua de RAM -->
                                     <Border Style="{StaticResource CardBorder}">
                                         <StackPanel>
-                                            <TextBlock Text="Limpeza Rápida de Memória" FontSize="14" FontWeight="Bold" Foreground="#3B82F6" Margin="0,0,0,8"/>
-                                            <TextBlock Text="Reduz o consumo de RAM liberando os conjuntos de trabalho de todos os processos em segundo plano ativos." FontSize="11" Foreground="#94A3B8" TextWrapping="Wrap" Margin="0,0,0,12"/>
-                                            <Button x:Name="BtnCleanRAM" Content="⚡ Limpar Memória RAM Agora" Style="{StaticResource AccentButton}"/>
+                                            <Grid Margin="0,0,0,8">
+                                                <TextBlock Text="Otimização e Limpeza de Memória" FontSize="14" FontWeight="Bold" Foreground="#3B82F6" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                                <Border x:Name="BadgeAutoRam" Background="#064E3B" BorderBrush="#10B981" BorderThickness="1" CornerRadius="5" Padding="7,3" HorizontalAlignment="Right" VerticalAlignment="Center" Visibility="Collapsed">
+                                                    <TextBlock x:Name="TxtAutoRamBadge" Text="● AUTO-LIMPEZA ATIVA" FontSize="9.5" FontWeight="Bold" Foreground="#34D399"/>
+                                                </Border>
+                                            </Grid>
+                                            <TextBlock Text="Reduz o consumo de RAM liberando os conjuntos de trabalho de todos os processos ativos. Ative a limpeza contínua para manter a memória sempre otimizada enquanto o utilitário estiver aberto." FontSize="11" Foreground="#94A3B8" TextWrapping="Wrap" Margin="0,0,0,12"/>
+                                            
+                                            <!-- Botões de Ação Divididos em Dois -->
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="8"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                
+                                                <!-- Botão 1: Limpeza Instantânea -->
+                                                <Button Grid.Column="0" x:Name="BtnCleanRAM" Content="⚡ Limpar RAM Agora" Style="{StaticResource AccentButton}" Height="34" FontSize="11.5" FontWeight="SemiBold" ToolTip="Executa uma limpeza profunda e imediata da memória RAM no momento."/>
+                                                
+                                                <!-- Botão 2: Limpeza Contínua (Segundo Plano) -->
+                                                <Button Grid.Column="2" x:Name="BtnAutoCleanRAM" Content="🔄 Limpeza Contínua: OFF" Style="{StaticResource ModernButton}" Background="#1E293B" Height="34" FontSize="11" FontWeight="SemiBold" ToolTip="Mantém a memória RAM otimizada automaticamente em segundo plano a cada poucos segundos enquanto o programa estiver aberto."/>
+                                            </Grid>
                                         </StackPanel>
                                     </Border>
 
@@ -1888,6 +1907,9 @@ $barCPU = $Window.FindName("BarCPU")
 $barRAM = $Window.FindName("BarRAM")
 $btnCreateRestore = $Window.FindName("BtnCreateRestore")
 $btnCleanRAM = $Window.FindName("BtnCleanRAM")
+$btnAutoCleanRAM = $Window.FindName("BtnAutoCleanRAM")
+$badgeAutoRam = $Window.FindName("BadgeAutoRam")
+$txtAutoRamBadge = $Window.FindName("TxtAutoRamBadge")
 $lvTopProcesses = $Window.FindName("LvTopProcesses")
 # Novos botões de atalhos rápidos do Painel
 $btnShortcutDev = $Window.FindName("BtnShortcutDev")
@@ -2321,6 +2343,61 @@ function Action-OptimizeRAM {
     }
     
     Set-Status "Pronto"
+}
+
+# Variáveis de Controle da Auto-Limpeza Contínua de RAM
+$global:autoRamCleaningEnabled = $false
+$global:autoRamTickCount = 0
+
+# Alternância de Auto-Limpeza Contínua em Segundo Plano
+function Action-ToggleAutoCleanRAM {
+    Register-Action "limpeza"
+    $global:autoRamCleaningEnabled = -not $global:autoRamCleaningEnabled
+    
+    if ($global:autoRamCleaningEnabled) {
+        if ($null -ne $btnAutoCleanRAM) {
+            $btnAutoCleanRAM.Content = "🟢 Limpeza Contínua: ATIVA"
+            $btnAutoCleanRAM.Background = [System.Windows.Media.Brush]"#065F46"
+            $btnAutoCleanRAM.ToolTip = "Auto-limpeza contínua ativada. Clique para desativar."
+        }
+        if ($null -ne $badgeAutoRam) {
+            $badgeAutoRam.Visibility = [System.Windows.Visibility]::Visible
+        }
+        
+        Write-Log "🛡️ Auto-Limpeza Contínua ATIVADA: A memória RAM será monitorada e mantida otimizada em segundo plano automaticamente enquanto o aplicativo estiver aberto." "SUCCESS"
+        
+        # Executa limpeza imediata ao ativar
+        try {
+            [void][MemoryCleaner]::Clean()
+            [GC]::Collect()
+            [GC]::WaitForPendingFinalizers()
+        } catch {}
+        
+        # Atualiza métricas na UI
+        $os = Get-CimInstance Win32_OperatingSystem -ErrorAction SilentlyContinue
+        if ($os) {
+            $total = $os.TotalVisibleMemorySize
+            $free = $os.FreePhysicalMemory
+            $used = $total - $free
+            $pct = [Math]::Round(($used / $total) * 100, 0)
+            if ($null -ne $barRAM) { $barRAM.Value = $pct }
+            if ($null -ne $lblRAM) { $lblRAM.Text = "$pct%" }
+            $usedGB = [Math]::Round(($used * 1KB) / 1GB, 1)
+            $totalGB = [Math]::Round(($total * 1KB) / 1GB, 1)
+            if ($null -ne $lblRAMDetail) { $lblRAMDetail.Text = "$usedGB GB usados de $totalGB GB" }
+        }
+    } else {
+        if ($null -ne $btnAutoCleanRAM) {
+            $btnAutoCleanRAM.Content = "🔄 Limpeza Contínua: OFF"
+            $btnAutoCleanRAM.Background = [System.Windows.Media.Brush]"#1E293B"
+            $btnAutoCleanRAM.ToolTip = "Clique para ativar a auto-limpeza contínua em segundo plano."
+        }
+        if ($null -ne $badgeAutoRam) {
+            $badgeAutoRam.Visibility = [System.Windows.Visibility]::Collapsed
+        }
+        
+        Write-Log "Auto-Limpeza Contínua DESATIVADA." "INFO"
+    }
 }
 
 # Execução do Debloat de Aplicativos Selecionados
@@ -5029,6 +5106,9 @@ $btnRedeTracert.Add_Click({
 # Botões da Tela Inicial (Painel)
 $btnCreateRestore.Add_Click({ Action-CreateRestorePoint })
 $btnCleanRAM.Add_Click({ Action-OptimizeRAM })
+if ($null -ne $btnAutoCleanRAM) {
+    $btnAutoCleanRAM.Add_Click({ Action-ToggleAutoCleanRAM })
+}
 
 # Botões da Tela de Debloat
 $btnSelectAllDebloat.Add_Click({
@@ -5241,6 +5321,18 @@ $hardwareTimer.Add_Tick({
             $usedGB = [Math]::Round(($used * 1KB) / 1GB, 1)
             $totalGB = [Math]::Round(($total * 1KB) / 1GB, 1)
             $lblRAMDetail.Text = "$usedGB GB usados de $totalGB GB"
+            
+            # Se a auto-limpeza contínua estiver ativada, otimiza silenciosamente a memória a cada ~6s ou se RAM > 65%
+            if ($global:autoRamCleaningEnabled) {
+                $global:autoRamTickCount++
+                if ($global:autoRamTickCount -ge 4 -or $pct -ge 65) {
+                    $global:autoRamTickCount = 0
+                    try {
+                        [void][MemoryCleaner]::Clean()
+                        [GC]::Collect()
+                    } catch {}
+                }
+            }
         }
         
         # Atualiza Tempo de Atividade (Uptime) - reutiliza a query WMI já feita acima
