@@ -81,7 +81,7 @@ $null = $global:cpuCounter.NextValue() # Primeira chamada inicializa o contador
 $xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Samack WinUtil" Height="680" Width="1000"
+        Title="Samack WinUtil" Height="740" Width="1180" MinHeight="680" MinWidth="1050"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent"
         WindowStartupLocation="CenterScreen">
     
@@ -401,8 +401,8 @@ $xaml = @"
                         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,0,0,5">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1.15*"/>
                                     <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1.18*"/>
                                 </Grid.ColumnDefinitions>
 
                             <!-- Informações do Sistema -->
@@ -430,7 +430,7 @@ $xaml = @"
                                     <StackPanel>
                                         <TextBlock Text="Segurança e Backup" FontSize="14" FontWeight="Bold" Foreground="#10B981" Margin="0,0,0,8"/>
                                         <TextBlock Text="Sempre crie um ponto de restauração antes de fazer otimizações complexas." FontSize="11" Foreground="#94A3B8" TextWrapping="Wrap" Margin="0,0,0,12"/>
-                                        <Button x:Name="BtnCreateRestore" Content="Criar Ponto de Restauração" Style="{StaticResource ModernButton}" Background="#059669"/>
+                                        <Button x:Name="BtnCreateRestore" Content="Criar Ponto de Restauração" Style="{StaticResource ModernButton}" Background="#059669" Height="34" FontSize="12"/>
                                     </StackPanel>
                                 </Border>
 
@@ -439,21 +439,21 @@ $xaml = @"
                                     <StackPanel>
                                         <TextBlock Text="🛠️ Ferramentas de Rede/Sistema" FontSize="14" FontWeight="Bold" Foreground="#F59E0B" Margin="0,0,0,10"/>
                                         <UniformGrid Columns="2">
-                                             <Button x:Name="BtnShortcutDev" Content="🎛️ Disp. Manager" Style="{StaticResource ModernButton}" Background="#1E293B" Padding="5,6" Margin="2" FontSize="11" Height="28"/>
-                                             <Button x:Name="BtnShortcutReg" Content="🔑 Registry" Style="{StaticResource ModernButton}" Background="#1E293B" Padding="5,6" Margin="2" FontSize="11" Height="28"/>
-                                             <Button x:Name="BtnShortcutDisk" Content="💾 Discos" Style="{StaticResource ModernButton}" Background="#1E293B" Padding="5,6" Margin="2" FontSize="11" Height="28"/>
-                                             <Button x:Name="BtnShortcutUser" Content="👤 Contas Usuário" Style="{StaticResource ModernButton}" Background="#1E293B" Padding="5,6" Margin="2" FontSize="11" Height="28"/>
-                                             <Button x:Name="BtnShortcutPower" Content="🔋 Opções Energia" Style="{StaticResource ModernButton}" Background="#1E293B" Padding="5,6" Margin="2" FontSize="11" Height="28"/>
-                                             <Button x:Name="BtnShortcutSys" Content="💻 Prop. Sistema" Style="{StaticResource ModernButton}" Background="#1E293B" Padding="5,6" Margin="2" FontSize="11" Height="28"/>
-                                             <Button x:Name="BtnShortcutServ" Content="⚙️ Serviços" Style="{StaticResource ModernButton}" Background="#1E293B" Padding="5,6" Margin="2" FontSize="11" Height="28"/>
-                                             <Button x:Name="BtnShortcutNetCenter" Content="🌐 Central Rede" Style="{StaticResource ModernButton}" Background="#1E293B" Padding="5,6" Margin="2" FontSize="11" Height="28"/>
-                                             <Button x:Name="BtnShortcutRes" Content="📈 Monitor Rec." Style="{StaticResource ModernButton}" Background="#1E293B" Padding="5,6" Margin="2" FontSize="11" Height="28"/>
-                                             <Button x:Name="BtnShortcutPingGoogle" Content="🏓 Ping Google" Style="{StaticResource ModernButton}" Background="#1E293B" Padding="5,6" Margin="2" FontSize="11" Height="28"/>
-                                             <Button x:Name="BtnShortcutIPConfig" Content="📡 Mostrar IPs" Style="{StaticResource ModernButton}" Background="#1E293B" Padding="5,6" Margin="2" FontSize="11" Height="28"/>
-                                             <Button x:Name="BtnShortcutFlushDNS" Content="🧹 Limpar Cache DNS" Style="{StaticResource ModernButton}" Background="#1E293B" Padding="5,6" Margin="2" FontSize="11" Height="28"/>
-                                             <Button x:Name="BtnShortcutNet" Content="🔌 Conexões de Rede" Style="{StaticResource ModernButton}" Background="#1E293B" Padding="5,6" Margin="2" FontSize="11" Height="28"/>
-                                             <Button x:Name="BtnShortcutTaskMgr" Content="📊 Ger. de Tarefas" Style="{StaticResource ModernButton}" Background="#1E293B" Padding="5,6" Margin="2" FontSize="11" Height="28"/>
-                                             <Button x:Name="BtnShortcutControl" Content="🖥️ Painel Controle" Style="{StaticResource ModernButton}" Background="#1E293B" Padding="5,6" Margin="2" FontSize="11" Height="28"/>
+                                             <Button x:Name="BtnShortcutDev" Content="🎛️ Disp. Manager" Style="{StaticResource ModernButton}" Background="#1E293B" Padding="6,4" Margin="2" FontSize="11" Height="30"/>
+                                             <Button x:Name="BtnShortcutReg" Content="🔑 Registry" Style="{StaticResource ModernButton}" Background="#1E293B" Padding="6,4" Margin="2" FontSize="11" Height="30"/>
+                                             <Button x:Name="BtnShortcutDisk" Content="💾 Discos" Style="{StaticResource ModernButton}" Background="#1E293B" Padding="6,4" Margin="2" FontSize="11" Height="30"/>
+                                             <Button x:Name="BtnShortcutUser" Content="👤 Contas Usuário" Style="{StaticResource ModernButton}" Background="#1E293B" Padding="6,4" Margin="2" FontSize="11" Height="30"/>
+                                             <Button x:Name="BtnShortcutPower" Content="🔋 Opções Energia" Style="{StaticResource ModernButton}" Background="#1E293B" Padding="6,4" Margin="2" FontSize="11" Height="30"/>
+                                             <Button x:Name="BtnShortcutSys" Content="💻 Prop. Sistema" Style="{StaticResource ModernButton}" Background="#1E293B" Padding="6,4" Margin="2" FontSize="11" Height="30"/>
+                                             <Button x:Name="BtnShortcutServ" Content="⚙️ Serviços" Style="{StaticResource ModernButton}" Background="#1E293B" Padding="6,4" Margin="2" FontSize="11" Height="30"/>
+                                             <Button x:Name="BtnShortcutNetCenter" Content="🌐 Central Rede" Style="{StaticResource ModernButton}" Background="#1E293B" Padding="6,4" Margin="2" FontSize="11" Height="30"/>
+                                             <Button x:Name="BtnShortcutRes" Content="📈 Monitor Rec." Style="{StaticResource ModernButton}" Background="#1E293B" Padding="6,4" Margin="2" FontSize="11" Height="30"/>
+                                             <Button x:Name="BtnShortcutPingGoogle" Content="🏓 Ping Google" Style="{StaticResource ModernButton}" Background="#1E293B" Padding="6,4" Margin="2" FontSize="11" Height="30"/>
+                                             <Button x:Name="BtnShortcutIPConfig" Content="📡 Mostrar IPs" Style="{StaticResource ModernButton}" Background="#1E293B" Padding="6,4" Margin="2" FontSize="11" Height="30"/>
+                                             <Button x:Name="BtnShortcutFlushDNS" Content="🧹 Limpar Cache DNS" Style="{StaticResource ModernButton}" Background="#1E293B" Padding="6,4" Margin="2" FontSize="11" Height="30"/>
+                                             <Button x:Name="BtnShortcutNet" Content="🔌 Conexões de Rede" Style="{StaticResource ModernButton}" Background="#1E293B" Padding="6,4" Margin="2" FontSize="11" Height="30"/>
+                                             <Button x:Name="BtnShortcutTaskMgr" Content="📊 Ger. de Tarefas" Style="{StaticResource ModernButton}" Background="#1E293B" Padding="6,4" Margin="2" FontSize="11" Height="30"/>
+                                             <Button x:Name="BtnShortcutControl" Content="🖥️ Painel Controle" Style="{StaticResource ModernButton}" Background="#1E293B" Padding="6,4" Margin="2" FontSize="11" Height="30"/>
                                         </UniformGrid>
                                     </StackPanel>
                                 </Border>
@@ -498,9 +498,9 @@ $xaml = @"
                                     <Border Style="{StaticResource CardBorder}">
                                         <StackPanel>
                                             <Grid Margin="0,0,0,8">
-                                                <TextBlock Text="Otimização e Limpeza de Memória" FontSize="14" FontWeight="Bold" Foreground="#3B82F6" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                                <Border x:Name="BadgeAutoRam" Background="#064E3B" BorderBrush="#10B981" BorderThickness="1" CornerRadius="5" Padding="7,3" HorizontalAlignment="Right" VerticalAlignment="Center" Visibility="Collapsed">
-                                                    <TextBlock x:Name="TxtAutoRamBadge" Text="● AUTO-LIMPEZA ATIVA" FontSize="9.5" FontWeight="Bold" Foreground="#34D399"/>
+                                                <TextBlock Text="Otimização e Limpeza de Memória" FontSize="13.5" FontWeight="Bold" Foreground="#3B82F6" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                                <Border x:Name="BadgeAutoRam" Background="#064E3B" BorderBrush="#10B981" BorderThickness="1" CornerRadius="4" Padding="6,2" HorizontalAlignment="Right" VerticalAlignment="Center" Visibility="Collapsed">
+                                                    <TextBlock x:Name="TxtAutoRamBadge" Text="● AUTO-LIMPEZA ATIVA" FontSize="9" FontWeight="Bold" Foreground="#34D399"/>
                                                 </Border>
                                             </Grid>
                                             <TextBlock Text="Reduz o consumo de RAM liberando os conjuntos de trabalho de todos os processos ativos. Ative a limpeza contínua para manter a memória sempre otimizada enquanto o utilitário estiver aberto." FontSize="11" Foreground="#94A3B8" TextWrapping="Wrap" Margin="0,0,0,12"/>
@@ -514,10 +514,10 @@ $xaml = @"
                                                 </Grid.ColumnDefinitions>
                                                 
                                                 <!-- Botão 1: Limpeza Instantânea -->
-                                                <Button Grid.Column="0" x:Name="BtnCleanRAM" Content="⚡ Limpar RAM Agora" Style="{StaticResource AccentButton}" Height="34" FontSize="11.5" FontWeight="SemiBold" ToolTip="Executa uma limpeza profunda e imediata da memória RAM no momento."/>
+                                                <Button Grid.Column="0" x:Name="BtnCleanRAM" Content="⚡ Limpar RAM Agora" Style="{StaticResource AccentButton}" Height="34" FontSize="11" FontWeight="SemiBold" ToolTip="Executa uma limpeza profunda e imediata da memória RAM no momento."/>
                                                 
                                                 <!-- Botão 2: Limpeza Contínua (Segundo Plano) -->
-                                                <Button Grid.Column="2" x:Name="BtnAutoCleanRAM" Content="🔄 Limpeza Contínua: OFF" Style="{StaticResource ModernButton}" Background="#1E293B" Height="34" FontSize="11" FontWeight="SemiBold" ToolTip="Mantém a memória RAM otimizada automaticamente em segundo plano a cada poucos segundos enquanto o programa estiver aberto."/>
+                                                <Button Grid.Column="2" x:Name="BtnAutoCleanRAM" Content="🔄 Limpeza Contínua: OFF" Style="{StaticResource ModernButton}" Background="#1E293B" Height="34" FontSize="10.5" FontWeight="SemiBold" ToolTip="Mantém a memória RAM otimizada automaticamente em segundo plano a cada poucos segundos enquanto o programa estiver aberto."/>
                                             </Grid>
                                         </StackPanel>
                                     </Border>
@@ -529,9 +529,9 @@ $xaml = @"
                                             <ListView x:Name="LvTopProcesses" Height="125" Background="#111827" Foreground="#F1F5F9" BorderBrush="#1F2937" BorderThickness="1" ScrollViewer.VerticalScrollBarVisibility="Hidden">
                                                 <ListView.View>
                                                     <GridView>
-                                                        <GridViewColumn Header="Processo" Width="105" DisplayMemberBinding="{Binding Name}"/>
-                                                        <GridViewColumn Header="RAM (MB)" Width="65" DisplayMemberBinding="{Binding RAM}"/>
-                                                        <GridViewColumn Header="CPU (s)" Width="60" DisplayMemberBinding="{Binding CPU}"/>
+                                                        <GridViewColumn Header="Processo" Width="140" DisplayMemberBinding="{Binding Name}"/>
+                                                        <GridViewColumn Header="RAM (MB)" Width="85" DisplayMemberBinding="{Binding RAM}"/>
+                                                        <GridViewColumn Header="CPU (s)" Width="75" DisplayMemberBinding="{Binding CPU}"/>
                                                     </GridView>
                                                 </ListView.View>
                                             </ListView>
