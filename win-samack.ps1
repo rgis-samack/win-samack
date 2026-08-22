@@ -1327,8 +1327,10 @@ $xaml = @"
                     </Grid>
 
                     <!-- TELA 5: LOGS DE EXECUÇÃO -->
+                    <!-- TELA 5: LOGS / CONSOLE -->
                     <Grid x:Name="GridLogs" Visibility="Collapsed">
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
@@ -1340,15 +1342,32 @@ $xaml = @"
                             <TextBlock Text="Acompanhe o que está acontecendo por trás das otimizações do sistema." FontSize="12" Foreground="#94A3B8" Margin="0,2,0,0"/>
                         </StackPanel>
 
+                        <!-- Barra de Download / Progresso Global nos Logs -->
+                        <Border Grid.Row="1" x:Name="PnlLogsProgress" Background="#082F49" BorderBrush="#0284C7" BorderThickness="1" CornerRadius="8" Padding="12,8" Margin="0,0,0,10" Visibility="Collapsed">
+                            <StackPanel>
+                                <Grid Margin="0,0,0,4">
+                                    <TextBlock x:Name="LblLogsProgressTitle" Text="Baixando e Atualizando Aplicativos..." Foreground="#38BDF8" FontSize="11.5" FontWeight="SemiBold"/>
+                                    <TextBlock x:Name="LblLogsProgressPercent" Text="0%" Foreground="#F8FAFC" FontSize="11.5" FontWeight="Bold" HorizontalAlignment="Right"/>
+                                </Grid>
+                                <ProgressBar x:Name="PbLogsProgress" Height="8" Minimum="0" Maximum="100" Value="0" Background="#030712" Foreground="#38BDF8" BorderThickness="0">
+                                    <ProgressBar.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="4"/>
+                                        </Style>
+                                    </ProgressBar.Resources>
+                                </ProgressBar>
+                            </StackPanel>
+                        </Border>
+
                         <!-- Tela do Console Log -->
-                        <TextBox Grid.Row="1" x:Name="TxtLogs" AcceptsReturn="True" IsReadOnly="True" 
+                        <TextBox Grid.Row="2" x:Name="TxtLogs" AcceptsReturn="True" IsReadOnly="True" 
                                  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                                  Background="#030712" Foreground="#38BDF8" BorderBrush="#1F2937" 
                                  BorderThickness="1.5" FontFamily="Consolas" FontSize="12" Padding="12"
                                  Margin="0,0,0,15"/>
 
                         <!-- Botoes inferiores dos Logs -->
-                        <Grid Grid.Row="2">
+                        <Grid Grid.Row="3">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="Auto"/>
@@ -1367,10 +1386,48 @@ $xaml = @"
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <!-- Cabeçalho -->
+                        <!-- Cabeçalho & Destaque de Atualização de Programas -->
                         <StackPanel Grid.Row="0" Margin="0,0,0,12">
-                            <TextBlock Text="Instalador de Programas (WinGet)" FontSize="18" FontWeight="Bold" Foreground="#F8FAFC"/>
-                            <TextBlock Text="Selecione abaixo os aplicativos que deseja baixar e instalar de forma silenciosa no seu computador." FontSize="12" Foreground="#94A3B8" Margin="0,2,0,0"/>
+                            <!-- Card de Destaque: Atualizador de Programas WinGet -->
+                            <Border Background="#0C4A6E" BorderBrush="#0284C7" BorderThickness="1.5" CornerRadius="10" Padding="14,12" Margin="0,0,0,10">
+                                <StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,15,0">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="🔄" FontSize="15" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                                <TextBlock Text="Atualizador Automático de Programas (WinGet)" FontSize="13.5" FontWeight="Bold" Foreground="#38BDF8" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                            <TextBlock Text="Varre o computador e atualiza automaticamente todos os programas instalados para a versão mais recente." FontSize="11" Foreground="#BAE6FD" Margin="0,3,0,0" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                        <Button Grid.Column="1" x:Name="BtnUpgradeAppsTop" Content="🔄 Atualizar Programas do PC" Style="{StaticResource ModernButton}" Background="#0284C7" Height="36" Padding="16,0" VerticalAlignment="Center" ToolTip="Escanear e atualizar todos os programas instalados no computador via WinGet"/>
+                                    </Grid>
+
+                                    <!-- Barra de Download e Progresso de Atualização -->
+                                    <Border x:Name="PnlUpgradeProgress" Background="#082F49" BorderBrush="#0284C7" BorderThickness="1" CornerRadius="8" Padding="12,10" Margin="0,10,0,0" Visibility="Collapsed">
+                                        <StackPanel>
+                                            <Grid Margin="0,0,0,6">
+                                                <TextBlock x:Name="LblUpgradeStatus" Text="Baixando atualização do programa..." Foreground="#38BDF8" FontSize="11.5" FontWeight="SemiBold"/>
+                                                <TextBlock x:Name="LblUpgradePercent" Text="0%" Foreground="#F8FAFC" FontSize="11.5" FontWeight="Bold" HorizontalAlignment="Right"/>
+                                            </Grid>
+                                            <ProgressBar x:Name="PbAppUpgrade" Height="9" Minimum="0" Maximum="100" Value="0" Background="#0F172A" Foreground="#38BDF8" BorderThickness="0">
+                                                <ProgressBar.Resources>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="CornerRadius" Value="4"/>
+                                                    </Style>
+                                                </ProgressBar.Resources>
+                                            </ProgressBar>
+                                            <TextBlock x:Name="LblUpgradeSubtext" Text="Iniciando download e instalação pelo WinGet..." Foreground="#94A3B8" FontSize="10.5" Margin="0,5,0,0"/>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </Border>
+
+                            <TextBlock Text="Instalador de Programas em Lote (WinGet)" FontSize="16" FontWeight="Bold" Foreground="#F8FAFC"/>
+                            <TextBlock Text="Selecione abaixo os aplicativos que deseja baixar e instalar silenciosamente no computador." FontSize="11.5" Foreground="#94A3B8" Margin="0,2,0,0"/>
                         </StackPanel>
 
                         <!-- Área de Checkboxes com scroll -->
@@ -1530,12 +1587,14 @@ $xaml = @"
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <Button Grid.Column="0" x:Name="BtnSelectAllApps" Content="Marcar Todos" Style="{StaticResource ModernButton}" Background="#1E293B" Padding="12,8" Margin="0,0,10,0"/>
-                            <Button Grid.Column="1" x:Name="BtnDeselectAllApps" Content="Desmarcar Todos" Style="{StaticResource ModernButton}" Background="#1E293B" Padding="12,8"/>
-                            <Button Grid.Column="3" x:Name="BtnRunApps" Content="📦 Instalar Programas Selecionados" Style="{StaticResource AccentButton}"/>
+                            <Button Grid.Column="1" x:Name="BtnDeselectAllApps" Content="Desmarcar Todos" Style="{StaticResource ModernButton}" Background="#1E293B" Padding="12,8" Margin="0,0,10,0"/>
+                            <Button Grid.Column="2" x:Name="BtnUpgradeApps" Content="🔄 Atualizar Programas do PC (WinGet)" Style="{StaticResource ModernButton}" Background="#0284C7" Padding="14,8" ToolTip="Escanear e atualizar automaticamente todos os programas instalados no computador via WinGet."/>
+                            <Button Grid.Column="4" x:Name="BtnRunApps" Content="📦 Instalar Programas Selecionados" Style="{StaticResource AccentButton}"/>
                         </Grid>
                     </Grid>
 
@@ -1875,10 +1934,23 @@ $btnRunLimpeza = $Window.FindName("BtnRunLimpeza")
 $btnRunSystemRepair = $Window.FindName("BtnRunSystemRepair")
 $btnBackupDrivers = $Window.FindName("BtnBackupDrivers")
 
-# Mapeando Elementos do Instalador de Apps
+# Mapeando Elementos do Instalador e Atualizador de Apps
 $btnSelectAllApps = $Window.FindName("BtnSelectAllApps")
 $btnDeselectAllApps = $Window.FindName("BtnDeselectAllApps")
+$btnUpgradeApps = $Window.FindName("BtnUpgradeApps")
+$btnUpgradeAppsTop = $Window.FindName("BtnUpgradeAppsTop")
 $btnRunApps = $Window.FindName("BtnRunApps")
+$pnlUpgradeProgress = $Window.FindName("PnlUpgradeProgress")
+$lblUpgradeStatus = $Window.FindName("LblUpgradeStatus")
+$lblUpgradePercent = $Window.FindName("LblUpgradePercent")
+$pbAppUpgrade = $Window.FindName("PbAppUpgrade")
+$lblUpgradeSubtext = $Window.FindName("LblUpgradeSubtext")
+
+# Mapeando Barra de Progresso nos Logs
+$pnlLogsProgress = $Window.FindName("PnlLogsProgress")
+$lblLogsProgressTitle = $Window.FindName("LblLogsProgressTitle")
+$lblLogsProgressPercent = $Window.FindName("LblLogsProgressPercent")
+$pbLogsProgress = $Window.FindName("PbLogsProgress")
 
 # Lista de elementos de checkboxes de aplicativos no XAML para mapeamento dinâmico
 $chkAppNames = @(
@@ -3570,7 +3642,6 @@ function Action-InstallApps {
 
     # Coleta todas as checkboxes marcadas na aba de apps
     $appsToInstall = @()
-    
     foreach ($chk in $appCheckboxObjects) {
         if ($chk.IsChecked) {
             $appsToInstall += $chk
@@ -3586,12 +3657,28 @@ function Action-InstallApps {
 
     Write-Log "Total de programas a instalar: $($appsToInstall.Count)"
 
+    # Exibe e inicializa a barra de progresso / download
+    if ($pnlUpgradeProgress) { $pnlUpgradeProgress.Visibility = [System.Windows.Visibility]::Visible }
+    if ($pnlLogsProgress) { $pnlLogsProgress.Visibility = [System.Windows.Visibility]::Visible }
+    if ($pbAppUpgrade) { $pbAppUpgrade.Value = 0; $pbAppUpgrade.IsIndeterminate = $false }
+    if ($pbLogsProgress) { $pbLogsProgress.Value = 0; $pbLogsProgress.IsIndeterminate = $false }
+    if ($lblUpgradePercent) { $lblUpgradePercent.Text = "0%" }
+    if ($lblLogsProgressPercent) { $lblLogsProgressPercent.Text = "0%" }
+
+    $appIndex = 0
+    $totalCount = $appsToInstall.Count
+
     foreach ($chk in $appsToInstall) {
+        $appIndex++
         $appName = $chk.Content
         $appId = $chk.Tag
         
         Write-Log "Iniciando download e instalação de: $appName (ID: $appId)..."
-        
+        if ($lblUpgradeStatus) { $lblUpgradeStatus.Text = "📥 Instalando: $appName ($appIndex de $totalCount)" }
+        if ($lblLogsProgressTitle) { $lblLogsProgressTitle.Text = "📥 Instalando: $appName ($appIndex de $totalCount)" }
+        if ($lblUpgradeSubtext) { $lblUpgradeSubtext.Text = "Conectando ao repositório WinGet..." }
+        Out-DoEvents
+
         # Executa winget silenciosamente e captura saída linha por linha para manter interativo
         $processInfo = New-Object System.Diagnostics.ProcessStartInfo
         $processInfo.FileName = "winget"
@@ -3600,6 +3687,7 @@ function Action-InstallApps {
         $processInfo.RedirectStandardError = $true
         $processInfo.UseShellExecute = $false
         $processInfo.CreateNoWindow = $true
+        $processInfo.StandardOutputEncoding = [System.Text.Encoding]::UTF8
         
         $process = New-Object System.Diagnostics.Process
         $process.StartInfo = $processInfo
@@ -3619,6 +3707,21 @@ function Action-InstallApps {
                     $cleanLine = $cleanLine -replace '[\b\r\n]', ''
                     $cleanLine = $cleanLine.Trim()
                     
+                    # Atualiza progresso da barra se houver porcentagem
+                    if ($cleanLine -match '(\d{1,3})%') {
+                        $pctVal = [int]$matches[1]
+                        $overallPct = [Math]::Min(100, [Math]::Max(0, [Math]::Round(((($appIndex - 1) + ($pctVal / 100.0)) / $totalCount) * 100)))
+                        if ($pbAppUpgrade) { $pbAppUpgrade.Value = $overallPct }
+                        if ($pbLogsProgress) { $pbLogsProgress.Value = $overallPct }
+                        if ($lblUpgradePercent) { $lblUpgradePercent.Text = "$overallPct%" }
+                        if ($lblLogsProgressPercent) { $lblLogsProgressPercent.Text = "$overallPct%" }
+                    }
+                    if ($cleanLine -match '(MB|KB|GB)') {
+                        if ($lblUpgradeSubtext) { $lblUpgradeSubtext.Text = "Download: $cleanLine" }
+                    } elseif ($cleanLine -match '(Instalando|Installing|Starting package)') {
+                        if ($lblUpgradeSubtext) { $lblUpgradeSubtext.Text = "Instalando pacote no sistema..." }
+                    }
+
                     # Filtra ruídos de progresso do WinGet (spinners, barras de bloco corrompidas e porcentagens)
                     $isNoise = $false
                     if ([string]::IsNullOrWhiteSpace($cleanLine)) {
@@ -3636,13 +3739,12 @@ function Action-InstallApps {
                     }
                 }
                 Out-DoEvents
+                Start-Sleep -Milliseconds 25
             }
             
             if ($process.ExitCode -eq 0) {
                 Write-Log "Instalação de $appName finalizada com SUCESSO!" "SUCCESS"
             } else {
-                # Alguns códigos de erro do winget podem indicar que já está instalado (ex: 0x8A15002B)
-                # Vamos verificar se o retorno indica sucesso alternativo ou erro real
                 $exitHex = "0x" + $process.ExitCode.ToString("X")
                 if ($process.ExitCode -eq -1978335189) { # 0x8A15002B: already installed
                     Write-Log "$appName já está instalado no sistema." "SUCCESS"
@@ -3654,12 +3756,243 @@ function Action-InstallApps {
             Write-Log "Erro ao tentar executar winget para ${appName}: $_" "ERROR"
         }
         
+        $curBasePct = [Math]::Round(($appIndex / $totalCount) * 100)
+        if ($pbAppUpgrade) { $pbAppUpgrade.Value = $curBasePct }
+        if ($pbLogsProgress) { $pbLogsProgress.Value = $curBasePct }
+        if ($lblUpgradePercent) { $lblUpgradePercent.Text = "$curBasePct%" }
+        if ($lblLogsProgressPercent) { $lblLogsProgressPercent.Text = "$curBasePct%" }
         Out-DoEvents
     }
 
+    if ($pbAppUpgrade) { $pbAppUpgrade.Value = 100 }
+    if ($pbLogsProgress) { $pbLogsProgress.Value = 100 }
+    if ($lblUpgradePercent) { $lblUpgradePercent.Text = "100%" }
+    if ($lblLogsProgressPercent) { $lblLogsProgressPercent.Text = "100%" }
+    if ($lblUpgradeStatus) { $lblUpgradeStatus.Text = "✅ Instalação Concluída!" }
+    if ($lblUpgradeSubtext) { $lblUpgradeSubtext.Text = "Todos os programas selecionados foram processados." }
+    
     Write-Log "Todos os processos de instalação foram concluídos!" "SUCCESS"
     Set-Status "Pronto"
-    # Mensagem de sucesso removida a pedido do usuário
+    Out-DoEvents
+}
+
+# Verificação e Atualização de Todos os Programas Instalados via WinGet
+function Action-UpgradeApps {
+    Register-Action "instalador"
+    Set-Status "Verificando atualizações de programas..."
+    Switch-Tab "Logs"
+    Write-Log "=== INICIANDO VARREDURA DE ATUALIZAÇÕES DE PROGRAMAS (WINGET) ===" "INFO"
+    Out-DoEvents
+
+    # Exibe a barra de download e progresso
+    if ($pnlUpgradeProgress) { $pnlUpgradeProgress.Visibility = [System.Windows.Visibility]::Visible }
+    if ($pnlLogsProgress) { $pnlLogsProgress.Visibility = [System.Windows.Visibility]::Visible }
+    if ($pbAppUpgrade) { $pbAppUpgrade.Value = 0; $pbAppUpgrade.IsIndeterminate = $true }
+    if ($pbLogsProgress) { $pbLogsProgress.Value = 0; $pbLogsProgress.IsIndeterminate = $true }
+    if ($lblUpgradePercent) { $lblUpgradePercent.Text = "0%" }
+    if ($lblLogsProgressPercent) { $lblLogsProgressPercent.Text = "0%" }
+    if ($lblUpgradeStatus) { $lblUpgradeStatus.Text = "🔍 Escaneando o computador em busca de atualizações..." }
+    if ($lblLogsProgressTitle) { $lblLogsProgressTitle.Text = "🔍 Escaneando o computador em busca de atualizações..." }
+    if ($lblUpgradeSubtext) { $lblUpgradeSubtext.Text = "Consultando catálogo de softwares via WinGet..." }
+    Out-DoEvents
+
+    # 1. Verifica se o winget está disponível
+    if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
+        Write-Log "WinGet não encontrado no sistema!" "ERROR"
+        Write-Log "Tentando baixar e registrar o pacote do WinGet..."
+        if ($lblUpgradeStatus) { $lblUpgradeStatus.Text = "Baixando pacote do WinGet..." }
+        Out-DoEvents
+        try {
+            $url = "https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle"
+            $dest = "$env:TEMP\winget.msixbundle"
+            Write-Log "Baixando pacote WinGet..."
+            Invoke-WebRequest -Uri $url -OutFile $dest -ErrorAction Stop
+            Write-Log "Executando instalação silenciosa..."
+            Add-AppxPackage -Path $dest -ErrorAction Stop
+            Write-Log "WinGet instalado com sucesso!" "SUCCESS"
+        } catch {
+            Write-Log "Falha ao instalar WinGet automaticamente: $_" "ERROR"
+            [System.Windows.MessageBox]::Show("O gerenciador de pacotes WinGet não foi encontrado. Por favor, instale o 'App Installer' na Microsoft Store.", "WinGet Necessário", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Warning)
+            Set-Status "Pronto"
+            if ($pnlUpgradeProgress) { $pnlUpgradeProgress.Visibility = [System.Windows.Visibility]::Collapsed }
+            if ($pnlLogsProgress) { $pnlLogsProgress.Visibility = [System.Windows.Visibility]::Collapsed }
+            return
+        }
+    }
+
+    Write-Log "Escaneando o computador em busca de softwares com novas versões..." "INFO"
+    Out-DoEvents
+
+    try {
+        # Executa 'winget upgrade' para obter a lista de softwares com novas versões
+        $processInfo = New-Object System.Diagnostics.ProcessStartInfo
+        $processInfo.FileName = "winget"
+        $processInfo.Arguments = "upgrade --include-unknown --accept-source-agreements"
+        $processInfo.RedirectStandardOutput = $true
+        $processInfo.RedirectStandardError = $true
+        $processInfo.UseShellExecute = $false
+        $processInfo.CreateNoWindow = $true
+        $processInfo.StandardOutputEncoding = [System.Text.Encoding]::UTF8
+        
+        $process = New-Object System.Diagnostics.Process
+        $process.StartInfo = $processInfo
+        [void]$process.Start()
+
+        $outputLines = @()
+        while (-not $process.HasExited) {
+            if ($process.StandardOutput.Peek() -ne -1) {
+                $line = $process.StandardOutput.ReadLine()
+                if ($line) {
+                    $cleanLine = $line -replace '\x1b\[[0-9;]*[a-zA-Z]', ''
+                    $cleanLine = $cleanLine -replace '[\b\r\n]', ''
+                    $cleanLine = $cleanLine.Trim()
+                    if (-not [string]::IsNullOrWhiteSpace($cleanLine)) {
+                        $outputLines += $cleanLine
+                    }
+                }
+            }
+            Out-DoEvents
+            Start-Sleep -Milliseconds 40
+        }
+
+        while (-not $process.StandardOutput.EndOfStream) {
+            $line = $process.StandardOutput.ReadLine()
+            if ($line) {
+                $cleanLine = $line -replace '\x1b\[[0-9;]*[a-zA-Z]', ''
+                $cleanLine = $cleanLine.Trim()
+                if (-not [string]::IsNullOrWhiteSpace($cleanLine)) {
+                    $outputLines += $cleanLine
+                }
+            }
+        }
+
+        $fullOutputText = $outputLines -join "`n"
+
+        # Verifica se não há atualizações disponíveis
+        if ($fullOutputText -match 'Nenhuma atualização aplicável encontrada|No applicable update found|No updates available' -or $outputLines.Count -le 3) {
+            Write-Log "🎉 Excelente! Todos os programas instalados já estão atualizados na versão mais recente." "SUCCESS"
+            Set-Status "Pronto - Sistema 100% atualizado"
+            if ($pbAppUpgrade) { $pbAppUpgrade.IsIndeterminate = $false; $pbAppUpgrade.Value = 100 }
+            if ($pbLogsProgress) { $pbLogsProgress.IsIndeterminate = $false; $pbLogsProgress.Value = 100 }
+            if ($lblUpgradePercent) { $lblUpgradePercent.Text = "100%" }
+            if ($lblLogsProgressPercent) { $lblLogsProgressPercent.Text = "100%" }
+            if ($lblUpgradeStatus) { $lblUpgradeStatus.Text = "🎉 Todos os programas já estão atualizados!" }
+            if ($lblUpgradeSubtext) { $lblUpgradeSubtext.Text = "Nenhuma nova atualização disponível no momento." }
+            Out-DoEvents
+
+            Show-CleanupResultModal -title "Programas Atualizados!" -subtitle "Nenhuma atualização pendente encontrada. Todos os softwares suportados já estão na versão mais recente." -freedSpace "OK" -deletedCount "0"
+            return
+        }
+
+        Write-Log "Softwares desatualizados detectados! Iniciando atualização em lote..." "INFO"
+        foreach ($l in $outputLines) {
+            if ($l -notmatch '^[\s\-\|\\/]*$' -and $l -notmatch 'Ôûê|ÔûÆ|█|░|▒|▓|■') {
+                Write-Log "  $l"
+            }
+        }
+        Out-DoEvents
+
+        Write-Log "Executando atualização automática (winget upgrade --all)..." "INFO"
+        Set-Status "Atualizando programas instalados..."
+
+        # Prepara a barra para o download e atualização
+        if ($pbAppUpgrade) { $pbAppUpgrade.IsIndeterminate = $false; $pbAppUpgrade.Value = 5 }
+        if ($pbLogsProgress) { $pbLogsProgress.IsIndeterminate = $false; $pbLogsProgress.Value = 5 }
+        if ($lblUpgradeStatus) { $lblUpgradeStatus.Text = "📥 Baixando e Atualizando Programas..." }
+        if ($lblLogsProgressTitle) { $lblLogsProgressTitle.Text = "📥 Baixando e Atualizando Programas..." }
+        if ($lblUpgradePercent) { $lblUpgradePercent.Text = "5%" }
+        if ($lblLogsProgressPercent) { $lblLogsProgressPercent.Text = "5%" }
+        if ($lblUpgradeSubtext) { $lblUpgradeSubtext.Text = "Iniciando download dos pacotes de atualização..." }
+        Out-DoEvents
+
+        $upgInfo = New-Object System.Diagnostics.ProcessStartInfo
+        $upgInfo.FileName = "winget"
+        $upgInfo.Arguments = "upgrade --all --include-unknown --accept-package-agreements --accept-source-agreements --silent"
+        $upgInfo.RedirectStandardOutput = $true
+        $upgInfo.RedirectStandardError = $true
+        $upgInfo.UseShellExecute = $false
+        $upgInfo.CreateNoWindow = $true
+        $upgInfo.StandardOutputEncoding = [System.Text.Encoding]::UTF8
+        
+        $upgProc = New-Object System.Diagnostics.Process
+        $upgProc.StartInfo = $upgInfo
+        [void]$upgProc.Start()
+
+        while (-not $upgProc.HasExited) {
+            if ($upgProc.StandardOutput.Peek() -ne -1) {
+                $line = $upgProc.StandardOutput.ReadLine()
+                if ($line) {
+                    $cleanLine = $line -replace '\x1b\[[0-9;]*[a-zA-Z]', ''
+                    $cleanLine = $cleanLine -replace '[\b\r\n]', ''
+                    $cleanLine = $cleanLine.Trim()
+                    
+                    # Atualiza a barra de progresso com porcentagem em tempo real
+                    if ($cleanLine -match '(\d{1,3})%') {
+                        $pctVal = [int]$matches[1]
+                        if ($pbAppUpgrade) { $pbAppUpgrade.Value = $pctVal }
+                        if ($pbLogsProgress) { $pbLogsProgress.Value = $pctVal }
+                        if ($lblUpgradePercent) { $lblUpgradePercent.Text = "$pctVal%" }
+                        if ($lblLogsProgressPercent) { $lblLogsProgressPercent.Text = "$pctVal%" }
+                    }
+                    
+                    # Atualiza textos de status de download e instalação
+                    if ($cleanLine -match '(MB|KB|GB)') {
+                        if ($lblUpgradeSubtext) { $lblUpgradeSubtext.Text = "Download: $cleanLine" }
+                    } elseif ($cleanLine -match '(Baixando|Downloading|http)') {
+                        if ($lblUpgradeStatus) { $lblUpgradeStatus.Text = "📥 Baixando pacote de atualização..." }
+                        if ($lblLogsProgressTitle) { $lblLogsProgressTitle.Text = "📥 Baixando pacote de atualização..." }
+                    } elseif ($cleanLine -match '(Instalando|Installing|Starting package)') {
+                        if ($lblUpgradeStatus) { $lblUpgradeStatus.Text = "⚙️ Instalando nova versão..." }
+                        if ($lblLogsProgressTitle) { $lblLogsProgressTitle.Text = "⚙️ Instalando nova versão..." }
+                        if ($lblUpgradeSubtext) { $lblUpgradeSubtext.Text = "Aplicando atualização..." }
+                    }
+
+                    $isNoise = $false
+                    if ([string]::IsNullOrWhiteSpace($cleanLine) -or $cleanLine -match '^[\s\-\|\\/]*$' -or $cleanLine -match 'Ôûê|ÔûÆ|█|░|▒|▓|■' -or $cleanLine -match '^\d+%\s*$') {
+                        $isNoise = $true
+                    }
+                    if (-not $isNoise) {
+                        Write-Log "  [WinGet Upgrade] $cleanLine"
+                    }
+                }
+            }
+            Out-DoEvents
+            Start-Sleep -Milliseconds 25
+        }
+
+        while (-not $upgProc.StandardOutput.EndOfStream) {
+            $line = $upgProc.StandardOutput.ReadLine()
+            if ($line) {
+                $cleanLine = $line -replace '\x1b\[[0-9;]*[a-zA-Z]', ''
+                $cleanLine = $cleanLine.Trim()
+                if (-not [string]::IsNullOrWhiteSpace($cleanLine) -and $cleanLine -notmatch 'Ôûê|ÔûÆ|█|░|▒|▓|■') {
+                    Write-Log "  [WinGet Upgrade] $cleanLine"
+                }
+            }
+        }
+
+        if ($pbAppUpgrade) { $pbAppUpgrade.Value = 100 }
+        if ($pbLogsProgress) { $pbLogsProgress.Value = 100 }
+        if ($lblUpgradePercent) { $lblUpgradePercent.Text = "100%" }
+        if ($lblLogsProgressPercent) { $lblLogsProgressPercent.Text = "100%" }
+        if ($lblUpgradeStatus) { $lblUpgradeStatus.Text = "🎉 Atualização Concluída!" }
+        if ($lblUpgradeSubtext) { $lblUpgradeSubtext.Text = "Todos os softwares compatíveis foram atualizados com sucesso." }
+        if ($lblLogsProgressTitle) { $lblLogsProgressTitle.Text = "🎉 Atualização Concluída com Sucesso!" }
+
+        Write-Log "════════════════════════════════════════════════════════" "SUCCESS"
+        Write-Log "🎉 Atualização de Programas Concluída com Sucesso!" "SUCCESS"
+        Write-Log "════════════════════════════════════════════════════════" "SUCCESS"
+        Set-Status "Pronto - Programas Atualizados"
+        Out-DoEvents
+
+        Show-CleanupResultModal -title "Programas Atualizados!" -subtitle "Todos os aplicativos compatíveis foram escaneados e atualizados para a versão mais recente via WinGet." -freedSpace "OK" -deletedCount "✓"
+
+    } catch {
+        Write-Log "Erro ao atualizar programas: $_" "ERROR"
+        Set-Status "Erro na atualização"
+        if ($lblUpgradeStatus) { $lblUpgradeStatus.Text = "❌ Erro na atualização." }
+        if ($lblUpgradeSubtext) { $lblUpgradeSubtext.Text = "$_" }
+    }
 }
 
 # Variáveis globais do desinstalador
@@ -4608,6 +4941,8 @@ $btnDeselectAllApps.Add_Click({
 })
 
 $btnRunApps.Add_Click({ Action-InstallApps })
+if ($null -ne $btnUpgradeApps) { $btnUpgradeApps.Add_Click({ Action-UpgradeApps }) }
+if ($null -ne $btnUpgradeAppsTop) { $btnUpgradeAppsTop.Add_Click({ Action-UpgradeApps }) }
 
 # Botões do Terminal de Logs
 $btnCopyLogs.Add_Click({
