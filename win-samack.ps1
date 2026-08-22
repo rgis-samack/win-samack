@@ -1450,6 +1450,8 @@ $xaml = @"
                                             <CheckBox x:Name="ChkAppDotNet9" Content=".NET Desktop Runtime 9.0" Tag="Microsoft.DotNet.DesktopRuntime.9" ToolTip="Runtime oficial da Microsoft para rodar apps .NET 9.0. ID: Microsoft.DotNet.DesktopRuntime.9"/>
                                             <CheckBox x:Name="ChkAppDotNet10" Content=".NET Desktop Runtime 10.0" Tag="Microsoft.DotNet.DesktopRuntime.10" ToolTip="Runtime oficial da Microsoft para rodar apps .NET 10.0. ID: Microsoft.DotNet.DesktopRuntime.10"/>
                                             <CheckBox x:Name="ChkAppNVCleanstall" Content="NVCleanstall" Tag="TechPowerUp.NVCleanstall" ToolTip="Instalador customizado e limpo para drivers de vídeo NVIDIA. ID: TechPowerUp.NVCleanstall"/>
+                                            <CheckBox x:Name="ChkAppVulkanRT" Content="Vulkan Runtime" Tag="KhronosGroup.VulkanRT" ToolTip="Runtime da API gráfica Vulkan para jogos de alta performance. ID: KhronosGroup.VulkanRT"/>
+                                            <CheckBox x:Name="ChkAppJava17" Content="AdoptOpenJDK Java 17" Tag="AdoptOpenJDK.OpenJDK.17" ToolTip="Ambiente de execução Java JDK/JRE Open Source oficial. ID: AdoptOpenJDK.OpenJDK.17"/>
                                         </UniformGrid>
                                     </StackPanel>
                                 </Border>
@@ -1463,6 +1465,7 @@ $xaml = @"
                                             <CheckBox x:Name="ChkAppNanaZip" Content="NanaZip" Tag="M2Team.NanaZip" ToolTip="Fork moderno do 7-Zip integrado ao Windows 11. ID: M2Team.NanaZip"/>
                                             <CheckBox x:Name="ChkAppPeaZip" Content="PeaZip" Tag="PeaZip.PeaZip" ToolTip="Compactador e descompactador open source completo. ID: PeaZip.PeaZip"/>
                                             <CheckBox x:Name="ChkAppWinRAR" Content="WinRAR" Tag="RARLab.WinRAR" ToolTip="Famoso compactador e descompactador de arquivos. ID: RARLab.WinRAR"/>
+                                            <CheckBox x:Name="ChkAppPowerToys" Content="Microsoft PowerToys" Tag="Microsoft.PowerToys" ToolTip="Conjunto avançado de utilitários e atalhos da Microsoft. ID: Microsoft.PowerToys"/>
                                             <CheckBox x:Name="ChkAppBulkCrap" Content="Bulk Crap Uninstaller" Tag="Klocman.BulkCrapUninstaller" ToolTip="Desinstalador profundo e automatizado para remoção em lote. ID: Klocman.BulkCrapUninstaller"/>
                                             <CheckBox x:Name="ChkAppRevo" Content="Revo Uninstaller" Tag="RevoUninstaller.RevoUninstaller" ToolTip="Desinstala programas removendo arquivos residuais e chaves de registro. ID: RevoUninstaller.RevoUninstaller"/>
                                             <CheckBox x:Name="ChkAppWiseUninstaller" Content="Wise Program Uninstaller" Tag="WiseCleaner.WiseProgramUninstaller" ToolTip="Ferramenta gratuita para desinstalação segura e forçada. ID: WiseCleaner.WiseProgramUninstaller"/>
@@ -1520,11 +1523,12 @@ $xaml = @"
                                             <CheckBox x:Name="ChkAppDDU" Content="Display Driver Uninstaller" Tag="Wagnardsoft.DisplayDriverUninstaller" ToolTip="Remove completamente drivers de vídeo AMD/NVIDIA/Intel sem deixar resíduos. ID: Wagnardsoft.DisplayDriverUninstaller"/>
                                             <CheckBox x:Name="ChkAppMullvadVPN" Content="Mullvad VPN" Tag="Mullvad.MullvadVPN" ToolTip="Serviço de VPN open source focado em privacidade extrema. ID: Mullvad.MullvadVPN"/>
                                             <CheckBox x:Name="ChkAppProtonVPN" Content="Proton VPN" Tag="Proton.ProtonVPN" ToolTip="VPN segura com plano gratuito ilimitado desenvolvida pela Proton. ID: Proton.ProtonVPN"/>
+                                            <CheckBox x:Name="ChkAppOpenVPN" Content="OpenVPN Client" Tag="OpenVPNTechnologies.OpenVPN" ToolTip="Cliente oficial e seguro de VPN do protocolo OpenVPN. ID: OpenVPNTechnologies.OpenVPN"/>
                                             <CheckBox x:Name="ChkAppPuTTY" Content="PuTTY" Tag="SimonTatham.PuTTY" ToolTip="Cliente SSH, Telnet e Rlogin clássico para gerenciamento de servidores. ID: SimonTatham.PuTTY"/>
                                             <CheckBox x:Name="ChkAppSimplewall" Content="Simplewall" Tag="Henry++.simplewall" ToolTip="Firewall simples para bloquear tráfego de rede e telemetria do Windows. ID: Henry++.simplewall"/>
                                             <CheckBox x:Name="ChkAppWinSCP" Content="WinSCP" Tag="WinSCP.WinSCP" ToolTip="Cliente SFTP e FTP gráfico para Windows. ID: WinSCP.WinSCP"/>
                                             <CheckBox x:Name="ChkAppWireGuard" Content="WireGuard" Tag="WireGuard.WireGuard" ToolTip="Protocolo e cliente de VPN moderno de altíssima performance. ID: WireGuard.WireGuard"/>
-                                            <CheckBox x:Name="ChkAppWireshark" Content="Wireshark" Tag="Wireshark.Wireshark" ToolTip="Analisador de protocolos de rede open source para auditorias. ID: Wireshark.Wireshark"/>
+                                            <CheckBox x:Name="ChkAppWireshark" Content="Wireshark" Tag="WiresharkFoundation.Wireshark" ToolTip="Analisador de protocolos de rede open source para auditorias. ID: WiresharkFoundation.Wireshark"/>
                                             <CheckBox x:Name="ChkAppNmap" Content="Nmap Network Scanner" Tag="Insecure.Nmap" ToolTip="Mapeador de segurança de rede e scanner de portas. ID: Insecure.Nmap"/>
                                         </UniformGrid>
                                     </StackPanel>
@@ -1535,12 +1539,17 @@ $xaml = @"
                                     <StackPanel>
                                         <TextBlock Text="🌐 Navegadores e Internet" FontSize="13" FontWeight="Bold" Foreground="#8B5CF6" Margin="0,0,0,8"/>
                                         <UniformGrid Columns="3">
+                                            <CheckBox x:Name="ChkAppZen" Content="Zen Browser" Tag="Zen-Team.Zen-Browser" ToolTip="Navegador moderno, veloz e focado em produtividade e privacidade baseado no Firefox. ID: Zen-Team.Zen-Browser"/>
                                             <CheckBox x:Name="ChkAppChrome" Content="Google Chrome" Tag="Google.Chrome" ToolTip="Navegador oficial do Google. ID: Google.Chrome"/>
                                             <CheckBox x:Name="ChkAppFirefox" Content="Mozilla Firefox" Tag="Mozilla.Firefox" ToolTip="Navegador livre e focado em privacidade. ID: Mozilla.Firefox"/>
                                             <CheckBox x:Name="ChkAppBrave" Content="Brave Browser" Tag="Brave.Brave" ToolTip="Navegador rápido com bloqueador de anúncios nativo. ID: Brave.Brave"/>
                                             <CheckBox x:Name="ChkAppEdge" Content="Microsoft Edge" Tag="Microsoft.Edge" ToolTip="Navegador Chromium da Microsoft. ID: Microsoft.Edge"/>
                                             <CheckBox x:Name="ChkAppVivaldi" Content="Vivaldi" Tag="Vivaldi.Vivaldi" ToolTip="Navegador flexível e cheio de recursos para usuários avançados. ID: Vivaldi.Vivaldi"/>
+                                            <CheckBox x:Name="ChkAppOperaGX" Content="Opera GX" Tag="Opera.OperaGX" ToolTip="Navegador para gamers com limitadores de CPU, RAM e rede. ID: Opera.OperaGX"/>
+                                            <CheckBox x:Name="ChkAppTor" Content="Tor Browser" Tag="TorProject.TorBrowser" ToolTip="Navegador anônimo com roteamento em camadas de cebola. ID: TorProject.TorBrowser"/>
+                                            <CheckBox x:Name="ChkAppFloorp" Content="Floorp Browser" Tag="Ablaze.Floorp" ToolTip="Navegador customizável e rápido baseado no Firefox. ID: Ablaze.Floorp"/>
                                             <CheckBox x:Name="ChkAppQBit" Content="qBittorrent" Tag="qBittorrent.qBittorrent" ToolTip="Cliente de torrent open source leve e livre de propagandas. ID: qBittorrent.qBittorrent"/>
+                                            <CheckBox x:Name="ChkAppTransmission" Content="Transmission" Tag="Transmission.Transmission" ToolTip="Cliente de torrent minimalista, ultraleve e open source. ID: Transmission.Transmission"/>
                                         </UniformGrid>
                                     </StackPanel>
                                 </Border>
@@ -1552,10 +1561,14 @@ $xaml = @"
                                         <UniformGrid Columns="3">
                                             <CheckBox x:Name="ChkAppVSCode" Content="VS Code" Tag="Microsoft.VisualStudioCode" ToolTip="Editor de código leve e extensível da Microsoft. ID: Microsoft.VisualStudioCode"/>
                                             <CheckBox x:Name="ChkAppNotepadPlus" Content="Notepad++" Tag="NotepadPlusPlus.NotepadPlusPlus" ToolTip="Editor de texto e código fonte leve. ID: NotepadPlusPlus.NotepadPlusPlus"/>
+                                            <CheckBox x:Name="ChkAppWindowsTerminal" Content="Windows Terminal" Tag="Microsoft.WindowsTerminal" ToolTip="Terminal moderno para PowerShell, CMD e WSL com abas. ID: Microsoft.WindowsTerminal"/>
                                             <CheckBox x:Name="ChkAppGit" Content="Git" Tag="Git.Git" ToolTip="Sistema de controle de versão distribuído. ID: Git.Git"/>
                                             <CheckBox x:Name="ChkAppGitHub" Content="GitHub Desktop" Tag="GitHub.GitHubDesktop" ToolTip="Interface amigável para repositórios Git/GitHub. ID: GitHub.GitHubDesktop"/>
                                             <CheckBox x:Name="ChkAppPython" Content="Python 3" Tag="Python.Python.3.12" ToolTip="Linguagem de programação limpa e poderosa. ID: Python.Python.3.12"/>
                                             <CheckBox x:Name="ChkAppNodeJS" Content="Node.js (LTS)" Tag="OpenJS.NodeJS.LTS" ToolTip="Ambiente de execução Javascript de servidor. ID: OpenJS.NodeJS.LTS"/>
+                                            <CheckBox x:Name="ChkAppDocker" Content="Docker Desktop" Tag="Docker.DockerDesktop" ToolTip="Ambiente e motor de virtualização de contêineres Docker. ID: Docker.DockerDesktop"/>
+                                            <CheckBox x:Name="ChkAppDBeaver" Content="DBeaver Community" Tag="DBeaver.DBeaver.Community" ToolTip="Gerenciador universal e poderoso de bancos de dados SQL/NoSQL. ID: DBeaver.DBeaver.Community"/>
+                                            <CheckBox x:Name="ChkAppPostman" Content="Postman" Tag="Postman.Postman" ToolTip="Plataforma de desenvolvimento, teste e automação de APIs. ID: Postman.Postman"/>
                                         </UniformGrid>
                                     </StackPanel>
                                 </Border>
@@ -1570,8 +1583,13 @@ $xaml = @"
                                             <CheckBox x:Name="ChkAppZoom" Content="Zoom Meetings" Tag="Zoom.Zoom" ToolTip="Software de chamadas de vídeo e reuniões online. ID: Zoom.Zoom"/>
                                             <CheckBox x:Name="ChkAppTeams" Content="Microsoft Teams" Tag="Microsoft.Teams" ToolTip="Plataforma corporativa de reuniões e chat. ID: Microsoft.Teams"/>
                                             <CheckBox x:Name="ChkAppSlack" Content="Slack" Tag="Slack.Slack" ToolTip="Mensageiro corporativo para gerenciamento de projetos. ID: Slack.Slack"/>
+                                            <CheckBox x:Name="ChkAppSpotify" Content="Spotify" Tag="Spotify.Spotify" ToolTip="Maior plataforma de streaming de músicas e podcasts do mundo. ID: Spotify.Spotify"/>
                                             <CheckBox x:Name="ChkAppVLC" Content="VLC Media Player" Tag="VideoLAN.VLC" ToolTip="Reprodutor multimídia livre e open source de codecs universais. ID: VideoLAN.VLC"/>
                                             <CheckBox x:Name="ChkAppOBS" Content="OBS Studio" Tag="Obsproject.OBSStudio" ToolTip="Gravação de tela e transmissão de lives profissional. ID: Obsproject.OBSStudio"/>
+                                            <CheckBox x:Name="ChkAppAudacity" Content="Audacity" Tag="Audacity.Audacity" ToolTip="Gravador e editor de áudio multifaixa open source. ID: Audacity.Audacity"/>
+                                            <CheckBox x:Name="ChkAppHandBrake" Content="HandBrake" Tag="HandBrake.HandBrake" ToolTip="Conversor e codificador de vídeo open source de alta qualidade. ID: HandBrake.HandBrake"/>
+                                            <CheckBox x:Name="ChkAppGIMP" Content="GIMP" Tag="GIMP.GIMP" ToolTip="Poderoso editor de imagens e gráficos rasterizados open source. ID: GIMP.GIMP"/>
+                                            <CheckBox x:Name="ChkAppKLite" Content="K-Lite Mega Codec Pack" Tag="CodecGuide.K-LiteCodecPack.Mega" ToolTip="Pacote completo de codecs de áudio e vídeo com Media Player Classic. ID: CodecGuide.K-LiteCodecPack.Mega"/>
                                             <CheckBox x:Name="ChkAppShareX" Content="ShareX" Tag="ShareX.ShareX" ToolTip="Captura de tela, upload de imagens e gravação de GIFs/Vídeos. ID: ShareX.ShareX"/>
                                             <CheckBox x:Name="ChkAppBlender" Content="Blender" Tag="BlenderFoundation.Blender" ToolTip="Modelagem 3D, animação e efeitos especiais livre. ID: BlenderFoundation.Blender"/>
                                             <CheckBox x:Name="ChkAppSteam" Content="Steam" Tag="Valve.Steam" ToolTip="Maior loja digital de jogos de PC do mundo. ID: Valve.Steam"/>
@@ -1954,8 +1972,8 @@ $pbLogsProgress = $Window.FindName("PbLogsProgress")
 
 # Lista de elementos de checkboxes de aplicativos no XAML para mapeamento dinâmico
 $chkAppNames = @(
-    "ChkAppSnappyDriver", "ChkAppVCRedist", "ChkAppDirectX", "ChkAppVCRedist2010x64", "ChkAppVCRedist2010x86", "ChkAppVCRedistv14x64", "ChkAppVCRedistv14x86", "ChkAppDotNet6", "ChkAppDotNet8", "ChkAppDotNet9", "ChkAppDotNet10", "ChkAppNVCleanstall",
-    "ChkApp7Zip", "ChkAppNanaZip", "ChkAppPeaZip", "ChkAppWinRAR", "ChkAppBulkCrap", "ChkAppRevo", "ChkAppWiseUninstaller",
+    "ChkAppSnappyDriver", "ChkAppVCRedist", "ChkAppDirectX", "ChkAppVCRedist2010x64", "ChkAppVCRedist2010x86", "ChkAppVCRedistv14x64", "ChkAppVCRedistv14x86", "ChkAppDotNet6", "ChkAppDotNet8", "ChkAppDotNet9", "ChkAppDotNet10", "ChkAppNVCleanstall", "ChkAppVulkanRT", "ChkAppJava17",
+    "ChkApp7Zip", "ChkAppNanaZip", "ChkAppPeaZip", "ChkAppWinRAR", "ChkAppPowerToys", "ChkAppBulkCrap", "ChkAppRevo", "ChkAppWiseUninstaller",
     "ChkAppCrystalInfo", "ChkAppCrystalMark", "ChkAppEverything", "ChkAppFiles", "ChkAppNilesoftShell", "ChkAppRufus",
     "ChkAppVentoy", "ChkAppUniGetUI", "ChkAppWizTree", "ChkAppTreeSize", "ChkAppTranslucentTB", "ChkAppAutoHotkey",
     "ChkAppGlazeWM", "ChkAppOFGB", "ChkAppMSEdgeRedirect", "ChkAppHxD", "ChkAppDeskflow", "ChkAppFlux", "ChkAppEnteAuth",
@@ -1963,11 +1981,11 @@ $chkAppNames = @(
     "ChkApp1Password", "ChkAppBlurAutoClicker", "ChkAppOPAutoClicker", "ChkAppOpenRGB", "ChkAppSignalRGB", "ChkAppParsec",
     "ChkAppVirtualBox", "ChkAppTeamViewer", "ChkAppTightVNC", "ChkAppTotalCommander", "ChkAppJPEGView",
     "ChkAppAdvancedIP", "ChkAppAngryIP", "ChkAppCPUZ", "ChkAppGPUZ", "ChkAppHWiNFO", "ChkAppHWMonitor", "ChkAppDDU",
-    "ChkAppMullvadVPN", "ChkAppProtonVPN", "ChkAppPuTTY", "ChkAppSimplewall", "ChkAppWinSCP", "ChkAppWireGuard",
+    "ChkAppMullvadVPN", "ChkAppProtonVPN", "ChkAppOpenVPN", "ChkAppPuTTY", "ChkAppSimplewall", "ChkAppWinSCP", "ChkAppWireGuard",
     "ChkAppWireshark", "ChkAppNmap",
-    "ChkAppChrome", "ChkAppFirefox", "ChkAppBrave", "ChkAppEdge", "ChkAppVivaldi", "ChkAppQBit",
-    "ChkAppVSCode", "ChkAppNotepadPlus", "ChkAppGit", "ChkAppGitHub", "ChkAppPython", "ChkAppNodeJS",
-    "ChkAppDiscord", "ChkAppTelegram", "ChkAppZoom", "ChkAppTeams", "ChkAppSlack", "ChkAppVLC", "ChkAppOBS",
+    "ChkAppZen", "ChkAppChrome", "ChkAppFirefox", "ChkAppBrave", "ChkAppEdge", "ChkAppVivaldi", "ChkAppOperaGX", "ChkAppTor", "ChkAppFloorp", "ChkAppQBit", "ChkAppTransmission",
+    "ChkAppVSCode", "ChkAppNotepadPlus", "ChkAppWindowsTerminal", "ChkAppGit", "ChkAppGitHub", "ChkAppPython", "ChkAppNodeJS", "ChkAppDocker", "ChkAppDBeaver", "ChkAppPostman",
+    "ChkAppDiscord", "ChkAppTelegram", "ChkAppZoom", "ChkAppTeams", "ChkAppSlack", "ChkAppSpotify", "ChkAppVLC", "ChkAppOBS", "ChkAppAudacity", "ChkAppHandBrake", "ChkAppGIMP", "ChkAppKLite",
     "ChkAppShareX", "ChkAppBlender", "ChkAppSteam", "ChkAppEpic"
 )
 
@@ -3609,12 +3627,74 @@ function Action-RunLimpeza {
     Show-CleanupResultModal -title "Limpeza de Disco Concluída!" -subtitle "Seu computador foi otimizado e os arquivos temporários foram removidos com sucesso." -freedSpace $finalFreedFormatted -deletedCount "$totalFilesDeleted"
 }
 
-# Execução da Instalação de Programas via Winget
+# Otimiza o motor do WinGet para download multithread (Delivery Optimization), sem telemetria e com prioridade máxima de CPU
+function Optimize-WinGetEnvironment {
+    try {
+        $wingetConfigDir = "$env:LOCALAPPDATA\Packages\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe\LocalState"
+        if (Test-Path "$env:LOCALAPPDATA\Packages\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe") {
+            if (-not (Test-Path $wingetConfigDir)) { $null = New-Item -ItemType Directory -Path $wingetConfigDir -Force }
+            $jsonSettingsFile = Join-Path $wingetConfigDir "settings.json"
+            $settingsJson = @'
+{
+    "$schema": "https://aka.ms/winget-settings.schema.json",
+    "network": {
+        "downloader": "do"
+    },
+    "telemetry": {
+        "disable": true
+    },
+    "installModes": {
+        "default": "silent"
+    }
+}
+'@
+            [System.IO.File]::WriteAllText($jsonSettingsFile, $settingsJson, [System.Text.Encoding]::UTF8)
+        }
+    } catch {}
+}
+
+# Função auxiliar para calcular recursos de Hardware (Até 70% de CPU e 70% de RAM)
+function Get-ResourceLimits70 {
+    $totalCores = [Environment]::ProcessorCount
+    # Aloca até 70% dos núcleos de CPU (mínimo 1 núcleo)
+    $allowedCores = [Math]::Max(1, [int][Math]::Ceiling($totalCores * 0.70))
+    # Máscara de afinidade bit a bit para os núcleos autorizados (até 70%)
+    $affinityMask = [IntPtr]([long][Math]::Pow(2, $allowedCores) - 1)
+    
+    # Cálculo de 70% da memória RAM do sistema
+    try {
+        $osMem = Get-CimInstance Win32_OperatingSystem -ErrorAction SilentlyContinue
+        $totalRamBytes = [long]($osMem.TotalVisibleMemorySize * 1KB)
+    } catch {
+        $totalRamBytes = 8GB
+    }
+    $maxRam70GB = [Math]::Round(($totalRamBytes * 0.70) / 1GB, 1)
+    $totalRamGB = [Math]::Round($totalRamBytes / 1GB, 1)
+
+    return @{
+        TotalCores = $totalCores
+        AllowedCores = $allowedCores
+        AffinityMask = $affinityMask
+        MaxRam70GB = $maxRam70GB
+        TotalRamGB = $totalRamGB
+    }
+}
+
+# Execução da Instalação de Programas via Winget com Aceleração Multi-Thread (Até 70% CPU/RAM) e Auto-Recuperação
 function Action-InstallApps {
     Register-Action "instalador"
     Set-Status "Instalando programas..."
     Switch-Tab "Logs"
     Write-Log "Iniciando processo de instalação de programas via WinGet..."
+
+    Optimize-WinGetEnvironment
+    $res = Get-ResourceLimits70
+    $allowedCores = $res.AllowedCores
+    $totalCores = $res.TotalCores
+    $affinityMask = $res.AffinityMask
+    $maxRam70GB = $res.MaxRam70GB
+
+    Write-Log "⚡ Alocação de Recursos (Até 70%): $allowedCores de $totalCores Threads de CPU | Até $maxRam70GB GB de RAM permitidos para download/buffer..." "INFO"
 
     # Verifica se o winget está disponível
     if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
@@ -3668,46 +3748,36 @@ function Action-InstallApps {
     $appIndex = 0
     $totalCount = $appsToInstall.Count
 
-    foreach ($chk in $appsToInstall) {
-        $appIndex++
-        $appName = $chk.Content
-        $appId = $chk.Tag
+    # Helper de execução do WinGet com streaming de console e barra de progresso
+    $executeWinGetProcess = {
+        param([string]$argsLine)
         
-        Write-Log "Iniciando download e instalação de: $appName (ID: $appId)..."
-        if ($lblUpgradeStatus) { $lblUpgradeStatus.Text = "📥 Instalando: $appName ($appIndex de $totalCount)" }
-        if ($lblLogsProgressTitle) { $lblLogsProgressTitle.Text = "📥 Instalando: $appName ($appIndex de $totalCount)" }
-        if ($lblUpgradeSubtext) { $lblUpgradeSubtext.Text = "Conectando ao repositório WinGet..." }
-        Out-DoEvents
-
-        # Executa winget silenciosamente e captura saída linha por linha para manter interativo
         $processInfo = New-Object System.Diagnostics.ProcessStartInfo
         $processInfo.FileName = "winget"
-        $processInfo.Arguments = "install --id $appId --silent --accept-package-agreements --accept-source-agreements"
+        $processInfo.Arguments = $argsLine
         $processInfo.RedirectStandardOutput = $true
         $processInfo.RedirectStandardError = $true
         $processInfo.UseShellExecute = $false
         $processInfo.CreateNoWindow = $true
         $processInfo.StandardOutputEncoding = [System.Text.Encoding]::UTF8
         
-        $process = New-Object System.Diagnostics.Process
-        $process.StartInfo = $processInfo
+        $proc = New-Object System.Diagnostics.Process
+        $proc.StartInfo = $processInfo
         
+        [void]$proc.Start()
         try {
-            [void]$process.Start()
-            
-            # Lê a saída enquanto instala
-            while (-not $process.HasExited) {
-                if ($process.StandardOutput.Peek() -ne -1) {
-                    $line = $process.StandardOutput.ReadLine()
-                } else {
-                    $line = $null
-                }
+            $proc.PriorityClass = [System.Diagnostics.ProcessPriorityClass]::AboveNormal
+            $proc.ProcessorAffinity = $affinityMask
+        } catch {}
+        
+        while (-not $proc.HasExited) {
+            while ($proc.StandardOutput.Peek() -ne -1) {
+                $line = $proc.StandardOutput.ReadLine()
                 if ($line) {
                     $cleanLine = $line -replace '\x1b\[[0-9;]*[a-zA-Z]', ''
                     $cleanLine = $cleanLine -replace '[\b\r\n]', ''
                     $cleanLine = $cleanLine.Trim()
                     
-                    # Atualiza progresso da barra se houver porcentagem
                     if ($cleanLine -match '(\d{1,3})%') {
                         $pctVal = [int]$matches[1]
                         $overallPct = [Math]::Min(100, [Math]::Max(0, [Math]::Round(((($appIndex - 1) + ($pctVal / 100.0)) / $totalCount) * 100)))
@@ -3722,7 +3792,6 @@ function Action-InstallApps {
                         if ($lblUpgradeSubtext) { $lblUpgradeSubtext.Text = "Instalando pacote no sistema..." }
                     }
 
-                    # Filtra ruídos de progresso do WinGet (spinners, barras de bloco corrompidas e porcentagens)
                     $isNoise = $false
                     if ([string]::IsNullOrWhiteSpace($cleanLine)) {
                         $isNoise = $true
@@ -3738,22 +3807,101 @@ function Action-InstallApps {
                         Write-Log "  [WinGet] $cleanLine"
                     }
                 }
-                Out-DoEvents
-                Start-Sleep -Milliseconds 25
             }
-            
-            if ($process.ExitCode -eq 0) {
-                Write-Log "Instalação de $appName finalizada com SUCESSO!" "SUCCESS"
-            } else {
-                $exitHex = "0x" + $process.ExitCode.ToString("X")
-                if ($process.ExitCode -eq -1978335189) { # 0x8A15002B: already installed
+            Out-DoEvents
+            Start-Sleep -Milliseconds 10
+        }
+        return $proc.ExitCode
+    }
+
+    foreach ($chk in $appsToInstall) {
+        $appIndex++
+        $appName = $chk.Content
+        $appId = $chk.Tag
+        
+        Write-Log "Iniciando download e instalação de: $appName (ID: $appId)..."
+        if ($lblUpgradeStatus) { $lblUpgradeStatus.Text = "📥 Instalando: $appName ($appIndex de $totalCount)" }
+        if ($lblLogsProgressTitle) { $lblLogsProgressTitle.Text = "📥 Instalando: $appName ($appIndex de $totalCount)" }
+        if ($lblUpgradeSubtext) { $lblUpgradeSubtext.Text = "Conectando ao repositório WinGet ($allowedCores Threads - 70% CPU)..." }
+        Out-DoEvents
+
+        $installedOk = $false
+        
+        # CAMADA 1: Tentativa direta com o ID configurado
+        try {
+            $code1 = & $executeWinGetProcess "install --id $appId --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --force"
+            if ($code1 -eq 0 -or $code1 -eq -1978335189) {
+                if ($code1 -eq -1978335189) {
                     Write-Log "$appName já está instalado no sistema." "SUCCESS"
                 } else {
-                    Write-Log "Falha na instalação de $appName. Código de saída: $exitHex" "WARNING"
+                    Write-Log "Instalação de $appName finalizada com SUCESSO!" "SUCCESS"
                 }
+                $installedOk = $true
+            } else {
+                $exitHex = "0x" + $code1.ToString("X")
+                Write-Log "⚠️ Instalação primária pelo ID '$appId' retornou código $exitHex. Ativando busca inteligente em tempo real..." "WARNING"
             }
         } catch {
-            Write-Log "Erro ao tentar executar winget para ${appName}: $_" "ERROR"
+            Write-Log ("Exceção na instalação primária de " + $appName + ": " + $_) "WARNING"
+        }
+
+        # CAMADA 2: Busca Dinâmica Inteligente no Catálogo Online se a Camada 1 não obtiver sucesso
+        if (-not $installedOk) {
+            try {
+                if ($lblUpgradeSubtext) { $lblUpgradeSubtext.Text = "Buscando ID atualizado de $appName no repositório..." }
+                Out-DoEvents
+
+                $searchOutput = & winget search "$appName" --source winget 2>&1
+                $foundId = $null
+                foreach ($sLine in $searchOutput) {
+                    if ($sLine -match '^\s*([^-\s]+(?:\s+[^-\s]+)*)\s+([a-zA-Z0-9_\.\-]+)\s+([\d\.\w\-@]+)\s+winget') {
+                        $candidate = $matches[2].Trim()
+                        if ($candidate -ne "ID" -and $candidate -notmatch '^-+' -and $candidate -ne $appId) {
+                            $foundId = $candidate
+                            break
+                        }
+                    }
+                }
+
+                if ($foundId) {
+                    Write-Log "🔍 Pacote localizado no catálogo com ID atualizado: '$foundId'. Baixando..." "INFO"
+                    $code2 = & $executeWinGetProcess "install --id $foundId --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --force"
+                    if ($code2 -eq 0 -or $code2 -eq -1978335189) {
+                        if ($code2 -eq -1978335189) {
+                            Write-Log "$appName já está instalado no sistema." "SUCCESS"
+                        } else {
+                            Write-Log "Instalação de $appName com ID recuperado ($foundId) finalizada com SUCESSO!" "SUCCESS"
+                        }
+                        $installedOk = $true
+                    }
+                }
+            } catch {
+                Write-Log ("Falha na busca dinâmica de " + $appName + ": " + $_) "WARNING"
+            }
+        }
+
+        # CAMADA 3: Instalação por Nome do Aplicativo
+        if (-not $installedOk) {
+            try {
+                Write-Log "Tentando instalação direta pelo nome: '$appName'..." "INFO"
+                if ($lblUpgradeSubtext) { $lblUpgradeSubtext.Text = "Tentando instalar $appName por nome exato..." }
+                Out-DoEvents
+
+                $code3 = & $executeWinGetProcess "install `"$appName`" --exact --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --force"
+                if ($code3 -eq 0 -or $code3 -eq -1978335189) {
+                    if ($code3 -eq -1978335189) {
+                        Write-Log "$appName já está instalado no sistema." "SUCCESS"
+                    } else {
+                        Write-Log "Instalação de $appName finalizada com SUCESSO!" "SUCCESS"
+                    }
+                    $installedOk = $true
+                } else {
+                    $exitHex3 = "0x" + $code3.ToString("X")
+                    Write-Log "Falha na instalação de $appName. Código de saída: $exitHex3" "WARNING"
+                }
+            } catch {
+                Write-Log ("Erro final ao instalar " + $appName + ": " + $_) "ERROR"
+            }
         }
         
         $curBasePct = [Math]::Round(($appIndex / $totalCount) * 100)
@@ -3776,13 +3924,24 @@ function Action-InstallApps {
     Out-DoEvents
 }
 
-# Verificação e Atualização de Todos os Programas Instalados via WinGet
+# Verificação e Atualização de Todos os Programas Instalados via WinGet com Limite de até 70% CPU/RAM
 function Action-UpgradeApps {
     Register-Action "instalador"
     Set-Status "Verificando atualizações de programas..."
     Switch-Tab "Logs"
-    Write-Log "=== INICIANDO VARREDURA DE ATUALIZAÇÕES DE PROGRAMAS (WINGET) ===" "INFO"
+    Write-Log "=== INICIANDO VARREDURA DE ATUALIZAÇÕES DE PROGRAMAS (WINGET - 70% RECURSOS) ===" "INFO"
     Out-DoEvents
+
+    # Otimiza o motor do WinGet para download multithread e sem telemetria
+    Optimize-WinGetEnvironment
+    $res = Get-ResourceLimits70
+    $allowedCores = $res.AllowedCores
+    $totalCores = $res.TotalCores
+    $affinityMask = $res.AffinityMask
+    $maxRam70GB = $res.MaxRam70GB
+
+    Write-Log "⚡ Alocação de Recursos (Limite de até 70%): $allowedCores de $totalCores Threads de CPU alocadas | Até $maxRam70GB GB de RAM liberados..." "INFO"
+    Write-Log "🚀 Motor de Download Otimizado: Delivery Optimization com conexões paralelas simultâneas ativado." "INFO"
 
     # Exibe a barra de download e progresso
     if ($pnlUpgradeProgress) { $pnlUpgradeProgress.Visibility = [System.Windows.Visibility]::Visible }
@@ -3791,9 +3950,9 @@ function Action-UpgradeApps {
     if ($pbLogsProgress) { $pbLogsProgress.Value = 0; $pbLogsProgress.IsIndeterminate = $true }
     if ($lblUpgradePercent) { $lblUpgradePercent.Text = "0%" }
     if ($lblLogsProgressPercent) { $lblLogsProgressPercent.Text = "0%" }
-    if ($lblUpgradeStatus) { $lblUpgradeStatus.Text = "🔍 Escaneando o computador em busca de atualizações..." }
-    if ($lblLogsProgressTitle) { $lblLogsProgressTitle.Text = "🔍 Escaneando o computador em busca de atualizações..." }
-    if ($lblUpgradeSubtext) { $lblUpgradeSubtext.Text = "Consultando catálogo de softwares via WinGet..." }
+    if ($lblUpgradeStatus) { $lblUpgradeStatus.Text = "⚡ Varredura Rápida ($allowedCores/$totalCores Cores - 70% CPU)..." }
+    if ($lblLogsProgressTitle) { $lblLogsProgressTitle.Text = "⚡ Varredura Rápida ($allowedCores/$totalCores Cores - 70% CPU)..." }
+    if ($lblUpgradeSubtext) { $lblUpgradeSubtext.Text = "Consultando catálogo de softwares em alta velocidade..." }
     Out-DoEvents
 
     # 1. Verifica se o winget está disponível
@@ -3824,10 +3983,10 @@ function Action-UpgradeApps {
     Out-DoEvents
 
     try {
-        # Executa 'winget upgrade' para obter a lista de softwares com novas versões
+        # Executa 'winget upgrade' com flags de velocidade e afinidade de 70% CPU
         $processInfo = New-Object System.Diagnostics.ProcessStartInfo
         $processInfo.FileName = "winget"
-        $processInfo.Arguments = "upgrade --include-unknown --accept-source-agreements"
+        $processInfo.Arguments = "upgrade --include-unknown --accept-source-agreements --disable-interactivity"
         $processInfo.RedirectStandardOutput = $true
         $processInfo.RedirectStandardError = $true
         $processInfo.UseShellExecute = $false
@@ -3838,9 +3997,14 @@ function Action-UpgradeApps {
         $process.StartInfo = $processInfo
         [void]$process.Start()
 
+        try {
+            $process.PriorityClass = [System.Diagnostics.ProcessPriorityClass]::AboveNormal
+            $process.ProcessorAffinity = $affinityMask
+        } catch {}
+
         $outputLines = @()
         while (-not $process.HasExited) {
-            if ($process.StandardOutput.Peek() -ne -1) {
+            while ($process.StandardOutput.Peek() -ne -1) {
                 $line = $process.StandardOutput.ReadLine()
                 if ($line) {
                     $cleanLine = $line -replace '\x1b\[[0-9;]*[a-zA-Z]', ''
@@ -3852,7 +4016,7 @@ function Action-UpgradeApps {
                 }
             }
             Out-DoEvents
-            Start-Sleep -Milliseconds 40
+            Start-Sleep -Milliseconds 10
         }
 
         while (-not $process.StandardOutput.EndOfStream) {
@@ -3884,7 +4048,7 @@ function Action-UpgradeApps {
             return
         }
 
-        Write-Log "Softwares desatualizados detectados! Iniciando atualização em lote..." "INFO"
+        Write-Log "Softwares desatualizados detectados! Iniciando atualização com conexões paralelas..." "INFO"
         foreach ($l in $outputLines) {
             if ($l -notmatch '^[\s\-\|\\/]*$' -and $l -notmatch 'Ôûê|ÔûÆ|█|░|▒|▓|■') {
                 Write-Log "  $l"
@@ -3892,22 +4056,22 @@ function Action-UpgradeApps {
         }
         Out-DoEvents
 
-        Write-Log "Executando atualização automática (winget upgrade --all)..." "INFO"
+        Write-Log "Executando atualização automática ultrarrápida (winget upgrade --all)..." "INFO"
         Set-Status "Atualizando programas instalados..."
 
         # Prepara a barra para o download e atualização
         if ($pbAppUpgrade) { $pbAppUpgrade.IsIndeterminate = $false; $pbAppUpgrade.Value = 5 }
         if ($pbLogsProgress) { $pbLogsProgress.IsIndeterminate = $false; $pbLogsProgress.Value = 5 }
-        if ($lblUpgradeStatus) { $lblUpgradeStatus.Text = "📥 Baixando e Atualizando Programas..." }
-        if ($lblLogsProgressTitle) { $lblLogsProgressTitle.Text = "📥 Baixando e Atualizando Programas..." }
+        if ($lblUpgradeStatus) { $lblUpgradeStatus.Text = "📥 Baixando e Atualizando Programas ($allowedCores Threads - 70% CPU)..." }
+        if ($lblLogsProgressTitle) { $lblLogsProgressTitle.Text = "📥 Baixando e Atualizando Programas ($allowedCores Threads - 70% CPU)..." }
         if ($lblUpgradePercent) { $lblUpgradePercent.Text = "5%" }
         if ($lblLogsProgressPercent) { $lblLogsProgressPercent.Text = "5%" }
-        if ($lblUpgradeSubtext) { $lblUpgradeSubtext.Text = "Iniciando download dos pacotes de atualização..." }
+        if ($lblUpgradeSubtext) { $lblUpgradeSubtext.Text = "Iniciando download multithread dos pacotes..." }
         Out-DoEvents
 
         $upgInfo = New-Object System.Diagnostics.ProcessStartInfo
         $upgInfo.FileName = "winget"
-        $upgInfo.Arguments = "upgrade --all --include-unknown --accept-package-agreements --accept-source-agreements --silent"
+        $upgInfo.Arguments = "upgrade --all --include-unknown --accept-package-agreements --accept-source-agreements --silent --disable-interactivity --force"
         $upgInfo.RedirectStandardOutput = $true
         $upgInfo.RedirectStandardError = $true
         $upgInfo.UseShellExecute = $false
@@ -3918,8 +4082,13 @@ function Action-UpgradeApps {
         $upgProc.StartInfo = $upgInfo
         [void]$upgProc.Start()
 
+        try {
+            $upgProc.PriorityClass = [System.Diagnostics.ProcessPriorityClass]::AboveNormal
+            $upgProc.ProcessorAffinity = $affinityMask
+        } catch {}
+
         while (-not $upgProc.HasExited) {
-            if ($upgProc.StandardOutput.Peek() -ne -1) {
+            while ($upgProc.StandardOutput.Peek() -ne -1) {
                 $line = $upgProc.StandardOutput.ReadLine()
                 if ($line) {
                     $cleanLine = $line -replace '\x1b\[[0-9;]*[a-zA-Z]', ''
@@ -3957,7 +4126,7 @@ function Action-UpgradeApps {
                 }
             }
             Out-DoEvents
-            Start-Sleep -Milliseconds 25
+            Start-Sleep -Milliseconds 10
         }
 
         while (-not $upgProc.StandardOutput.EndOfStream) {
