@@ -81,9 +81,9 @@ $null = $global:cpuCounter.NextValue() # Primeira chamada inicializa o contador
 $xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Samack WinUtil" Height="740" Width="1180" MinHeight="680" MinWidth="1050"
+        Title="Samack WinUtil" Height="720" Width="1140" MinHeight="580" MinWidth="920"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="Manual">
     
     <Window.Resources>
         <!-- Estilo Customizado para a Barra de Rolagem (ScrollBar) Escura e Moderna -->
@@ -147,14 +147,17 @@ $xaml = @"
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Background" Value="#3B82F6"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="Padding" Value="10,4"/>
+            <Setter Property="MinHeight" Value="32"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="border" CornerRadius="8" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Border x:Name="border" CornerRadius="8" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" SnapsToDevicePixels="True"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
@@ -177,20 +180,23 @@ $xaml = @"
         <Style TargetType="Button" x:Key="AccentButton">
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="20,12"/>
+            <Setter Property="Padding" Value="10,4"/>
+            <Setter Property="MinHeight" Value="32"/>
             <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="border" CornerRadius="8" Padding="{TemplateBinding Padding}">
+                        <Border x:Name="border" CornerRadius="8" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
                             <Border.Background>
                                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                                     <GradientStop Color="#3B82F6" Offset="0"/>
                                     <GradientStop Color="#8B5CF6" Offset="1"/>
                                 </LinearGradientBrush>
                             </Border.Background>
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" SnapsToDevicePixels="True"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
@@ -514,10 +520,20 @@ $xaml = @"
                                                 </Grid.ColumnDefinitions>
                                                 
                                                 <!-- Botão 1: Limpeza Instantânea -->
-                                                <Button Grid.Column="0" x:Name="BtnCleanRAM" Content="⚡ Limpar RAM Agora" Style="{StaticResource AccentButton}" Height="34" FontSize="11" FontWeight="SemiBold" ToolTip="Executa uma limpeza profunda e imediata da memória RAM no momento."/>
+                                                <Button Grid.Column="0" x:Name="BtnCleanRAM" Style="{StaticResource AccentButton}" MinHeight="36" Padding="6,4" ToolTip="Executa uma limpeza profunda e imediata da memória RAM no momento.">
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <TextBlock Text="⚡" FontSize="11" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                                                        <TextBlock Text="Limpar RAM Agora" FontSize="11" FontWeight="Bold" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
                                                 
                                                 <!-- Botão 2: Limpeza Contínua (Segundo Plano) -->
-                                                <Button Grid.Column="2" x:Name="BtnAutoCleanRAM" Content="🔄 Limpeza Contínua: OFF" Style="{StaticResource ModernButton}" Background="#1E293B" Height="34" FontSize="10.5" FontWeight="SemiBold" ToolTip="Mantém a memória RAM otimizada automaticamente em segundo plano a cada poucos segundos enquanto o programa estiver aberto."/>
+                                                <Button Grid.Column="2" x:Name="BtnAutoCleanRAM" Style="{StaticResource ModernButton}" Background="#1E293B" MinHeight="36" Padding="6,4" ToolTip="Mantém a memória RAM otimizada automaticamente em segundo plano a cada poucos segundos enquanto o programa estiver aberto.">
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <TextBlock x:Name="TxtAutoRamIcon" Text="🔄" FontSize="11" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                                                        <TextBlock x:Name="TxtAutoRamStatus" Text="Limpeza Contínua: OFF" FontSize="10.5" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
                                             </Grid>
                                         </StackPanel>
                                     </Border>
@@ -1765,6 +1781,34 @@ $btnMinimize = $Window.FindName("BtnMinimize")
 $btnMaximize = $Window.FindName("BtnMaximize")
 $windowBorder = $Window.FindName("WindowBorder")
 
+# Eventos da Janela Principal (Arrastar, Minimizar, Maximizar, Fechar)
+if ($null -ne $titleBar) {
+    $titleBar.Add_MouseDown({
+        if ($args[1].LeftButton -eq [System.Windows.Input.MouseButtonState]::Pressed) {
+            $Window.DragMove()
+        }
+    })
+}
+if ($null -ne $btnClose) {
+    $btnClose.Add_Click({
+        $Window.Close()
+    })
+}
+if ($null -ne $btnMinimize) {
+    $btnMinimize.Add_Click({
+        $Window.WindowState = [System.Windows.WindowState]::Minimized
+    })
+}
+if ($null -ne $btnMaximize) {
+    $btnMaximize.Add_Click({
+        if ($Window.WindowState -eq [System.Windows.WindowState]::Maximized) {
+            $Window.WindowState = [System.Windows.WindowState]::Normal
+        } else {
+            $Window.WindowState = [System.Windows.WindowState]::Maximized
+        }
+    })
+}
+
 # Mapeando Abas do Menu Lateral
 $btnTabPainel = $Window.FindName("BtnTabPainel")
 $btnTabDebloat = $Window.FindName("BtnTabDebloat")
@@ -1910,6 +1954,8 @@ $btnCleanRAM = $Window.FindName("BtnCleanRAM")
 $btnAutoCleanRAM = $Window.FindName("BtnAutoCleanRAM")
 $badgeAutoRam = $Window.FindName("BadgeAutoRam")
 $txtAutoRamBadge = $Window.FindName("TxtAutoRamBadge")
+$txtAutoRamIcon = $Window.FindName("TxtAutoRamIcon")
+$txtAutoRamStatus = $Window.FindName("TxtAutoRamStatus")
 $lvTopProcesses = $Window.FindName("LvTopProcesses")
 # Novos botões de atalhos rápidos do Painel
 $btnShortcutDev = $Window.FindName("BtnShortcutDev")
@@ -2222,8 +2268,8 @@ function Show-CleanupResultModal {
         $xmlReader = [System.Xml.XmlReader]::Create((New-Object System.IO.StringReader($modalXaml)))
         $modalWin = [System.Windows.Markup.XamlReader]::Load($xmlReader)
 
-        $btnClose = $modalWin.FindName("BtnCloseCleanupModal")
-        $btnOk = $modalWin.FindName("BtnOkCleanupModal")
+        $modalBtnClose = $modalWin.FindName("BtnCloseCleanupModal")
+        $modalBtnOk = $modalWin.FindName("BtnOkCleanupModal")
         $header = $modalWin.FindName("HeaderCleanupModal")
 
         if ($null -ne $header) {
@@ -2234,11 +2280,11 @@ function Show-CleanupResultModal {
             })
         }
 
-        if ($null -ne $btnClose) {
-            $btnClose.Add_Click({ $modalWin.Close() })
+        if ($null -ne $modalBtnClose) {
+            $modalBtnClose.Add_Click({ $modalWin.Close() })
         }
-        if ($null -ne $btnOk) {
-            $btnOk.Add_Click({ $modalWin.Close() })
+        if ($null -ne $modalBtnOk) {
+            $modalBtnOk.Add_Click({ $modalWin.Close() })
         }
 
         $modalWin.ShowDialog() | Out-Null
@@ -2355,8 +2401,9 @@ function Action-ToggleAutoCleanRAM {
     $global:autoRamCleaningEnabled = -not $global:autoRamCleaningEnabled
     
     if ($global:autoRamCleaningEnabled) {
+        if ($null -ne $txtAutoRamIcon) { $txtAutoRamIcon.Text = "🟢" }
+        if ($null -ne $txtAutoRamStatus) { $txtAutoRamStatus.Text = "Limpeza: ATIVA" }
         if ($null -ne $btnAutoCleanRAM) {
-            $btnAutoCleanRAM.Content = "🟢 Limpeza Contínua: ATIVA"
             $btnAutoCleanRAM.Background = [System.Windows.Media.Brush]"#065F46"
             $btnAutoCleanRAM.ToolTip = "Auto-limpeza contínua ativada. Clique para desativar."
         }
@@ -2387,8 +2434,9 @@ function Action-ToggleAutoCleanRAM {
             if ($null -ne $lblRAMDetail) { $lblRAMDetail.Text = "$usedGB GB usados de $totalGB GB" }
         }
     } else {
+        if ($null -ne $txtAutoRamIcon) { $txtAutoRamIcon.Text = "🔄" }
+        if ($null -ne $txtAutoRamStatus) { $txtAutoRamStatus.Text = "Limpeza Contínua: OFF" }
         if ($null -ne $btnAutoCleanRAM) {
-            $btnAutoCleanRAM.Content = "🔄 Limpeza Contínua: OFF"
             $btnAutoCleanRAM.Background = [System.Windows.Media.Brush]"#1E293B"
             $btnAutoCleanRAM.ToolTip = "Clique para ativar a auto-limpeza contínua em segundo plano."
         }
@@ -5494,7 +5542,52 @@ if ($base64QrCode -and $base64QrCode -ne "/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAQFBQ
 Switch-Tab "Painel"
 Write-Log "Sistema inicializado com sucesso. Pronto para execução."
 
-# 10. Executa o Loop da Janela WPF
+# 10. Detecção Inteligente do Tipo de Tela e Redimensionamento Proporcional (Notebooks e Desktops)
+try {
+    $primaryScreen = [System.Windows.Forms.Screen]::PrimaryScreen
+    $workArea = $primaryScreen.WorkingArea
+    $screenWidth = $workArea.Width
+    $screenHeight = $workArea.Height
+
+    # Proporções responsivas ideais para que NUNCA preencha a tela toda (mantendo 65-88% da área útil)
+    if ($screenWidth -le 1366 -or $screenHeight -le 768) {
+        # Notebooks e Telas Menores (ex: 1366x768, 1280x720, ou 1080p c/ escala alta de 125%/150%)
+        $calcW = [int]($screenWidth * 0.88)
+        $calcH = [int]($screenHeight * 0.88)
+        $calcW = [Math]::Min($calcW, 1080)
+        $calcH = [Math]::Min($calcH, 680)
+        $calcW = [Math]::Max($calcW, 940)
+        $calcH = [Math]::Max($calcH, 600)
+    } elseif ($screenWidth -le 1920 -and $screenHeight -le 1080) {
+        # Desktops e Laptops Full HD (1920x1080)
+        $calcW = [int]($screenWidth * 0.64)  # ~1220px
+        $calcH = [int]($screenHeight * 0.72) # ~740px
+        $calcW = [Math]::Min($calcW, 1200)
+        $calcH = [Math]::Min($calcH, 740)
+        $calcW = [Math]::Max($calcW, 1060)
+        $calcH = [Math]::Max($calcH, 680)
+    } else {
+        # Monitores Maiores (1440p 2K, 4K ou Ultrawide)
+        $calcW = [int]($screenWidth * 0.52)
+        $calcH = [int]($screenHeight * 0.62)
+        $calcW = [Math]::Min($calcW, 1260)
+        $calcH = [Math]::Min($calcH, 780)
+        $calcW = [Math]::Max($calcW, 1140)
+        $calcH = [Math]::Max($calcH, 720)
+    }
+
+    $Window.Width = $calcW
+    $Window.Height = $calcH
+    $Window.Left = [Math]::Max(10, [int](($screenWidth - $calcW) / 2) + $workArea.Left)
+    $Window.Top = [Math]::Max(10, [int](($screenHeight - $calcH) / 2) + $workArea.Top)
+    
+    Write-Log "Monitor detectado: Resolução útil $($screenWidth)x$($screenHeight). Janela ajustada proporcionalmente para $($calcW)x$($calcH)." "INFO"
+} catch {
+    $Window.Width = 1140
+    $Window.Height = 720
+}
+
+# 11. Executa o Loop da Janela WPF
 $Window.ShowDialog() | Out-Null
 $hardwareTimer.Stop()
 $processTimer.Stop()
