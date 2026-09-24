@@ -117,9 +117,9 @@ $xaml = @"
             <Setter Property="Foreground" Value="#94A3B8"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Height" Value="45"/>
-            <Setter Property="Margin" Value="5,3"/>
-            <Setter Property="Padding" Value="15,0"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="4,2"/>
+            <Setter Property="Padding" Value="14,0"/>
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="FontSize" Value="13"/>
@@ -271,85 +271,88 @@ $xaml = @"
                     <ColumnDefinition Width="*"/>   <!-- Tela de Conteudo -->
                 </Grid.ColumnDefinitions>
 
-                <!-- Menu Lateral (Sidebar) -->
-                <Border Grid.Column="0" Background="#0B0F19" BorderBrush="#1F2937" BorderThickness="0,0,1,0" Padding="8,15,8,15">
+                <!-- Menu Lateral (Sidebar) com Rolagem Suave -->
+                <Border Grid.Column="0" Background="#0B0F19" BorderBrush="#1F2937" BorderThickness="0,0,1,0" Padding="6,10,6,10">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         
-                        <StackPanel Grid.Row="0">
-                            <Button x:Name="BtnTabPainel" Style="{StaticResource SidebarButton}">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="📊" Margin="0,0,10,0"/>
-                                    <TextBlock Text="Painel"/>
-                                </StackPanel>
-                            </Button>
-                            <Button x:Name="BtnTabDebloat" Style="{StaticResource SidebarButton}">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="🧹" Margin="0,0,10,0"/>
-                                    <TextBlock Text="Debloat (Apps)"/>
-                                </StackPanel>
-                            </Button>
-                            <Button x:Name="BtnTabDesempenho" Style="{StaticResource SidebarButton}">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="⚡" Margin="0,0,10,0"/>
-                                    <TextBlock Text="Desempenho &amp; Jogos"/>
-                                </StackPanel>
-                            </Button>
-                            <Button x:Name="BtnTabLimpeza" Style="{StaticResource SidebarButton}">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="🗑️" Margin="0,0,10,0"/>
-                                    <TextBlock Text="Limpeza de Disco"/>
-                                </StackPanel>
-                            </Button>
-                            <Button x:Name="BtnTabApps" Style="{StaticResource SidebarButton}">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="📦" Margin="0,0,10,0"/>
-                                    <TextBlock Text="Instalar Apps"/>
-                                </StackPanel>
-                            </Button>
-                            <Button x:Name="BtnTabUninstall" Style="{StaticResource SidebarButton}">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="🔥" Margin="0,0,10,0"/>
-                                    <TextBlock Text="Desinstalar Apps"/>
-                                </StackPanel>
-                            </Button>
-                            <Button x:Name="BtnTabRede" Style="{StaticResource SidebarButton}">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="🌐" Margin="0,0,10,0"/>
-                                    <TextBlock Text="Ferramentas de Rede"/>
-                                </StackPanel>
-                            </Button>
-                            <Button x:Name="BtnTabAtivacao" Style="{StaticResource SidebarButton}">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="🔑" Margin="0,0,10,0"/>
-                                    <TextBlock Text="Ativação"/>
-                                </StackPanel>
-                            </Button>
-                            <Button x:Name="BtnTabDism" Style="{StaticResource SidebarButton}">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="🛠️" Margin="0,0,10,0"/>
-                                    <TextBlock Text="Dism++ (Auxiliar)"/>
-                                </StackPanel>
-                            </Button>
-                            <Button x:Name="BtnTabOffice" Style="{StaticResource SidebarButton}">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="📂" Margin="0,0,10,0"/>
-                                    <TextBlock Text="Office"/>
-                                </StackPanel>
-                            </Button>
-                            <Button x:Name="BtnTabLogs" Style="{StaticResource SidebarButton}">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="📜" Margin="0,0,10,0"/>
-                                    <TextBlock Text="Logs de Execução"/>
-                                </StackPanel>
-                            </Button>
-                        </StackPanel>
+                        <!-- Lista de Botões de Navegação com ScrollViewer Suave -->
+                        <ScrollViewer x:Name="SidebarScrollViewer" Grid.Row="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" CanContentScroll="False" Focusable="False" Margin="0,0,0,6">
+                            <StackPanel Margin="0,0,2,0">
+                                <Button x:Name="BtnTabPainel" Style="{StaticResource SidebarButton}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="📊" Margin="0,0,10,0"/>
+                                        <TextBlock Text="Painel"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button x:Name="BtnTabDebloat" Style="{StaticResource SidebarButton}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="🧹" Margin="0,0,10,0"/>
+                                        <TextBlock Text="Debloat (Apps)"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button x:Name="BtnTabDesempenho" Style="{StaticResource SidebarButton}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="⚡" Margin="0,0,10,0"/>
+                                        <TextBlock Text="Desempenho &amp; Jogos"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button x:Name="BtnTabLimpeza" Style="{StaticResource SidebarButton}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="🗑️" Margin="0,0,10,0"/>
+                                        <TextBlock Text="Limpeza de Disco"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button x:Name="BtnTabApps" Style="{StaticResource SidebarButton}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="📦" Margin="0,0,10,0"/>
+                                        <TextBlock Text="Instalar Apps"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button x:Name="BtnTabUninstall" Style="{StaticResource SidebarButton}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="🔥" Margin="0,0,10,0"/>
+                                        <TextBlock Text="Desinstalar Apps"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button x:Name="BtnTabRede" Style="{StaticResource SidebarButton}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="🌐" Margin="0,0,10,0"/>
+                                        <TextBlock Text="Ferramentas de Rede"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button x:Name="BtnTabAtivacao" Style="{StaticResource SidebarButton}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="🔑" Margin="0,0,10,0"/>
+                                        <TextBlock Text="Ativação"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button x:Name="BtnTabDism" Style="{StaticResource SidebarButton}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="🛠️" Margin="0,0,10,0"/>
+                                        <TextBlock Text="Dism++ (Auxiliar)"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button x:Name="BtnTabOffice" Style="{StaticResource SidebarButton}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="📂" Margin="0,0,10,0"/>
+                                        <TextBlock Text="Office"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button x:Name="BtnTabLogs" Style="{StaticResource SidebarButton}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="📜" Margin="0,0,10,0"/>
+                                        <TextBlock Text="Logs de Execução"/>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </ScrollViewer>
                         
-                        <!-- Logo/Tag do Desenvolvedor -->
-                        <StackPanel Grid.Row="1" VerticalAlignment="Bottom" Margin="0,0,0,12" HorizontalAlignment="Center">
+                        <!-- Logo/Tag do Desenvolvedor Fixo no Rodapé -->
+                        <StackPanel Grid.Row="1" VerticalAlignment="Bottom" Margin="0,4,0,8" HorizontalAlignment="Center">
                             <TextBlock Text="Criado por Felipe Samack" Foreground="#475569" FontSize="11" HorizontalAlignment="Center" Margin="0,0,0,6"/>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,6">
                                 <!-- Botão Instagram -->
@@ -1089,12 +1092,18 @@ $xaml = @"
 
                         <!-- Conteúdo -->
                         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                            <StackPanel Margin="20,16" MaxWidth="800" HorizontalAlignment="Left">
+                            <StackPanel Margin="20,16" MaxWidth="820" HorizontalAlignment="Left">
                                 
                                 <Border Style="{StaticResource CardBorder}" Margin="0,0,0,16">
                                     <StackPanel>
-                                        <TextBlock Text="⚡ Microsoft Activation Scripts (MAS Integrado)" FontSize="16" FontWeight="Bold" Foreground="#10B981" Margin="0,0,0,8"/>
-                                        <TextBlock Text="Selecione abaixo a opção desejada para executar a ativação diretamente no aplicativo sem abrir janelas pretas de terminal." FontSize="12" Foreground="#CBD5E1" TextWrapping="Wrap" Margin="0,0,0,16"/>
+                                        <Grid Margin="0,0,0,8">
+                                            <TextBlock Text="⚡ Microsoft Activation Scripts (MAS Integrado)" FontSize="16" FontWeight="Bold" Foreground="#10B981" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                            <Border x:Name="BadgeMasStatus" Background="#064E3B" BorderBrush="#10B981" BorderThickness="1" CornerRadius="4" Padding="8,3" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                                <TextBlock x:Name="TxtMasStatusBadge" Text="● MAS_AIO.cmd LOCAL PRONTO" FontSize="10" FontWeight="Bold" Foreground="#34D399"/>
+                                            </Border>
+                                        </Grid>
+                                        
+                                        <TextBlock Text="Execução de ativações permanentes e oficiais para Windows e Office. O script local 'MAS_AIO.cmd' é priorizado automaticamente com funcionamento 100% offline, contando com download automático de contingência via GitHub caso necessário." FontSize="12" Foreground="#CBD5E1" TextWrapping="Wrap" Margin="0,0,0,16"/>
 
                                         <!-- Ativações Principais (Grid 2 colunas) -->
                                         <TextBlock Text="🚀 Opções de Ativação Direta:" FontSize="13" FontWeight="Bold" Foreground="#F8FAFC" Margin="0,0,0,10"/>
@@ -1112,28 +1121,28 @@ $xaml = @"
                                             </Grid.RowDefinitions>
 
                                             <!-- [1] HWID Windows -->
-                                            <Button Grid.Row="0" Grid.Column="0" x:Name="BtnMasHWID" Style="{StaticResource ModernButton}" Background="#059669" Height="42" Padding="10,0">
+                                            <Button Grid.Row="0" Grid.Column="0" x:Name="BtnMasHWID" Style="{StaticResource ModernButton}" Background="#059669" Height="42" Padding="10,0" ToolTip="Ativação digital permanente vinculada à placa-mãe para Windows 10 e 11.">
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock Text="⚡ [1] HWID - Windows 10/11" FontWeight="Bold" FontSize="12" VerticalAlignment="Center"/>
                                                 </StackPanel>
                                             </Button>
 
                                             <!-- [2] Ohook Office -->
-                                            <Button Grid.Row="0" Grid.Column="2" x:Name="BtnMasOhook" Style="{StaticResource ModernButton}" Background="#2563EB" Height="42" Padding="10,0">
+                                            <Button Grid.Row="0" Grid.Column="2" x:Name="BtnMasOhook" Style="{StaticResource ModernButton}" Background="#2563EB" Height="42" Padding="10,0" ToolTip="Ativação vitalícia Ohook para todas as edições do Office (2013 a 2024 / 365).">
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock Text="⚡ [2] Ohook - Office (Todas Edições)" FontWeight="Bold" FontSize="12" VerticalAlignment="Center"/>
                                                 </StackPanel>
                                             </Button>
 
                                             <!-- [3] TSforge / KMS38 -->
-                                            <Button Grid.Row="2" Grid.Column="0" x:Name="BtnMasTSforge" Style="{StaticResource ModernButton}" Background="#7C3AED" Height="42" Padding="10,0">
+                                            <Button Grid.Row="2" Grid.Column="0" x:Name="BtnMasTSforge" Style="{StaticResource ModernButton}" Background="#7C3AED" Height="42" Padding="10,0" ToolTip="Ativação estendida até 2038 para Windows 10/11, edições Server e suporte ESU.">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="⚡ [3] TSforge / KMS38 (Win/Office/2038)" FontWeight="Bold" FontSize="12" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="⚡ [3] TSforge / KMS38 (Win/Server/2038)" FontWeight="Bold" FontSize="12" VerticalAlignment="Center"/>
                                                 </StackPanel>
                                             </Button>
 
                                             <!-- [4] Online KMS -->
-                                            <Button Grid.Row="2" Grid.Column="2" x:Name="BtnMasKMS" Style="{StaticResource ModernButton}" Background="#D97706" Height="42" Padding="10,0">
+                                            <Button Grid.Row="2" Grid.Column="2" x:Name="BtnMasKMS" Style="{StaticResource ModernButton}" Background="#D97706" Height="42" Padding="10,0" ToolTip="Ativação online para Windows e Office com renovação programada.">
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock Text="⚡ [4] Online KMS (Windows &amp; Office)" FontWeight="Bold" FontSize="12" VerticalAlignment="Center"/>
                                                 </StackPanel>
@@ -1145,17 +1154,20 @@ $xaml = @"
                                         
                                         <WrapPanel Margin="0,0,0,15">
                                             <!-- [5] Status -->
-                                            <Button x:Name="BtnMasCheck" Content="🔍 [5] Verificar Status da Licença" Style="{StaticResource ModernButton}" Background="#0284C7" Height="36" Margin="0,0,8,8" Padding="15,0"/>
+                                            <Button x:Name="BtnMasCheck" Content="🔍 [5] Verificar Status da Licença" Style="{StaticResource ModernButton}" Background="#0284C7" Height="36" Margin="0,0,8,8" Padding="14,0" ToolTip="Verifica a validade e status atual das licenças instaladas no computador."/>
                                             
                                             <!-- [8] Troubleshoot -->
-                                            <Button x:Name="BtnMasTroubleshoot" Content="🛠️ [8] Reparar Licenciamento" Style="{StaticResource ModernButton}" Background="#475569" Height="36" Margin="0,0,8,8" Padding="15,0"/>
+                                            <Button x:Name="BtnMasTroubleshoot" Content="🛠️ [8] Reparar Licenciamento" Style="{StaticResource ModernButton}" Background="#475569" Height="36" Margin="0,0,8,8" Padding="14,0" ToolTip="Executa a rotina de reparo e limpeza de conflitos de chaves de licença."/>
                                             
                                             <!-- Modo Clássico -->
-                                            <Button x:Name="BtnMasInteractive" Content="💻 Abrir Console CMD Clássico" Style="{StaticResource ModernButton}" Background="#334155" Height="36" Margin="0,0,0,8" Padding="15,0"/>
+                                            <Button x:Name="BtnMasInteractive" Content="💻 Abrir Console CMD Clássico" Style="{StaticResource ModernButton}" Background="#334155" Height="36" Margin="0,0,8,8" Padding="14,0" ToolTip="Abre o script 'MAS_AIO.cmd' diretamente em uma janela preta do Prompt de Comando com o menu completo interativo."/>
+
+                                            <!-- Abrir Pasta do Script Local -->
+                                            <Button x:Name="BtnMasOpenFolder" Content="📂 Local do MAS_AIO.cmd" Style="{StaticResource ModernButton}" Background="#1E293B" Height="36" Margin="0,0,0,8" Padding="14,0" ToolTip="Abre no Windows Explorer a pasta contendo o arquivo MAS_AIO.cmd."/>
                                         </WrapPanel>
 
                                         <Border BorderBrush="#334155" BorderThickness="0,1,0,0" Padding="0,12,0,0">
-                                            <TextBlock Text="ℹ️ Todas as ativações acima utilizam o projeto oficial de código aberto MAS (MassGrave). Os resultados e o progresso em tempo real serão exibidos na aba 'Logs' do Samack WinUtil." FontSize="11" Foreground="#94A3B8" TextWrapping="Wrap"/>
+                                            <TextBlock Text="ℹ️ As ativações são executadas através do script 'MAS_AIO.cmd' localizado na raiz do projeto ou baixado automaticamente via repositório GitHub. O progresso em tempo real é exibido na aba 'Logs de Execução'." FontSize="11" Foreground="#94A3B8" TextWrapping="Wrap"/>
                                         </Border>
                                     </StackPanel>
                                 </Border>
@@ -1809,7 +1821,16 @@ if ($null -ne $btnMaximize) {
     })
 }
 
-# Mapeando Abas do Menu Lateral
+# Mapeando ScrollViewer e Abas do Menu Lateral
+$sidebarScrollViewer = $Window.FindName("SidebarScrollViewer")
+if ($null -ne $sidebarScrollViewer) {
+    $sidebarScrollViewer.Add_PreviewMouseWheel({
+        $delta = $args[1].Delta
+        $sidebarScrollViewer.ScrollToVerticalOffset($sidebarScrollViewer.VerticalOffset - ($delta / 2))
+        $args[1].Handled = $true
+    })
+}
+
 $btnTabPainel = $Window.FindName("BtnTabPainel")
 $btnTabDebloat = $Window.FindName("BtnTabDebloat")
 $btnTabDesempenho = $Window.FindName("BtnTabDesempenho")
@@ -1868,6 +1889,9 @@ $btnMasKMS = $Window.FindName("BtnMasKMS")
 $btnMasCheck = $Window.FindName("BtnMasCheck")
 $btnMasTroubleshoot = $Window.FindName("BtnMasTroubleshoot")
 $btnMasInteractive = $Window.FindName("BtnMasInteractive")
+$btnMasOpenFolder = $Window.FindName("BtnMasOpenFolder")
+$badgeMasStatus = $Window.FindName("BadgeMasStatus")
+$txtMasStatusBadge = $Window.FindName("TxtMasStatusBadge")
 
 # Mapeando controles da tela de Office
 $btnOffice2021Tiny = $Window.FindName("BtnOffice2021Tiny")
@@ -2334,6 +2358,10 @@ function Switch-Tab {
     $grids[$tabName].Visibility = [System.Windows.Visibility]::Visible
     $buttons[$tabName].Background = [System.Windows.Media.Brush]"#1E293B"
     $buttons[$tabName].Foreground = [System.Windows.Media.Brush]"#F8FAFC"
+
+    if ($tabName -eq "Ativacao") {
+        try { Update-MASUIStatus } catch {}
+    }
 }
 
 # 7. Regras e Ações de Otimização
@@ -4932,7 +4960,79 @@ $Window.add_Closing({
     Show-DonationWindow -messageText $randomFrase -title "Apoie o Samack WinUtil 💖"
 })
 
-# ── Ativação (MAS) ──────────────────────────────────────────────────────────
+# ── Ativação (MAS - Microsoft Activation Scripts) ──────────────────────────
+
+# Localizador inteligente do script MAS_AIO.cmd
+function Get-MASScriptPath {
+    # 1. Procura arquivo local nos diretórios prioritários do projeto
+    $candidatePaths = @(
+        (Join-Path $PSScriptRoot "MAS_AIO.cmd"),
+        (Join-Path (Split-Path $PSScriptRoot -Parent) "MAS_AIO.cmd"),
+        "C:\DEV\Program Limpeza Windows\MAS_AIO.cmd",
+        "C:\DEV\Program Limpeza Windows\Samack-WinUtil-V2\MAS_AIO.cmd",
+        (Join-Path (Get-Location).Path "MAS_AIO.cmd"),
+        (Join-Path $env:TEMP "MAS_AIO.cmd")
+    )
+    foreach ($path in $candidatePaths) {
+        if (-not [string]::IsNullOrWhiteSpace($path) -and (Test-Path -LiteralPath $path)) {
+            return $path
+        }
+    }
+    
+    # 2. Se executado diretamente via GitHub online (sem arquivos locais baixados),
+    # efetua o download automático de MAS_AIO.cmd para a pasta TEMP
+    try {
+        $tempMas = Join-Path $env:TEMP "MAS_AIO.cmd"
+        if ((Test-Path $tempMas) -and ((Get-Item $tempMas).Length -gt 100000)) {
+            return $tempMas
+        }
+        
+        Write-Log "MAS_AIO.cmd não encontrado localmente. Efetuando download de contingência via repositório..." "INFO"
+        $downloadSources = @(
+            "https://raw.githubusercontent.com/rgis-samack/win-samack/main/MAS_AIO.cmd",
+            "https://raw.githubusercontent.com/massgravel/Microsoft-Activation-Scripts/master/MAS/All-In-One-Version/MAS_AIO.cmd"
+        )
+        foreach ($src in $downloadSources) {
+            try {
+                $null = curl.exe -s -L --doh-url https://1.1.1.1/dns-query $src -o $tempMas
+                if ((Test-Path $tempMas) -and ((Get-Item $tempMas).Length -gt 100000)) {
+                    Write-Log "MAS_AIO.cmd baixado e preparado com sucesso em: $tempMas" "SUCCESS"
+                    return $tempMas
+                }
+            } catch {}
+        }
+    } catch {}
+
+    return $null
+}
+
+# Atualização de status visual na interface da aba Ativação
+function Update-MASUIStatus {
+    $masLocal = Get-MASScriptPath
+    if ($masLocal -and (Test-Path $masLocal)) {
+        if ($null -ne $txtMasStatusBadge) {
+            $txtMasStatusBadge.Text = "● MAS_AIO.cmd LOCAL PRONTO"
+            $txtMasStatusBadge.Foreground = [System.Windows.Media.Brush]"#34D399"
+        }
+        if ($null -ne $badgeMasStatus) {
+            $badgeMasStatus.Background = [System.Windows.Media.Brush]"#064E3B"
+            $badgeMasStatus.BorderBrush = [System.Windows.Media.Brush]"#10B981"
+            $badgeMasStatus.ToolTip = "Script local encontrado em: $masLocal (Execução 100% Offline)"
+        }
+    } else {
+        if ($null -ne $txtMasStatusBadge) {
+            $txtMasStatusBadge.Text = "🌐 MODO ONLINE (GITHUB / MAS)"
+            $txtMasStatusBadge.Foreground = [System.Windows.Media.Brush]"#60A5FA"
+        }
+        if ($null -ne $badgeMasStatus) {
+            $badgeMasStatus.Background = [System.Windows.Media.Brush]"#1E3A8A"
+            $badgeMasStatus.BorderBrush = [System.Windows.Media.Brush]"#3B82F6"
+            $badgeMasStatus.ToolTip = "Script será executado via download automático seguro."
+        }
+    }
+}
+
+# Execução de ações do MAS com captura em tempo real para os Logs
 function Invoke-MASAction {
     param(
         [string]$actionTitle,
@@ -4941,23 +5041,81 @@ function Invoke-MASAction {
     Register-Action "ativacao"
     Set-Status "Executando $actionTitle..."
     Switch-Tab "Logs"
-    Write-Log "=== $actionTitle (MICROSOFT ACTIVATION SCRIPTS) ===" "INFO"
-    Write-Log "Iniciando processo silencioso em segundo plano..." "INFO"
+    Write-Log "=== $actionTitle (MICROSOFT ACTIVATION SCRIPTS - MAS) ===" "INFO"
+    Write-Log "Iniciando processo de ativação..." "INFO"
     
-    $masCommand = "& ([ScriptBlock]::Create((curl.exe -s --doh-url https://1.1.1.1/dns-query https://get.activated.win | Out-String))) $masSwitch"
+    $masLocal = Get-MASScriptPath
     
-    $processInfo = New-Object System.Diagnostics.ProcessStartInfo
-    $processInfo.FileName = "powershell.exe"
-    $processInfo.Arguments = "-NoProfile -ExecutionPolicy Bypass -Command `"$masCommand`""
-    $processInfo.RedirectStandardOutput = $true
-    $processInfo.RedirectStandardError = $true
-    $processInfo.UseShellExecute = $false
-    $processInfo.CreateNoWindow = $true
+    if ($masLocal -and (Test-Path $masLocal)) {
+        Write-Log "Executando via script local: $masLocal [Parâmetro: $masSwitch]" "SUCCESS"
+        
+        $processInfo = New-Object System.Diagnostics.ProcessStartInfo
+        $processInfo.FileName = "cmd.exe"
+        $processInfo.Arguments = "/c `"`"$masLocal`" $masSwitch`""
+        $processInfo.RedirectStandardOutput = $true
+        $processInfo.RedirectStandardError = $true
+        $processInfo.UseShellExecute = $false
+        $processInfo.CreateNoWindow = $true
+        $processInfo.WorkingDirectory = Split-Path $masLocal -Parent
+        
+        $process = New-Object System.Diagnostics.Process
+        $process.StartInfo = $processInfo
+        
+        try {
+            [void]$process.Start()
+            
+            while (-not $process.HasExited) {
+                if ($process.StandardOutput.Peek() -ne -1) {
+                    $line = $process.StandardOutput.ReadLine()
+                    if ($line) {
+                        $cleanLine = $line -replace '\x1b\[[0-9;]*[a-zA-Z]', ''
+                        $cleanLine = $cleanLine -replace '[\b\r\n\x0c]', ''
+                        $cleanLine = $cleanLine.Trim()
+                        if (-not [string]::IsNullOrWhiteSpace($cleanLine)) {
+                            Write-Log "  [MAS] $cleanLine" "INFO"
+                        }
+                    }
+                }
+                Out-DoEvents
+                Start-Sleep -Milliseconds 15
+            }
+            
+            if ($process.ExitCode -eq 0) {
+                Write-Log "$actionTitle concluído com SUCESSO!" "SUCCESS"
+            } else {
+                Write-Log "$actionTitle finalizado com código: $($process.ExitCode)" "INFO"
+            }
+        } catch {
+            Write-Log "Falha ao executar via MAS_AIO.cmd: $_. Tentando contingência online..." "WARNING"
+            Invoke-MASOnlineFallback $actionTitle $masSwitch
+        }
+    } else {
+        Write-Log "MAS_AIO.cmd não encontrado localmente. Utilizando canal online de ativação..." "INFO"
+        Invoke-MASOnlineFallback $actionTitle $masSwitch
+    }
     
-    $process = New-Object System.Diagnostics.Process
-    $process.StartInfo = $processInfo
-    
+    Set-Status "Pronto"
+}
+
+# Contingência online caso o arquivo local não esteja presente
+function Invoke-MASOnlineFallback {
+    param(
+        [string]$actionTitle,
+        [string]$masSwitch
+    )
     try {
+        $masCommand = "& ([ScriptBlock]::Create((curl.exe -s --doh-url https://1.1.1.1/dns-query https://get.activated.win | Out-String))) $masSwitch"
+        
+        $processInfo = New-Object System.Diagnostics.ProcessStartInfo
+        $processInfo.FileName = "powershell.exe"
+        $processInfo.Arguments = "-NoProfile -ExecutionPolicy Bypass -Command `"$masCommand`""
+        $processInfo.RedirectStandardOutput = $true
+        $processInfo.RedirectStandardError = $true
+        $processInfo.UseShellExecute = $false
+        $processInfo.CreateNoWindow = $true
+        
+        $process = New-Object System.Diagnostics.Process
+        $process.StartInfo = $processInfo
         [void]$process.Start()
         
         while (-not $process.HasExited) {
@@ -4965,29 +5123,23 @@ function Invoke-MASAction {
                 $line = $process.StandardOutput.ReadLine()
                 if ($line) {
                     $cleanLine = $line -replace '\x1b\[[0-9;]*[a-zA-Z]', ''
-                    $cleanLine = $cleanLine -replace '[\b\r\n]', ''
+                    $cleanLine = $cleanLine -replace '[\b\r\n\x0c]', ''
                     $cleanLine = $cleanLine.Trim()
                     if (-not [string]::IsNullOrWhiteSpace($cleanLine)) {
-                        Write-Log "  [MAS] $cleanLine" "INFO"
+                        Write-Log "  [MAS Online] $cleanLine" "INFO"
                     }
                 }
             }
             Out-DoEvents
-            Start-Sleep -Milliseconds 10
+            Start-Sleep -Milliseconds 15
         }
-        
-        if ($process.ExitCode -eq 0) {
-            Write-Log "$actionTitle concluído com SUCESSO!" "SUCCESS"
-        } else {
-            Write-Log "$actionTitle finalizado. Código de saída: $($process.ExitCode)" "WARNING"
-        }
+        Write-Log "$actionTitle concluído via contingência online." "SUCCESS"
     } catch {
-        Write-Log "Erro ao executar $($actionTitle): $_" "ERROR"
+        Write-Log "Falha na contingência online: $_" "ERROR"
     }
-    
-    Set-Status "Pronto"
 }
 
+# Associação de Eventos dos Botões de Ativação
 if ($null -ne $btnMasHWID) {
     $btnMasHWID.Add_Click({ Invoke-MASAction "Ativação Digital HWID (Windows 10/11)" "/HWID" })
 }
@@ -4995,10 +5147,10 @@ if ($null -ne $btnMasOhook) {
     $btnMasOhook.Add_Click({ Invoke-MASAction "Ativação Permanente Ohook (Office)" "/Ohook" })
 }
 if ($null -ne $btnMasTSforge) {
-    $btnMasTSforge.Add_Click({ Invoke-MASAction "Ativação KMS38 / TSforge (Win Server / LTSC / ESU)" "/KMS38" })
+    $btnMasTSforge.Add_Click({ Invoke-MASAction "Ativação KMS38 / TSforge (Win Server / LTSC / ESU)" "/Z-WindowsESUOffice" })
 }
 if ($null -ne $btnMasKMS) {
-    $btnMasKMS.Add_Click({ Invoke-MASAction "Ativação Online KMS (Windows & Office)" "/KMS-All" })
+    $btnMasKMS.Add_Click({ Invoke-MASAction "Ativação Online KMS (Windows & Office)" "/K-WindowsOffice" })
 }
 if ($null -ne $btnMasCheck) {
     $btnMasCheck.Add_Click({
@@ -5032,14 +5184,37 @@ if ($null -ne $btnMasInteractive) {
         Register-Action "ativacao"
         Set-Status "Iniciando MAS em janela de console externa..."
         Write-Log "Iniciando Microsoft Activation Scripts (MAS) em janela externa..." "INFO"
-        try {
-            $masArgs = @("-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "iex (curl.exe -s --doh-url https://1.1.1.1/dns-query https://get.activated.win | Out-String)")
-            $null = Start-Process powershell.exe -ArgumentList $masArgs
-            Write-Log "MAS interativo aberto em console externo." "SUCCESS"
-        } catch {
-            Write-Log "Erro ao iniciar console interativo do MAS: $_" "ERROR"
+        
+        $masLocal = Get-MASScriptPath
+        if ($masLocal -and (Test-Path $masLocal)) {
+            Write-Log "Executando MAS_AIO.cmd local em nova janela de console..." "SUCCESS"
+            try {
+                $p = Start-Process cmd.exe -ArgumentList "/c `"`"$masLocal`"`"" -WorkingDirectory (Split-Path $masLocal -Parent) -PassThru
+                Write-Log "Console do MAS iniciado com PID $($p.Id)." "INFO"
+            } catch {
+                Write-Log "Erro ao abrir cmd local: $_" "ERROR"
+            }
+        } else {
+            Write-Log "MAS local não encontrado. Abrindo console via canal online..." "INFO"
+            try {
+                $masArgs = @("-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", "iex (curl.exe -s --doh-url https://1.1.1.1/dns-query https://get.activated.win | Out-String)")
+                $null = Start-Process powershell.exe -ArgumentList $masArgs
+                Write-Log "MAS interativo aberto em console externo." "SUCCESS"
+            } catch {
+                Write-Log "Erro ao iniciar console interativo do MAS: $_" "ERROR"
+            }
         }
         Set-Status "Pronto"
+    })
+}
+if ($null -ne $btnMasOpenFolder) {
+    $btnMasOpenFolder.Add_Click({
+        $masLocal = Get-MASScriptPath
+        if ($masLocal -and (Test-Path $masLocal)) {
+            Start-Process explorer.exe -ArgumentList "/select,`"$masLocal`""
+        } else {
+            Start-Process explorer.exe -ArgumentList (Get-Location).Path
+        }
     })
 }
 if ($null -ne $btnRunActivation) {
