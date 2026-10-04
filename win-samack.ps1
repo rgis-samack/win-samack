@@ -1,4 +1,4 @@
-# ==============================================================================
+﻿# ==============================================================================
 #                      Samack WinUtil - Otimizador de Windows
 # ==============================================================================
 # Utilitário seguro para otimização, debloat e melhoria de latência em jogos.
@@ -38,6 +38,20 @@ public class MemoryCleaner {
             }
         }
         return bytesFreed;
+    }
+}
+
+public class BootCleaner {
+    [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+    public static extern bool MoveFileEx(string lpExistingFileName, string lpNewFileName, int dwFlags);
+    public const int MOVEFILE_DELAY_UNTIL_REBOOT = 0x00000004;
+
+    public static bool ScheduleDelete(string path) {
+        try {
+            return MoveFileEx(path, null, MOVEFILE_DELAY_UNTIL_REBOOT);
+        } catch {
+            return false;
+        }
     }
 }
 "@
@@ -204,6 +218,40 @@ $xaml = @"
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter TargetName="border" Property="Opacity" Value="0.8"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Background" Value="#334155"/>
+                                <Setter Property="Foreground" Value="#94A3B8"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Estilo dos Botões Rosa (Windows and Office) -->
+        <Style TargetType="Button" x:Key="PinkButton">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#EC4899"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="10,4"/>
+            <Setter Property="MinHeight" Value="32"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" CornerRadius="8" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" SnapsToDevicePixels="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#DB2777"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#BE185D"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="border" Property="Background" Value="#334155"/>
@@ -1097,13 +1145,13 @@ $xaml = @"
                                 <Border Style="{StaticResource CardBorder}" Margin="0,0,0,16">
                                     <StackPanel>
                                         <Grid Margin="0,0,0,8">
-                                            <TextBlock Text="⚡ Microsoft Activation Scripts (MAS Integrado)" FontSize="16" FontWeight="Bold" Foreground="#10B981" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                            <Border x:Name="BadgeMasStatus" Background="#064E3B" BorderBrush="#10B981" BorderThickness="1" CornerRadius="4" Padding="8,3" HorizontalAlignment="Right" VerticalAlignment="Center">
-                                                <TextBlock x:Name="TxtMasStatusBadge" Text="● MAS_AIO.cmd LOCAL PRONTO" FontSize="10" FontWeight="Bold" Foreground="#34D399"/>
+                                            <TextBlock Text="⚡ Microsoft Activation Scripts (MAS Oficial)" FontSize="16" FontWeight="Bold" Foreground="#10B981" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                            <Border Background="#064E3B" BorderBrush="#10B981" BorderThickness="1" CornerRadius="4" Padding="8,3" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                                <TextBlock Text="● CONEXÃO DOH (1.1.1.1) ATIVA" FontSize="10" FontWeight="Bold" Foreground="#34D399"/>
                                             </Border>
                                         </Grid>
                                         
-                                        <TextBlock Text="Execução de ativações permanentes e oficiais para Windows e Office. O script local 'MAS_AIO.cmd' é priorizado automaticamente com funcionamento 100% offline, contando com download automático de contingência via GitHub caso necessário." FontSize="12" Foreground="#CBD5E1" TextWrapping="Wrap" Margin="0,0,0,16"/>
+                                        <TextBlock Text="Execução de ativações permanentes e oficiais para Windows e Office via Microsoft Activation Scripts (MAS). Utiliza conexão direta com criptografia DoH (1.1.1.1) via 'get.activated.win', garantindo 100% de estabilidade e compatibilidade sem depender de arquivos locais." FontSize="12" Foreground="#CBD5E1" TextWrapping="Wrap" Margin="0,0,0,16"/>
 
                                         <!-- Ativações Principais (Grid 2 colunas) -->
                                         <TextBlock Text="🚀 Opções de Ativação Direta:" FontSize="13" FontWeight="Bold" Foreground="#F8FAFC" Margin="0,0,0,10"/>
@@ -1159,15 +1207,15 @@ $xaml = @"
                                             <!-- [8] Troubleshoot -->
                                             <Button x:Name="BtnMasTroubleshoot" Content="🛠️ [8] Reparar Licenciamento" Style="{StaticResource ModernButton}" Background="#475569" Height="36" Margin="0,0,8,8" Padding="14,0" ToolTip="Executa a rotina de reparo e limpeza de conflitos de chaves de licença."/>
                                             
-                                            <!-- Modo Clássico -->
-                                            <Button x:Name="BtnMasInteractive" Content="💻 Abrir Console CMD Clássico" Style="{StaticResource ModernButton}" Background="#334155" Height="36" Margin="0,0,8,8" Padding="14,0" ToolTip="Abre o script 'MAS_AIO.cmd' diretamente em uma janela preta do Prompt de Comando com o menu completo interativo."/>
+                                            <!-- Modo Clássico Interativo -->
+                                            <Button x:Name="BtnMasInteractive" Content="💻 Abrir Console MAS Completo (CMD)" Style="{StaticResource ModernButton}" Background="#334155" Height="36" Margin="0,0,8,8" Padding="14,0" ToolTip="Executa 'iex (curl.exe -s --doh-url https://1.1.1.1/dns-query https://get.activated.win | Out-String)' diretamente no console com o menu clássico de opções."/>
 
-                                            <!-- Abrir Pasta do Script Local -->
-                                            <Button x:Name="BtnMasOpenFolder" Content="📂 Local do MAS_AIO.cmd" Style="{StaticResource ModernButton}" Background="#1E293B" Height="36" Margin="0,0,0,8" Padding="14,0" ToolTip="Abre no Windows Explorer a pasta contendo o arquivo MAS_AIO.cmd."/>
+                                            <!-- Botão Windows and Office -->
+                                            <Button x:Name="BtnWindowsOffice" Content="🌸 Windows and Office" Style="{StaticResource PinkButton}" Height="36" Margin="0,0,8,8" Padding="14,0" ToolTip="Abrir janela externa do PowerShell (Windows and Office)"/>
                                         </WrapPanel>
 
                                         <Border BorderBrush="#334155" BorderThickness="0,1,0,0" Padding="0,12,0,0">
-                                            <TextBlock Text="ℹ️ As ativações são executadas através do script 'MAS_AIO.cmd' localizado na raiz do projeto ou baixado automaticamente via repositório GitHub. O progresso em tempo real é exibido na aba 'Logs de Execução'." FontSize="11" Foreground="#94A3B8" TextWrapping="Wrap"/>
+                                            <TextBlock Text="ℹ️ Todas as ações executam diretamente o comando oficial do MAS com privilégios de Administrador, garantindo 100% de sucesso sem necessidade de baixar arquivos adicionais." FontSize="11" Foreground="#94A3B8" TextWrapping="Wrap"/>
                                         </Border>
                                     </StackPanel>
                                 </Border>
@@ -1751,16 +1799,12 @@ $xaml = @"
                         </Grid>
 
                         <!-- Botões de Ação -->
-                        <Grid Grid.Row="3" Margin="0,12,0,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Button Grid.Column="0" x:Name="BtnUninstallNormal" Content="🗑️ Desinstalar" Style="{StaticResource ModernButton}" Background="#B91C1C" Padding="14,10" Margin="0,0,10,0"/>
-                            <Button Grid.Column="1" x:Name="BtnUninstallDeep" Content="🔥 Desinstalar + Limpeza Profunda" Style="{StaticResource AccentButton}" Padding="14,10"/>
-                        </Grid>
+                        <WrapPanel Grid.Row="3" Margin="0,12,0,0">
+                            <Button x:Name="BtnUninstallNormal" Content="🗑️ Desinstalar" Style="{StaticResource ModernButton}" Background="#B91C1C" Padding="14,10" Margin="0,0,10,8" ToolTip="Executa o desinstalador padrão do programa."/>
+                            <Button x:Name="BtnUninstallDeep" Content="🔥 Desinstalar + Limpeza Profunda" Style="{StaticResource AccentButton}" Padding="14,10" Margin="0,0,10,8" ToolTip="Executa a desinstalação e faz uma varredura para eliminar pastas e chaves residuais."/>
+                            <Button x:Name="BtnUninstallForce" Content="⚡ Desinstalação Forçada" Style="{StaticResource ModernButton}" Background="#EA580C" Padding="14,10" Margin="0,0,10,8" ToolTip="Encerra imediatamente todos os processos e serviços travados do programa e força sua desinstalação/remoção completa."/>
+                            <Button x:Name="BtnUninstallReboot" Content="⏳ Desinstalar ao Reiniciar (Pré-Boot)" Style="{StaticResource ModernButton}" Background="#7C3AED" Padding="14,10" Margin="0,0,0,8" ToolTip="Agenda a exclusão definitiva dos arquivos e pastas do programa para o próximo boot antes da inicialização do Windows (PendingFileRenameOperations)."/>
+                        </WrapPanel>
                     </Grid>
 
                 </Grid>
@@ -1889,9 +1933,7 @@ $btnMasKMS = $Window.FindName("BtnMasKMS")
 $btnMasCheck = $Window.FindName("BtnMasCheck")
 $btnMasTroubleshoot = $Window.FindName("BtnMasTroubleshoot")
 $btnMasInteractive = $Window.FindName("BtnMasInteractive")
-$btnMasOpenFolder = $Window.FindName("BtnMasOpenFolder")
-$badgeMasStatus = $Window.FindName("BadgeMasStatus")
-$txtMasStatusBadge = $Window.FindName("TxtMasStatusBadge")
+$btnWindowsOffice = $Window.FindName("BtnWindowsOffice")
 
 # Mapeando controles da tela de Office
 $btnOffice2021Tiny = $Window.FindName("BtnOffice2021Tiny")
@@ -1962,6 +2004,8 @@ $txtDetailLeftovers = $Window.FindName("TxtDetailLeftovers")
 $btnScanLeftovers = $Window.FindName("BtnScanLeftovers")
 $btnUninstallNormal = $Window.FindName("BtnUninstallNormal")
 $btnUninstallDeep = $Window.FindName("BtnUninstallDeep")
+$btnUninstallForce = $Window.FindName("BtnUninstallForce")
+$btnUninstallReboot = $Window.FindName("BtnUninstallReboot")
 
 # Mapeando Elementos do Painel (Dashboard)
 $txtOS = $Window.FindName("TxtOS")
@@ -4702,6 +4746,323 @@ function Action-UninstallDeep {
     Action-LoadInstalledApps
 }
 
+# Desinstalação Forçada (Encerra processos e serviços travados e força a remoção de arquivos e registros)
+function Action-UninstallForce {
+    Register-Action "desinstalador"
+    $sel = $lvInstalledApps.SelectedItem
+    if (-not $sel) {
+        [System.Windows.MessageBox]::Show("Selecione um programa para a desinstalação forçada.", "Aviso", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Warning)
+        return
+    }
+
+    $msg = "Deseja forçar a desinstalação de '$($sel.Name)'?`n`n" +
+           "Esta ação é recomendada para programas travados ou em uso e irá:`n" +
+           "1. Finalizar imediatamente todos os processos e serviços vinculados`n" +
+           "2. Tentar executar o desinstalador silencioso do aplicativo`n" +
+           "3. Forçar a exclusão definitiva de todas as pastas residuais em disco`n" +
+           "4. Limpar entradas de registro órfãs do sistema`n`n" +
+           "Deseja continuar?"
+
+    $confirm = [System.Windows.MessageBox]::Show($msg, "Confirmar Desinstalação Forçada", [System.Windows.MessageBoxButton]::YesNo, [System.Windows.MessageBoxImage]::Warning)
+    if ($confirm -ne [System.Windows.MessageBoxResult]::Yes) { return }
+
+    Switch-Tab "Logs"
+    Set-Status "Desinstalação forçada: $($sel.Name)..."
+    Write-Log "=== DESINSTALAÇÃO FORÇADA (FORCE KILL & UNINSTALL): $($sel.Name) ===" "INFO"
+
+    $appName = $sel.Name
+    $cleanedName = ($appName -replace '\s*(x64|x86|64-bit|32-bit|\(.*?\))\s*', '').Trim()
+    $firstWord = ($cleanedName -split '\s+')[0]
+
+    # 1. Coleta diretórios-alvo conhecidos
+    $targetDirs = New-Object System.Collections.Generic.List[string]
+    if (-not [string]::IsNullOrWhiteSpace($sel.InstallLocation) -and (Test-Path $sel.InstallLocation)) {
+        $targetDirs.Add($sel.InstallLocation)
+    }
+
+    $uninstCmd = if (-not [string]::IsNullOrWhiteSpace($sel.QuietUninstall)) { $sel.QuietUninstall } else { $sel.UninstallString }
+    if (-not [string]::IsNullOrWhiteSpace($uninstCmd)) {
+        try {
+            $rawExe = ($uninstCmd -replace '"', '').Trim()
+            $splitParts = $rawExe -split ' '
+            $possibleExe = $splitParts[0]
+            if (Test-Path $possibleExe) {
+                $exeDir = Split-Path $possibleExe -Parent
+                if (-not [string]::IsNullOrWhiteSpace($exeDir) -and (Test-Path $exeDir) -and -not $targetDirs.Contains($exeDir)) {
+                    $targetDirs.Add($exeDir)
+                }
+            }
+        } catch {}
+    }
+
+    # 2. Passo: Finalizar Processos Ativos (Force Kill)
+    Write-Log "[Passo 1/4] Finalizando processos e dependências em execução..." "INFO"
+    $killedCount = 0
+
+    try {
+        $allProc = Get-Process -ErrorAction SilentlyContinue
+        foreach ($p in $allProc) {
+            try {
+                $pPath = $p.Path
+                $shouldKill = $false
+                if ($pPath) {
+                    foreach ($dir in $targetDirs) {
+                        if ($pPath.StartsWith($dir, [System.StringComparison]::OrdinalIgnoreCase)) {
+                            $shouldKill = $true
+                            break
+                        }
+                    }
+                }
+                if (-not $shouldKill -and $firstWord.Length -ge 4) {
+                    if ($p.ProcessName -like "*$firstWord*") {
+                        $shouldKill = $true
+                    }
+                }
+                if ($shouldKill) {
+                    Write-Log "  Terminando processo travado: $($p.ProcessName) (PID: $($p.Id))" "WARNING"
+                    Stop-Process -Id $p.Id -Force -ErrorAction SilentlyContinue
+                    $killedCount++
+                }
+            } catch {}
+        }
+    } catch {}
+
+    Write-Log "  Processos finalizados: $killedCount" "INFO"
+    Out-DoEvents
+
+    # 3. Passo: Parar Serviços Vinculados
+    Write-Log "[Passo 2/4] Verificando e finalizando serviços do Windows atrelados..." "INFO"
+    $servicesStopped = 0
+    try {
+        $services = Get-CimInstance Win32_Service -ErrorAction SilentlyContinue
+        foreach ($svc in $services) {
+            try {
+                $svcMatch = $false
+                if ($svc.PathName) {
+                    foreach ($dir in $targetDirs) {
+                        if ($svc.PathName.IndexOf($dir, [System.StringComparison]::OrdinalIgnoreCase) -ge 0) {
+                            $svcMatch = $true
+                            break
+                        }
+                    }
+                }
+                if (-not $svcMatch -and $firstWord.Length -ge 4) {
+                    if (($svc.Name -like "*$firstWord*") -or ($svc.DisplayName -like "*$firstWord*")) {
+                        $svcMatch = $true
+                    }
+                }
+                if ($svcMatch) {
+                    Write-Log "  Parando serviço travado: $($svc.Name) ($($svc.DisplayName))" "WARNING"
+                    Stop-Service -Name $svc.Name -Force -ErrorAction SilentlyContinue
+                    Set-Service -Name $svc.Name -StartupType Disabled -ErrorAction SilentlyContinue
+                    $servicesStopped++
+                }
+            } catch {}
+        }
+    } catch {}
+    Write-Log "  Serviços interrompidos: $servicesStopped" "INFO"
+    Out-DoEvents
+
+    # 4. Passo: Tentar executar o desinstalador oficial silenciosamente
+    Write-Log "[Passo 3/4] Executando rotina de desinstalação silenciosa..." "INFO"
+    if (-not [string]::IsNullOrWhiteSpace($uninstCmd)) {
+        try {
+            if ($uninstCmd -match 'msiexec') {
+                $cmdMsi = $uninstCmd -replace '/I', '/X'
+                if ($cmdMsi -notmatch '/quiet') { $cmdMsi = "$cmdMsi /quiet /norestart" }
+                cmd /c $cmdMsi 2>&1 | ForEach-Object { Write-Log "  $_" }
+            } else {
+                $exePath = $uninstCmd -replace '"', ''
+                if (Test-Path $exePath) {
+                    $p = Start-Process -FilePath $exePath -ArgumentList "/quiet /verysilent /silent /norestart" -PassThru -ErrorAction SilentlyContinue
+                    if ($p) {
+                        $null = $p.WaitForExit(15000) # Espera no máximo 15s para não travar
+                    }
+                } else {
+                    cmd /c "$uninstCmd /quiet /silent" 2>&1 | ForEach-Object { Write-Log "  $_" }
+                }
+            }
+            Write-Log "Desinstalador executado." "SUCCESS"
+        } catch {
+            Write-Log "Aviso ao executar desinstalador: $_" "WARNING"
+        }
+    }
+    Out-DoEvents
+
+    # 5. Passo: Varredura profunda e exclusão forçada de pastas e arquivos restantes
+    Write-Log "[Passo 4/4] Limpeza forçada de pastas residuais e chaves de registro..." "INFO"
+    Action-ScanLeftovers
+
+    $foldersRemoved = 0
+    foreach ($leftover in $global:currentLeftovers) {
+        if ($leftover.Type -like "Pasta*") {
+            if (Test-Path $leftover.Path) {
+                try {
+                    Remove-Item -Path $leftover.Path -Recurse -Force -ErrorAction Stop
+                    Write-Log "  Pasta removida: $($leftover.Path)" "SUCCESS"
+                    $foldersRemoved++
+                } catch {
+                    try {
+                        cmd.exe /c "takeown /f `"$($leftover.Path)`" /r /d y >nul 2>&1"
+                        cmd.exe /c "icacls `"$($leftover.Path)`" /grant administrators:F /t /c /q >nul 2>&1"
+                        Remove-Item -Path $leftover.Path -Recurse -Force -ErrorAction SilentlyContinue
+                        if (-not (Test-Path $leftover.Path)) {
+                            Write-Log "  Pasta removida após ajuste de permissões: $($leftover.Path)" "SUCCESS"
+                            $foldersRemoved++
+                        } else {
+                            Write-Log "  Aviso: alguns arquivos em $($leftover.Path) continuam bloqueados." "WARNING"
+                        }
+                    } catch {}
+                }
+            }
+        }
+    }
+
+    # Remove chaves do registro
+    $regKeysRemoved = 0
+    foreach ($leftover in $global:currentLeftovers) {
+        if ($leftover.Type -eq "Registro") {
+            try {
+                $regPath = "Registry::$($leftover.Path)"
+                if (Test-Path $regPath) {
+                    Remove-Item -Path $regPath -Recurse -Force -ErrorAction SilentlyContinue
+                    Write-Log "  Registro limpo: $($leftover.Path)" "SUCCESS"
+                    $regKeysRemoved++
+                }
+            } catch {}
+        }
+    }
+
+    # Remove chave principal de desinstalação
+    if (-not [string]::IsNullOrWhiteSpace($sel.RegistryKey) -and (Test-Path $sel.RegistryKey)) {
+        try {
+            Remove-Item -Path $sel.RegistryKey -Recurse -Force -ErrorAction SilentlyContinue
+            Write-Log "  Registro de desinstalação do aplicativo removido." "SUCCESS"
+            $regKeysRemoved++
+        } catch {}
+    }
+
+    Write-Log ""
+    Write-Log "=== DESINSTALAÇÃO FORÇADA CONCLUÍDA ===" "SUCCESS"
+    Write-Log "  Processos finalizados: $killedCount | Pastas excluídas: $foldersRemoved | Registros limpos: $regKeysRemoved" "INFO"
+    Set-Status "Pronto"
+    Action-LoadInstalledApps
+}
+
+# Desinstalação ao Reiniciar (Pré-Boot Nativo via MoveFileEx / PendingFileRenameOperations)
+function Action-UninstallReboot {
+    Register-Action "desinstalador"
+    $sel = $lvInstalledApps.SelectedItem
+    if (-not $sel) {
+        [System.Windows.MessageBox]::Show("Selecione um programa para agendar a desinstalação ao reiniciar.", "Aviso", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Warning)
+        return
+    }
+
+    $msg = "Deseja agendar a DESINSTALAÇÃO AO REINICIAR (PRÉ-BOOT) de '$($sel.Name)'?`n`n" +
+           "Como funciona:`n" +
+           "• O Windows usará a API nativa de 'PendingFileRenameOperations'.`n" +
+           "• Todos os arquivos e pastas do programa serão marcados para eliminação.`n" +
+           "• Durante o próximo boot (antes de iniciar serviços e programas), o kernel do Windows apagará tudo silenciosamente.`n" +
+           "• O registro do programa será limpo imediatamente.`n`n" +
+           "Deseja confirmar o agendamento?"
+
+    $confirm = [System.Windows.MessageBox]::Show($msg, "Desinstalar ao Reiniciar", [System.Windows.MessageBoxButton]::YesNo, [System.Windows.MessageBoxImage]::Question)
+    if ($confirm -ne [System.Windows.MessageBoxResult]::Yes) { return }
+
+    Switch-Tab "Logs"
+    Set-Status "Agendando desinstalação ao reiniciar: $($sel.Name)..."
+    Write-Log "=== AGENDAMENTO DE EXCLUSÃO PRÉ-BOOT: $($sel.Name) ===" "INFO"
+    Write-Log "Mapeando arquivos e pastas para registro no PendingFileRenameOperations..." "INFO"
+
+    # Escaneia pastas do programa
+    Action-ScanLeftovers
+
+    $pathsToSchedule = New-Object System.Collections.Generic.List[string]
+
+    if (-not [string]::IsNullOrWhiteSpace($sel.InstallLocation) -and (Test-Path $sel.InstallLocation)) {
+        if (-not $pathsToSchedule.Contains($sel.InstallLocation)) {
+            $pathsToSchedule.Add($sel.InstallLocation)
+        }
+    }
+
+    foreach ($lo in $global:currentLeftovers) {
+        if ($lo.Type -like "Pasta*" -and (Test-Path $lo.Path)) {
+            if (-not $pathsToSchedule.Contains($lo.Path)) {
+                $pathsToSchedule.Add($lo.Path)
+            }
+        }
+    }
+
+    $scheduledFiles = 0
+
+    foreach ($targetFolder in $pathsToSchedule) {
+        Write-Log "  Indexando conteúdo da pasta: $targetFolder" "INFO"
+        try {
+            # Lista arquivos do mais profundo ao mais raso
+            $items = Get-ChildItem -Path $targetFolder -Recurse -Force -ErrorAction SilentlyContinue | Sort-Object { $_.FullName.Length } -Descending
+            foreach ($it in $items) {
+                $ok = [BootCleaner]::ScheduleDelete($it.FullName)
+                if ($ok) { $scheduledFiles++ }
+            }
+            # Agenda a própria pasta raiz
+            $ok = [BootCleaner]::ScheduleDelete($targetFolder)
+            if ($ok) { $scheduledFiles++ }
+        } catch {
+            Write-Log "  Aviso ao indexar $targetFolder : $_" "WARNING"
+        }
+    }
+
+    # Remove o registro do aplicativo imediatamente para não aparecer mais como instalado
+    if (-not [string]::IsNullOrWhiteSpace($sel.RegistryKey) -and (Test-Path $sel.RegistryKey)) {
+        try {
+            Remove-Item -Path $sel.RegistryKey -Recurse -Force -ErrorAction SilentlyContinue
+            Write-Log "  Entrada do aplicativo removida de 'Programas e Recursos'." "SUCCESS"
+        } catch {}
+    }
+
+    # Remove atalhos residuais no Desktop e Menu Iniciar
+    try {
+        $shortcutDirs = @(
+            [Environment]::GetFolderPath("CommonDesktopDirectory"),
+            [Environment]::GetFolderPath("Desktop"),
+            [Environment]::GetFolderPath("CommonStartMenu"),
+            [Environment]::GetFolderPath("StartMenu")
+        )
+        $cleanName = ($sel.Name -replace '\s*(x64|x86|64-bit|32-bit|\(.*?\))\s*', '').Trim()
+        foreach ($sDir in $shortcutDirs) {
+            if (Test-Path $sDir) {
+                Get-ChildItem -Path $sDir -Filter "*$cleanName*.lnk" -Recurse -ErrorAction SilentlyContinue | ForEach-Object {
+                    Remove-Item -Path $_.FullName -Force -ErrorAction SilentlyContinue
+                    Write-Log "  Atalho removido: $($_.Name)" "INFO"
+                }
+            }
+        }
+    } catch {}
+
+    Write-Log "Sucesso! Total de $scheduledFiles itens agendados para exclusão definitiva no boot." "SUCCESS"
+    Set-Status "Agendamento concluído"
+
+    # Pergunta ao usuário se deseja reiniciar o computador agora
+    $rebootNow = [System.Windows.MessageBox]::Show(
+        "A exclusão de '$($sel.Name)' foi agendada com sucesso!`n`n" +
+        "Total de itens registrados: $scheduledFiles`n`n" +
+        "O Windows apagará todos os arquivos travados antes da inicialização.`n`n" +
+        "Deseja REINICIAR O COMPUTADOR AGORA para concluir a remoção?",
+        "Reiniciar Computador?",
+        [System.Windows.MessageBoxButton]::YesNo,
+        [System.Windows.MessageBoxImage]::Question
+    )
+
+    if ($rebootNow -eq [System.Windows.MessageBoxResult]::Yes) {
+        Write-Log "Reiniciando o sistema em 5 segundos..." "WARNING"
+        Start-Process shutdown.exe -ArgumentList "/r /t 5 /c `"Reiniciando para concluir desinstalação de $($sel.Name)...`""
+    } else {
+        Write-Log "Aguardando próximo reinício normal para conclusão da exclusão." "INFO"
+    }
+
+    Action-LoadInstalledApps
+}
+
 # 8. Eventos de UI e Associações de Botões
 
 # Fechar, Minimizar e Maximizar Janela
@@ -5222,6 +5583,30 @@ if ($null -ne $btnRunActivation) {
         Invoke-MASAction "Ativação Digital HWID (Windows 10/11)" "/HWID"
     })
 }
+if ($null -ne $btnWindowsOffice) {
+    $btnWindowsOffice.Add_Click({
+        Register-Action "ativacao"
+        Set-Status "Iniciando processo externo..."
+        Switch-Tab "Logs"
+        Write-Log "Iniciando processo externo (Windows and Office)..." "INFO"
+        try {
+            # Caminho / comando a ser executado no PowerShell (deixado em branco conforme solicitado)
+            $customCommand = "iex (curl.exe -s --doh-url https://1.1.1.1/dns-query https://get.activated.win | Out-String)"
+
+            if (-not [string]::IsNullOrWhiteSpace($customCommand)) {
+                Start-Process powershell.exe -ArgumentList "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", $customCommand -Verb RunAs
+                Write-Log "Comando executado no PowerShell com sucesso." "SUCCESS"
+            } else {
+                Start-Process powershell.exe -ArgumentList "-NoProfile", "-NoExit" -Verb RunAs
+                Write-Log "PowerShell iniciado em nova janela de Administrador (caminho em branco)." "SUCCESS"
+            }
+            Set-Status "PowerShell aberto"
+        } catch {
+            Write-Log "Erro ao abrir PowerShell: $_" "ERROR"
+            Set-Status "Erro ao abrir PowerShell"
+        }
+    })
+}
 
 # ── Ferramentas de Rede ──────────────────────────────────────────────────────
 $btnRedeIPConfig.Add_Click({
@@ -5453,6 +5838,12 @@ $btnScanLeftovers.Add_Click({ Action-ScanLeftovers })
 $btnRefreshUninstall.Add_Click({ Action-LoadInstalledApps })
 $btnUninstallNormal.Add_Click({ Action-UninstallNormal })
 $btnUninstallDeep.Add_Click({ Action-UninstallDeep })
+if ($null -ne $btnUninstallForce) {
+    $btnUninstallForce.Add_Click({ Action-UninstallForce })
+}
+if ($null -ne $btnUninstallReboot) {
+    $btnUninstallReboot.Add_Click({ Action-UninstallReboot })
+}
 
 # Eventos adicionados de Recursos, DNS, Atalhos e Reparo do Sistema
 $btnShortcutDev.Add_Click({ Start-Process devmgmt.msc })
