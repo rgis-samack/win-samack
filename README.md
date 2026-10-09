@@ -28,9 +28,6 @@ O **Samack WinUtil** é uma suíte completa e portátil de otimização, debloat
 ---
 
 
-<img width="997" height="675" alt="image" src="https://github.com/user-attachments/assets/f2bfbfdd-261d-48e4-a1a0-7e4fe47e6ae2" />
-
-
 
 ### 🚀 Como Executar Online (Sem Baixar Arquivos)
 
