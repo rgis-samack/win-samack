@@ -1551,10 +1551,10 @@ $xaml = @"
                                     </StackPanel>
                                 </Border>
 
-                                <!-- Card 2: Utilitários -->
+                                <!-- Card 2: Utilitários do Sistema -->
                                 <Border Style="{StaticResource CardBorder}" Margin="0,0,0,12">
                                     <StackPanel>
-                                        <TextBlock Text="🛠️ Utilitários" FontSize="13" FontWeight="Bold" Foreground="#F59E0B" Margin="0,0,0,8"/>
+                                        <TextBlock Text="🛠️ Utilitários do Sistema" FontSize="13" FontWeight="Bold" Foreground="#F59E0B" Margin="0,0,0,8"/>
                                         <UniformGrid Columns="3">
                                             <CheckBox x:Name="ChkApp7Zip" Content="7-Zip" Tag="7zip.7zip" ToolTip="Descompactador de arquivos leve e gratuito. ID: 7zip.7zip"/>
                                             <CheckBox x:Name="ChkAppNanaZip" Content="NanaZip" Tag="M2Team.NanaZip" ToolTip="Fork moderno do 7-Zip integrado ao Windows 11. ID: M2Team.NanaZip"/>
@@ -1564,16 +1564,21 @@ $xaml = @"
                                             <CheckBox x:Name="ChkAppBulkCrap" Content="Bulk Crap Uninstaller" Tag="Klocman.BulkCrapUninstaller" ToolTip="Desinstalador profundo e automatizado para remoção em lote. ID: Klocman.BulkCrapUninstaller"/>
                                             <CheckBox x:Name="ChkAppRevo" Content="Revo Uninstaller" Tag="RevoUninstaller.RevoUninstaller" ToolTip="Desinstala programas removendo arquivos residuais e chaves de registro. ID: RevoUninstaller.RevoUninstaller"/>
                                             <CheckBox x:Name="ChkAppWiseUninstaller" Content="Wise Program Uninstaller" Tag="WiseCleaner.WiseProgramUninstaller" ToolTip="Ferramenta gratuita para desinstalação segura e forçada. ID: WiseCleaner.WiseProgramUninstaller"/>
+                                            <CheckBox x:Name="ChkAppCCleaner" Content="CCleaner Free" Tag="Piriform.CCleaner" ToolTip="Limpeza de arquivos temporários e otimização do sistema. ID: Piriform.CCleaner"/>
                                             <CheckBox x:Name="ChkAppCrystalInfo" Content="CrystalDiskInfo" Tag="CrystalDewWorld.CrystalDiskInfo" ToolTip="Utilitário de monitoramento da integridade de HDs e SSDs. ID: CrystalDewWorld.CrystalDiskInfo"/>
                                             <CheckBox x:Name="ChkAppCrystalMark" Content="CrystalDiskMark" Tag="CrystalDewWorld.CrystalDiskMark" ToolTip="Ferramenta de benchmark para testar velocidade de HDs/SSDs. ID: CrystalDewWorld.CrystalDiskMark"/>
                                             <CheckBox x:Name="ChkAppEverything" Content="VoidTools Everything" Tag="voidtools.Everything" ToolTip="Mecanismo de busca instantânea de arquivos e pastas no Windows. ID: voidtools.Everything"/>
                                             <CheckBox x:Name="ChkAppFiles" Content="Files App" Tag="Files-Community.Files" ToolTip="Gerenciador de arquivos moderno com abas e design fluente. ID: Files-Community.Files"/>
+                                            <CheckBox x:Name="ChkAppTeraCopy" Content="TeraCopy" Tag="CodeSector.TeraCopy" ToolTip="Copiador e movimentador de arquivos de alta performance com verificação CRC. ID: CodeSector.TeraCopy"/>
                                             <CheckBox x:Name="ChkAppNilesoftShell" Content="Nilesoft Shell" Tag="Nilesoft.Shell" ToolTip="Personalizador avançado e leve do menu de contexto do Windows. ID: Nilesoft.Shell"/>
                                             <CheckBox x:Name="ChkAppRufus" Content="Rufus" Tag="Akeo.Rufus" ToolTip="Criador de pendrives bootáveis para instalação de sistemas. ID: Akeo.Rufus"/>
                                             <CheckBox x:Name="ChkAppVentoy" Content="Ventoy" Tag="Ventoy.Ventoy" ToolTip="Ferramenta open source para criar pendrive multiboot copiando arquivos ISO. ID: Ventoy.Ventoy"/>
+                                            <CheckBox x:Name="ChkAppEtcher" Content="Balena Etcher" Tag="Balena.Etcher" ToolTip="Gravador simples e seguro de imagens de sistema em pendrives e cartões SD. ID: Balena.Etcher"/>
                                             <CheckBox x:Name="ChkAppUniGetUI" Content="UniGetUI" Tag="MartiCliment.UniGetUI" ToolTip="Interface gráfica avançada para WinGet, Chocolatey e Scoop. ID: MartiCliment.UniGetUI"/>
                                             <CheckBox x:Name="ChkAppWizTree" Content="WizTree" Tag="AntibodySoftware.WizTree" ToolTip="Analisador de espaço em disco ultrarrápido. ID: AntibodySoftware.WizTree"/>
                                             <CheckBox x:Name="ChkAppTreeSize" Content="TreeSize Free" Tag="JAMSoftware.TreeSize.Free" ToolTip="Verifique pastas que mais ocupam espaço no disco. ID: JAMSoftware.TreeSize.Free"/>
+                                            <CheckBox x:Name="ChkAppWinDirStat" Content="WinDirStat" Tag="WinDirStat.WinDirStat" ToolTip="Visualizador estatístico clássico de uso de disco com mapa em árvore. ID: WinDirStat.WinDirStat"/>
+                                            <CheckBox x:Name="ChkAppOpenShell" Content="Open-Shell (Menu Clássico)" Tag="Open-Shell.Open-Shell-Menu" ToolTip="Restaura o menu Iniciar clássico altamente customizável no Windows 10/11. ID: Open-Shell.Open-Shell-Menu"/>
                                             <CheckBox x:Name="ChkAppTranslucentTB" Content="TranslucentTB" Tag="TranslucentTB.TranslucentTB" ToolTip="Torna a barra de tarefas do Windows transparente ou translúcida. ID: TranslucentTB.TranslucentTB"/>
                                             <CheckBox x:Name="ChkAppAutoHotkey" Content="AutoHotkey" Tag="AutoHotkey.AutoHotkey" ToolTip="Linguagem de script para automação e atalhos de teclado. ID: AutoHotkey.AutoHotkey"/>
                                             <CheckBox x:Name="ChkAppGlazeWM" Content="GlazeWM" Tag="glzr-io.glazewm" ToolTip="Gerenciador de janelas em blocos (tiling window manager) para Windows. ID: glzr-io.glazewm"/>
@@ -1584,18 +1589,16 @@ $xaml = @"
                                             <CheckBox x:Name="ChkAppFlux" Content="F.lux" Tag="Herf.Flux" ToolTip="Ajusta o calor da cor da tela de acordo com o horário do dia. ID: Herf.Flux"/>
                                             <CheckBox x:Name="ChkAppEnteAuth" Content="Ente Auth" Tag="ente-io.auth-desktop" ToolTip="Gerenciador open source de autenticação de 2 fatores (2FA). ID: ente-io.auth-desktop"/>
                                             <CheckBox x:Name="ChkAppKeePassXC" Content="KeePassXC" Tag="KeePassXCTeam.KeePassXC" ToolTip="Gerenciador de senhas offline criptografado e open source. ID: KeePassXCTeam.KeePassXC"/>
-                                            <CheckBox x:Name="ChkAppBitwarden" Content="Bitwarden" Tag="Bitwarden.Bitwarden" ToolTip="Gerenciador de senhas em nuvem seguro e open source. ID: Bitwarden.Bitwarden"/>
-                                            <CheckBox x:Name="ChkAppGoogleDrive" Content="Google Drive" Tag="Google.GoogleDrive" ToolTip="Cliente de sincronização em nuvem do Google Drive. ID: Google.GoogleDrive"/>
-                                            <CheckBox x:Name="ChkAppProtonDrive" Content="Proton Drive" Tag="Proton.ProtonDrive" ToolTip="Armazenamento seguro em nuvem com criptografia de ponta a ponta. ID: Proton.ProtonDrive"/>
-                                            <CheckBox x:Name="ChkAppProtonPass" Content="Proton Pass" Tag="Proton.ProtonPass" ToolTip="Gerenciador de senhas e aliases seguro do Proton. ID: Proton.ProtonPass"/>
-                                            <CheckBox x:Name="ChkAppProtonAuth" Content="Proton Authenticator" Tag="Proton.ProtonAuthenticator" ToolTip="Gerenciador de autenticação de dois fatores da Proton. ID: Proton.ProtonAuthenticator"/>
-                                            <CheckBox x:Name="ChkApp1Password" Content="1Password" Tag="1Password.1Password" ToolTip="Excelente gerenciador de senhas comercial. ID: 1Password.1Password"/>
                                             <CheckBox x:Name="ChkAppBlurAutoClicker" Content="Blur AutoClicker" Tag="Blur009.BlurAutoClicker" ToolTip="AutoClicker rápido de código aberto. ID: Blur009.BlurAutoClicker"/>
                                             <CheckBox x:Name="ChkAppOPAutoClicker" Content="OP AutoClicker" Tag="OPAutoClicker.OPAutoClicker" ToolTip="Autoclicker clássico simples e portátil para automações de cliques. ID: OPAutoClicker.OPAutoClicker"/>
                                             <CheckBox x:Name="ChkAppOpenRGB" Content="OpenRGB" Tag="OpenRGB.OpenRGB" ToolTip="Controle de iluminação RGB open source compatível com vários hardwares. ID: OpenRGB.OpenRGB"/>
                                             <CheckBox x:Name="ChkAppSignalRGB" Content="SignalRGB" Tag="WhirlwindFX.SignalRGB" ToolTip="Controle completo e efeitos de luz RGB em jogos e hardware. ID: WhirlwindFX.SignalRGB"/>
+                                            <CheckBox x:Name="ChkAppFanControl" Content="FanControl" Tag="Rem0o.FanControl" ToolTip="Software avançado e altamente customizável de controle de ventoinhas do PC. ID: Rem0o.FanControl"/>
+                                            <CheckBox x:Name="ChkAppAfterburner" Content="MSI Afterburner" Tag="Guru3D.Afterburner" ToolTip="Ferramenta de overclock, controle de temperatura e monitoramento de GPUs. ID: Guru3D.Afterburner"/>
+                                            <CheckBox x:Name="ChkAppRTSS" Content="RivaTuner Statistics Server" Tag="Guru3D.RTSS" ToolTip="Monitor de FPS e estatísticas em tela (overlay) para jogos. ID: Guru3D.RTSS"/>
                                             <CheckBox x:Name="ChkAppParsec" Content="Parsec" Tag="Parsec.Parsec" ToolTip="Streaming de tela de altíssima performance para jogos e trabalho remoto. ID: Parsec.Parsec"/>
                                             <CheckBox x:Name="ChkAppVirtualBox" Content="Oracle VirtualBox" Tag="Oracle.VirtualBox" ToolTip="Software de virtualização de sistemas operacionais gratuito. ID: Oracle.VirtualBox"/>
+                                            <CheckBox x:Name="ChkAppAnyDesk" Content="AnyDesk" Tag="AnyDesk.AnyDesk" ToolTip="Software de acesso e controle remoto rápido e seguro. ID: AnyDesk.AnyDesk"/>
                                             <CheckBox x:Name="ChkAppTeamViewer" Content="TeamViewer" Tag="TeamViewer.TeamViewer" ToolTip="Software tradicional para controle remoto e reuniões online. ID: TeamViewer.TeamViewer"/>
                                             <CheckBox x:Name="ChkAppTightVNC" Content="TightVNC" Tag="TightVNC.TightVNC" ToolTip="Utilitário de desktop remoto leve baseado em VNC. ID: TightVNC.TightVNC"/>
                                             <CheckBox x:Name="ChkAppTotalCommander" Content="Total Commander" Tag="Ghisler.TotalCommander" ToolTip="Gerenciador de arquivos em painel duplo clássico para power users. ID: Ghisler.TotalCommander"/>
@@ -1604,58 +1607,77 @@ $xaml = @"
                                     </StackPanel>
                                 </Border>
 
-                                <!-- Card 3: Ferramentas Pro e Redes -->
+                                <!-- Card 3: Navegadores e Downloaders -->
                                 <Border Style="{StaticResource CardBorder}" Margin="0,0,0,12">
                                     <StackPanel>
-                                        <TextBlock Text="🛠️ Ferramentas Pro e Redes" FontSize="13" FontWeight="Bold" Foreground="#10B981" Margin="0,0,0,8"/>
+                                        <TextBlock Text="🌐 Navegadores e Downloaders" FontSize="13" FontWeight="Bold" Foreground="#8B5CF6" Margin="0,0,0,8"/>
                                         <UniformGrid Columns="3">
-                                            <CheckBox x:Name="ChkAppAdvancedIP" Content="Advanced IP Scanner" Tag="Famatech.AdvancedIPScanner" ToolTip="Varredura de rede local rápida e fácil de usar. ID: Famatech.AdvancedIPScanner"/>
-                                            <CheckBox x:Name="ChkAppAngryIP" Content="Angry IP Scanner" Tag="angryziber.AngryIPScanner" ToolTip="Scanner de endereços IP e portas open source multiplataforma. ID: angryziber.AngryIPScanner"/>
-                                            <CheckBox x:Name="ChkAppCPUZ" Content="CPU-Z" Tag="CPUID.CPU-Z" ToolTip="Exibe informações detalhadas sobre processador, placa-mãe e memória. ID: CPUID.CPU-Z"/>
-                                            <CheckBox x:Name="ChkAppGPUZ" Content="GPU-Z" Tag="TechPowerUp.GPU-Z" ToolTip="Exibe dados técnicos completos sobre sua placa de vídeo. ID: TechPowerUp.GPU-Z"/>
-                                            <CheckBox x:Name="ChkAppHWiNFO" Content="HWiNFO" Tag="HWiNFO.HWiNFO" ToolTip="Monitoramento de hardware avançado e relatório completo de sensores. ID: HWiNFO.HWiNFO"/>
-                                            <CheckBox x:Name="ChkAppHWMonitor" Content="HWMonitor" Tag="CPUID.HWMonitor" ToolTip="Monitora temperaturas, voltagens e velocidades de ventoinhas. ID: CPUID.HWMonitor"/>
-                                            <CheckBox x:Name="ChkAppDDU" Content="Display Driver Uninstaller" Tag="Wagnardsoft.DisplayDriverUninstaller" ToolTip="Remove completamente drivers de vídeo AMD/NVIDIA/Intel sem deixar resíduos. ID: Wagnardsoft.DisplayDriverUninstaller"/>
-                                            <CheckBox x:Name="ChkAppMullvadVPN" Content="Mullvad VPN" Tag="Mullvad.MullvadVPN" ToolTip="Serviço de VPN open source focado em privacidade extrema. ID: Mullvad.MullvadVPN"/>
-                                            <CheckBox x:Name="ChkAppProtonVPN" Content="Proton VPN" Tag="Proton.ProtonVPN" ToolTip="VPN segura com plano gratuito ilimitado desenvolvida pela Proton. ID: Proton.ProtonVPN"/>
-                                            <CheckBox x:Name="ChkAppOpenVPN" Content="OpenVPN Client" Tag="OpenVPNTechnologies.OpenVPN" ToolTip="Cliente oficial e seguro de VPN do protocolo OpenVPN. ID: OpenVPNTechnologies.OpenVPN"/>
-                                            <CheckBox x:Name="ChkAppPuTTY" Content="PuTTY" Tag="SimonTatham.PuTTY" ToolTip="Cliente SSH, Telnet e Rlogin clássico para gerenciamento de servidores. ID: SimonTatham.PuTTY"/>
-                                            <CheckBox x:Name="ChkAppSimplewall" Content="Simplewall" Tag="Henry++.simplewall" ToolTip="Firewall simples para bloquear tráfego de rede e telemetria do Windows. ID: Henry++.simplewall"/>
-                                            <CheckBox x:Name="ChkAppWinSCP" Content="WinSCP" Tag="WinSCP.WinSCP" ToolTip="Cliente SFTP e FTP gráfico para Windows. ID: WinSCP.WinSCP"/>
-                                            <CheckBox x:Name="ChkAppWireGuard" Content="WireGuard" Tag="WireGuard.WireGuard" ToolTip="Protocolo e cliente de VPN moderno de altíssima performance. ID: WireGuard.WireGuard"/>
-                                            <CheckBox x:Name="ChkAppWireshark" Content="Wireshark" Tag="WiresharkFoundation.Wireshark" ToolTip="Analisador de protocolos de rede open source para auditorias. ID: WiresharkFoundation.Wireshark"/>
-                                            <CheckBox x:Name="ChkAppNmap" Content="Nmap Network Scanner" Tag="Insecure.Nmap" ToolTip="Mapeador de segurança de rede e scanner de portas. ID: Insecure.Nmap"/>
-                                        </UniformGrid>
-                                    </StackPanel>
-                                </Border>
-
-                                <!-- Card 4: Navegadores e Internet -->
-                                <Border Style="{StaticResource CardBorder}" Margin="0,0,0,12">
-                                    <StackPanel>
-                                        <TextBlock Text="🌐 Navegadores e Internet" FontSize="13" FontWeight="Bold" Foreground="#8B5CF6" Margin="0,0,0,8"/>
-                                        <UniformGrid Columns="3">
-                                            <CheckBox x:Name="ChkAppZen" Content="Zen Browser" Tag="Zen-Team.Zen-Browser" ToolTip="Navegador moderno, veloz e focado em produtividade e privacidade baseado no Firefox. ID: Zen-Team.Zen-Browser"/>
                                             <CheckBox x:Name="ChkAppChrome" Content="Google Chrome" Tag="Google.Chrome" ToolTip="Navegador oficial do Google. ID: Google.Chrome"/>
                                             <CheckBox x:Name="ChkAppFirefox" Content="Mozilla Firefox" Tag="Mozilla.Firefox" ToolTip="Navegador livre e focado em privacidade. ID: Mozilla.Firefox"/>
                                             <CheckBox x:Name="ChkAppBrave" Content="Brave Browser" Tag="Brave.Brave" ToolTip="Navegador rápido com bloqueador de anúncios nativo. ID: Brave.Brave"/>
                                             <CheckBox x:Name="ChkAppEdge" Content="Microsoft Edge" Tag="Microsoft.Edge" ToolTip="Navegador Chromium da Microsoft. ID: Microsoft.Edge"/>
-                                            <CheckBox x:Name="ChkAppVivaldi" Content="Vivaldi" Tag="Vivaldi.Vivaldi" ToolTip="Navegador flexível e cheio de recursos para usuários avançados. ID: Vivaldi.Vivaldi"/>
+                                            <CheckBox x:Name="ChkAppOpera" Content="Opera" Tag="Opera.Opera" ToolTip="Navegador web rápido com VPN gratuita integrada e recursos sociais. ID: Opera.Opera"/>
                                             <CheckBox x:Name="ChkAppOperaGX" Content="Opera GX" Tag="Opera.OperaGX" ToolTip="Navegador para gamers com limitadores de CPU, RAM e rede. ID: Opera.OperaGX"/>
-                                            <CheckBox x:Name="ChkAppTor" Content="Tor Browser" Tag="TorProject.TorBrowser" ToolTip="Navegador anônimo com roteamento em camadas de cebola. ID: TorProject.TorBrowser"/>
+                                            <CheckBox x:Name="ChkAppVivaldi" Content="Vivaldi" Tag="Vivaldi.Vivaldi" ToolTip="Navegador flexível e cheio de recursos para usuários avançados. ID: Vivaldi.Vivaldi"/>
+                                            <CheckBox x:Name="ChkAppZen" Content="Zen Browser" Tag="Zen-Team.Zen-Browser" ToolTip="Navegador moderno, veloz e focado em produtividade e privacidade baseado no Firefox. ID: Zen-Team.Zen-Browser"/>
                                             <CheckBox x:Name="ChkAppFloorp" Content="Floorp Browser" Tag="Ablaze.Floorp" ToolTip="Navegador customizável e rápido baseado no Firefox. ID: Ablaze.Floorp"/>
+                                            <CheckBox x:Name="ChkAppTor" Content="Tor Browser" Tag="TorProject.TorBrowser" ToolTip="Navegador anônimo com roteamento em camadas de cebola. ID: TorProject.TorBrowser"/>
                                             <CheckBox x:Name="ChkAppQBit" Content="qBittorrent" Tag="qBittorrent.qBittorrent" ToolTip="Cliente de torrent open source leve e livre de propagandas. ID: qBittorrent.qBittorrent"/>
                                             <CheckBox x:Name="ChkAppTransmission" Content="Transmission" Tag="Transmission.Transmission" ToolTip="Cliente de torrent minimalista, ultraleve e open source. ID: Transmission.Transmission"/>
+                                            <CheckBox x:Name="ChkAppFDM" Content="Free Download Manager" Tag="SoftDeluxe.FreeDownloadManager" ToolTip="Acelerador e gerenciador de downloads completo com suporte a torrents. ID: SoftDeluxe.FreeDownloadManager"/>
+                                            <CheckBox x:Name="ChkAppYtDlp" Content="yt-dlp" Tag="yt-dlp.yt-dlp" ToolTip="Poderoso downloader de vídeos e áudios de milhares de sites da internet. ID: yt-dlp.yt-dlp"/>
                                         </UniformGrid>
                                     </StackPanel>
                                 </Border>
 
-                                <!-- Card 5: Desenvolvimento -->
+                                <!-- Card 4: Documentos e Escritório -->
                                 <Border Style="{StaticResource CardBorder}" Margin="0,0,0,12">
                                     <StackPanel>
-                                        <TextBlock Text="💻 Desenvolvimento" FontSize="13" FontWeight="Bold" Foreground="#EC4899" Margin="0,0,0,8"/>
+                                        <TextBlock Text="📄 Documentos e Escritório" FontSize="13" FontWeight="Bold" Foreground="#06B6D4" Margin="0,0,0,8"/>
+                                        <UniformGrid Columns="3">
+                                            <CheckBox x:Name="ChkAppLibreOffice" Content="LibreOffice" Tag="TheDocumentFoundation.LibreOffice" ToolTip="Suíte de escritório livre e completa (Texto, Planilhas, Apresentações). ID: TheDocumentFoundation.LibreOffice"/>
+                                            <CheckBox x:Name="ChkAppSumatraPDF" Content="SumatraPDF" Tag="SumatraPDF.SumatraPDF" ToolTip="Leitor de PDF, ePub e quadrinhos ultraleve e rápido. ID: SumatraPDF.SumatraPDF"/>
+                                            <CheckBox x:Name="ChkAppAdobeReader" Content="Adobe Acrobat Reader" Tag="Adobe.Acrobat.Reader.64-bit" ToolTip="Visualizador padrão da indústria para documentos e formulários PDF. ID: Adobe.Acrobat.Reader.64-bit"/>
+                                            <CheckBox x:Name="ChkAppFoxitReader" Content="Foxit PDF Reader" Tag="Foxit.FoxitReader" ToolTip="Leitor e editor leve de arquivos PDF com ferramentas de anotação. ID: Foxit.FoxitReader"/>
+                                            <CheckBox x:Name="ChkAppCalibre" Content="Calibre (E-books)" Tag="calibre.calibre" ToolTip="Gerenciador e conversor definitivo de livros digitais (E-books). ID: calibre.calibre"/>
+                                            <CheckBox x:Name="ChkAppNotion" Content="Notion" Tag="Notion.Notion" ToolTip="Espaço de trabalho conectado para anotações, tarefas e documentação. ID: Notion.Notion"/>
+                                            <CheckBox x:Name="ChkAppObsidian" Content="Obsidian" Tag="Obsidian.Obsidian" ToolTip="Aplicativo poderoso de base de conhecimento e notas em Markdown offline. ID: Obsidian.Obsidian"/>
+                                        </UniformGrid>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- Card 5: Design, Imagem e Criação -->
+                                <Border Style="{StaticResource CardBorder}" Margin="0,0,0,12">
+                                    <StackPanel>
+                                        <TextBlock Text="🎨 Design, Imagem e Criação" FontSize="13" FontWeight="Bold" Foreground="#F97316" Margin="0,0,0,8"/>
+                                        <UniformGrid Columns="3">
+                                            <CheckBox x:Name="ChkAppKrita" Content="Krita" Tag="KDE.Krita" ToolTip="Aplicativo profissional e livre de pintura digital e ilustração. ID: KDE.Krita"/>
+                                            <CheckBox x:Name="ChkAppPaintDotNet" Content="Paint.NET" Tag="dotPDN.PaintDotNet" ToolTip="Editor de imagens gratuito e intuitivo com suporte a camadas e plugins. ID: dotPDN.PaintDotNet"/>
+                                            <CheckBox x:Name="ChkAppGIMP" Content="GIMP" Tag="GIMP.GIMP" ToolTip="Poderoso editor de imagens e gráficos rasterizados open source. ID: GIMP.GIMP"/>
+                                            <CheckBox x:Name="ChkAppInkscape" Content="Inkscape" Tag="Inkscape.Inkscape" ToolTip="Editor de gráficos vetoriais de qualidade profissional (SVG, AI, PDF). ID: Inkscape.Inkscape"/>
+                                            <CheckBox x:Name="ChkAppIrfanView" Content="IrfanView" Tag="IrfanSkiljan.IrfanView" ToolTip="Visualizador e conversor de imagens clássico, ultraleve e veloz. ID: IrfanSkiljan.IrfanView"/>
+                                            <CheckBox x:Name="ChkAppFastStone" Content="FastStone Image Viewer" Tag="FastStone.Viewer" ToolTip="Excelente navegador, conversor e editor rápido de fotos e imagens. ID: FastStone.Viewer"/>
+                                            <CheckBox x:Name="ChkAppGreenshot" Content="Greenshot" Tag="Greenshot.Greenshot" ToolTip="Ferramenta leve de captura de tela com anotações e exportação rápida. ID: Greenshot.Greenshot"/>
+                                            <CheckBox x:Name="ChkAppFlameshot" Content="Flameshot" Tag="Flameshot.Flameshot" ToolTip="Software poderoso e moderno de captura de tela com ferramentas de desenho em tempo real. ID: Flameshot.Flameshot"/>
+                                            <CheckBox x:Name="ChkAppScreenToGif" Content="ScreenToGif" Tag="NickeManarin.ScreenToGif" ToolTip="Gravador de tela, webcam e quadro branco com editor de GIFs integrado. ID: NickeManarin.ScreenToGif"/>
+                                            <CheckBox x:Name="ChkAppShareX" Content="ShareX" Tag="ShareX.ShareX" ToolTip="Captura de tela avançada, upload automático e gravação de vídeos/GIFs. ID: ShareX.ShareX"/>
+                                            <CheckBox x:Name="ChkAppBlender" Content="Blender" Tag="BlenderFoundation.Blender" ToolTip="Suíte completa de modelagem 3D, animação, renderização e VFX livre. ID: BlenderFoundation.Blender"/>
+                                            <CheckBox x:Name="ChkAppFigma" Content="Figma" Tag="Figma.Figma" ToolTip="Ferramenta colaborativa de design de interfaces (UI/UX) e prototipagem. ID: Figma.Figma"/>
+                                            <CheckBox x:Name="ChkAppCura" Content="UltiMaker Cura (3D)" Tag="UltiMaker.Cura" ToolTip="Fatiador (slicer) 3D mais popular do mundo para impressão 3D. ID: UltiMaker.Cura"/>
+                                        </UniformGrid>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- Card 6: Desenvolvimento e IA -->
+                                <Border Style="{StaticResource CardBorder}" Margin="0,0,0,12">
+                                    <StackPanel>
+                                        <TextBlock Text="💻 Desenvolvimento e IA" FontSize="13" FontWeight="Bold" Foreground="#EC4899" Margin="0,0,0,8"/>
                                         <UniformGrid Columns="3">
                                             <CheckBox x:Name="ChkAppVSCode" Content="VS Code" Tag="Microsoft.VisualStudioCode" ToolTip="Editor de código leve e extensível da Microsoft. ID: Microsoft.VisualStudioCode"/>
-                                            <CheckBox x:Name="ChkAppNotepadPlus" Content="Notepad++" Tag="NotepadPlusPlus.NotepadPlusPlus" ToolTip="Editor de texto e código fonte leve. ID: NotepadPlusPlus.NotepadPlusPlus"/>
+                                            <CheckBox x:Name="ChkAppCursor" Content="Cursor AI" Tag="Anysphere.Cursor" ToolTip="Editor de código inteligente com inteligência artificial nativa avançada. ID: Anysphere.Cursor"/>
+                                            <CheckBox x:Name="ChkAppClaude" Content="Claude Desktop" Tag="Anthropic.Claude" ToolTip="Aplicativo oficial para desktop da inteligência artificial Claude da Anthropic. ID: Anthropic.Claude"/>
+                                            <CheckBox x:Name="ChkAppNotepadPlus" Content="Notepad++" Tag="NotepadPlusPlus.NotepadPlusPlus" ToolTip="Editor de texto e código fonte leve e rápido. ID: NotepadPlusPlus.NotepadPlusPlus"/>
+                                            <CheckBox x:Name="ChkAppSublimeText" Content="Sublime Text 4" Tag="SublimeHQ.SublimeText.4" ToolTip="Editor de texto sofisticado para código, marcação e prosa. ID: SublimeHQ.SublimeText.4"/>
                                             <CheckBox x:Name="ChkAppWindowsTerminal" Content="Windows Terminal" Tag="Microsoft.WindowsTerminal" ToolTip="Terminal moderno para PowerShell, CMD e WSL com abas. ID: Microsoft.WindowsTerminal"/>
                                             <CheckBox x:Name="ChkAppGit" Content="Git" Tag="Git.Git" ToolTip="Sistema de controle de versão distribuído. ID: Git.Git"/>
                                             <CheckBox x:Name="ChkAppGitHub" Content="GitHub Desktop" Tag="GitHub.GitHubDesktop" ToolTip="Interface amigável para repositórios Git/GitHub. ID: GitHub.GitHubDesktop"/>
@@ -1664,31 +1686,74 @@ $xaml = @"
                                             <CheckBox x:Name="ChkAppDocker" Content="Docker Desktop" Tag="Docker.DockerDesktop" ToolTip="Ambiente e motor de virtualização de contêineres Docker. ID: Docker.DockerDesktop"/>
                                             <CheckBox x:Name="ChkAppDBeaver" Content="DBeaver Community" Tag="DBeaver.DBeaver.Community" ToolTip="Gerenciador universal e poderoso de bancos de dados SQL/NoSQL. ID: DBeaver.DBeaver.Community"/>
                                             <CheckBox x:Name="ChkAppPostman" Content="Postman" Tag="Postman.Postman" ToolTip="Plataforma de desenvolvimento, teste e automação de APIs. ID: Postman.Postman"/>
+                                            <CheckBox x:Name="ChkAppWinMerge" Content="WinMerge" Tag="WinMerge.WinMerge" ToolTip="Ferramenta de comparação e mesclagem visual de arquivos e diretórios. ID: WinMerge.WinMerge"/>
                                         </UniformGrid>
                                     </StackPanel>
                                 </Border>
 
-                                <!-- Card 6: Comunicação e Multimídia -->
+                                <!-- Card 7: Comunicação, Mídia e Jogos -->
                                 <Border Style="{StaticResource CardBorder}" Margin="0,0,0,12">
                                     <StackPanel>
-                                        <TextBlock Text="🎬 Comunicação e Multimídia" FontSize="13" FontWeight="Bold" Foreground="#EF4444" Margin="0,0,0,8"/>
+                                        <TextBlock Text="🎬 Comunicação, Mídia e Jogos" FontSize="13" FontWeight="Bold" Foreground="#EF4444" Margin="0,0,0,8"/>
                                         <UniformGrid Columns="3">
-                                            <CheckBox x:Name="ChkAppDiscord" Content="Discord" Tag="Discord.Discord" ToolTip="Plataforma de voz e texto para comunidades de jogos. ID: Discord.Discord"/>
-                                            <CheckBox x:Name="ChkAppTelegram" Content="Telegram Desktop" Tag="Telegram.TelegramDesktop" ToolTip="Aplicativo de mensagens rápido e seguro. ID: Telegram.TelegramDesktop"/>
+                                            <CheckBox x:Name="ChkAppDiscord" Content="Discord" Tag="Discord.Discord" ToolTip="Plataforma de voz e texto para comunidades e jogos. ID: Discord.Discord"/>
+                                            <CheckBox x:Name="ChkAppTelegram" Content="Telegram Desktop" Tag="Telegram.TelegramDesktop" ToolTip="Aplicativo de mensagens rápido, sincronizado e seguro. ID: Telegram.TelegramDesktop"/>
+                                            <CheckBox x:Name="ChkAppWhatsApp" Content="WhatsApp" Tag="9NKSQGP7F2NH" ToolTip="Aplicativo oficial de mensagens e chamadas do WhatsApp. ID: 9NKSQGP7F2NH"/>
+                                            <CheckBox x:Name="ChkAppSignal" Content="Signal Desktop" Tag="OpenWhisperSystems.Signal" ToolTip="Mensageiro com foco absoluto em privacidade e criptografia ponta a ponta. ID: OpenWhisperSystems.Signal"/>
                                             <CheckBox x:Name="ChkAppZoom" Content="Zoom Meetings" Tag="Zoom.Zoom" ToolTip="Software de chamadas de vídeo e reuniões online. ID: Zoom.Zoom"/>
                                             <CheckBox x:Name="ChkAppTeams" Content="Microsoft Teams" Tag="Microsoft.Teams" ToolTip="Plataforma corporativa de reuniões e chat. ID: Microsoft.Teams"/>
                                             <CheckBox x:Name="ChkAppSlack" Content="Slack" Tag="Slack.Slack" ToolTip="Mensageiro corporativo para gerenciamento de projetos. ID: Slack.Slack"/>
+                                            <CheckBox x:Name="ChkAppThunderbird" Content="Mozilla Thunderbird" Tag="Mozilla.Thunderbird" ToolTip="Cliente de e-mail, agenda e notícias livre e seguro. ID: Mozilla.Thunderbird"/>
                                             <CheckBox x:Name="ChkAppSpotify" Content="Spotify" Tag="Spotify.Spotify" ToolTip="Maior plataforma de streaming de músicas e podcasts do mundo. ID: Spotify.Spotify"/>
                                             <CheckBox x:Name="ChkAppVLC" Content="VLC Media Player" Tag="VideoLAN.VLC" ToolTip="Reprodutor multimídia livre e open source de codecs universais. ID: VideoLAN.VLC"/>
+                                            <CheckBox x:Name="ChkAppAIMP" Content="AIMP" Tag="AIMP.AIMP" ToolTip="Reprodutor de áudio clássico e potente com suporte a alta fidelidade. ID: AIMP.AIMP"/>
+                                            <CheckBox x:Name="ChkAppFoobar2000" Content="foobar2000" Tag="PeterPawlowski.foobar2000" ToolTip="Reprodutor de áudio modular, ultraleve e altamente personalizável. ID: PeterPawlowski.foobar2000"/>
+                                            <CheckBox x:Name="ChkAppiTunes" Content="Apple iTunes" Tag="Apple.iTunes" ToolTip="Reprodutor e gerenciador de músicas, mídias e dispositivos Apple. ID: Apple.iTunes"/>
+                                            <CheckBox x:Name="ChkAppStremio" Content="Stremio" Tag="Stremio.Stremio" ToolTip="Central de agregação e streaming de filmes, séries e canais de vídeo. ID: Stremio.Stremio"/>
+                                            <CheckBox x:Name="ChkAppPlex" Content="Plex Media Player" Tag="Plex.PlexMediaPlayer" ToolTip="Cliente do servidor de mídia pessoal Plex para streaming local e remoto. ID: Plex.PlexMediaPlayer"/>
+                                            <CheckBox x:Name="ChkAppJellyfin" Content="Jellyfin Media Player" Tag="Jellyfin.JellyfinMediaPlayer" ToolTip="Cliente open source e 100% gratuito para o servidor de mídia Jellyfin. ID: Jellyfin.JellyfinMediaPlayer"/>
                                             <CheckBox x:Name="ChkAppOBS" Content="OBS Studio" Tag="Obsproject.OBSStudio" ToolTip="Gravação de tela e transmissão de lives profissional. ID: Obsproject.OBSStudio"/>
                                             <CheckBox x:Name="ChkAppAudacity" Content="Audacity" Tag="Audacity.Audacity" ToolTip="Gravador e editor de áudio multifaixa open source. ID: Audacity.Audacity"/>
                                             <CheckBox x:Name="ChkAppHandBrake" Content="HandBrake" Tag="HandBrake.HandBrake" ToolTip="Conversor e codificador de vídeo open source de alta qualidade. ID: HandBrake.HandBrake"/>
-                                            <CheckBox x:Name="ChkAppGIMP" Content="GIMP" Tag="GIMP.GIMP" ToolTip="Poderoso editor de imagens e gráficos rasterizados open source. ID: GIMP.GIMP"/>
                                             <CheckBox x:Name="ChkAppKLite" Content="K-Lite Mega Codec Pack" Tag="CodecGuide.K-LiteCodecPack.Mega" ToolTip="Pacote completo de codecs de áudio e vídeo com Media Player Classic. ID: CodecGuide.K-LiteCodecPack.Mega"/>
-                                            <CheckBox x:Name="ChkAppShareX" Content="ShareX" Tag="ShareX.ShareX" ToolTip="Captura de tela, upload de imagens e gravação de GIFs/Vídeos. ID: ShareX.ShareX"/>
-                                            <CheckBox x:Name="ChkAppBlender" Content="Blender" Tag="BlenderFoundation.Blender" ToolTip="Modelagem 3D, animação e efeitos especiais livre. ID: BlenderFoundation.Blender"/>
                                             <CheckBox x:Name="ChkAppSteam" Content="Steam" Tag="Valve.Steam" ToolTip="Maior loja digital de jogos de PC do mundo. ID: Valve.Steam"/>
                                             <CheckBox x:Name="ChkAppEpic" Content="Epic Games Launcher" Tag="EpicGames.EpicGamesLauncher" ToolTip="Plataforma de jogos digitais e Unreal Engine. ID: EpicGames.EpicGamesLauncher"/>
+                                        </UniformGrid>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- Card 8: Segurança, Redes e Nuvem -->
+                                <Border Style="{StaticResource CardBorder}" Margin="0,0,0,12">
+                                    <StackPanel>
+                                        <TextBlock Text="🛡️ Segurança, Redes e Nuvem" FontSize="13" FontWeight="Bold" Foreground="#10B981" Margin="0,0,0,8"/>
+                                        <UniformGrid Columns="3">
+                                            <CheckBox x:Name="ChkAppMalwarebytes" Content="Malwarebytes" Tag="Malwarebytes.Malwarebytes" ToolTip="Proteção avançada contra malwares, ransomwares e ameaças da web. ID: Malwarebytes.Malwarebytes"/>
+                                            <CheckBox x:Name="ChkAppAdwCleaner" Content="AdwCleaner" Tag="Malwarebytes.AdwCleaner" ToolTip="Removedor rápido e portátil de adwares, spywares e barras indesejadas. ID: Malwarebytes.AdwCleaner"/>
+                                            <CheckBox x:Name="ChkAppBitwarden" Content="Bitwarden" Tag="Bitwarden.Bitwarden" ToolTip="Gerenciador de senhas em nuvem seguro e open source. ID: Bitwarden.Bitwarden"/>
+                                            <CheckBox x:Name="ChkApp1Password" Content="1Password" Tag="1Password.1Password" ToolTip="Excelente gerenciador de senhas comercial. ID: 1Password.1Password"/>
+                                            <CheckBox x:Name="ChkAppProtonPass" Content="Proton Pass" Tag="Proton.ProtonPass" ToolTip="Gerenciador de senhas e aliases seguro do Proton. ID: Proton.ProtonPass"/>
+                                            <CheckBox x:Name="ChkAppProtonAuth" Content="Proton Authenticator" Tag="Proton.ProtonAuthenticator" ToolTip="Gerenciador de autenticação de dois fatores da Proton. ID: Proton.ProtonAuthenticator"/>
+                                            <CheckBox x:Name="ChkAppGoogleDrive" Content="Google Drive" Tag="Google.GoogleDrive" ToolTip="Cliente de sincronização em nuvem do Google Drive. ID: Google.GoogleDrive"/>
+                                            <CheckBox x:Name="ChkAppDropbox" Content="Dropbox" Tag="Dropbox.Dropbox" ToolTip="Armazenamento e sincronização inteligente de arquivos em nuvem. ID: Dropbox.Dropbox"/>
+                                            <CheckBox x:Name="ChkAppOneDrive" Content="Microsoft OneDrive" Tag="Microsoft.OneDrive" ToolTip="Cliente oficial de armazenamento em nuvem da Microsoft. ID: Microsoft.OneDrive"/>
+                                            <CheckBox x:Name="ChkAppProtonDrive" Content="Proton Drive" Tag="Proton.ProtonDrive" ToolTip="Armazenamento seguro em nuvem com criptografia de ponta a ponta. ID: Proton.ProtonDrive"/>
+                                            <CheckBox x:Name="ChkAppTailscale" Content="Tailscale" Tag="Tailscale.Tailscale" ToolTip="Rede mesh VPN segura baseada no protocolo WireGuard com zero configuração. ID: Tailscale.Tailscale"/>
+                                            <CheckBox x:Name="ChkAppMullvadVPN" Content="Mullvad VPN" Tag="Mullvad.MullvadVPN" ToolTip="Serviço de VPN open source focado em privacidade extrema. ID: Mullvad.MullvadVPN"/>
+                                            <CheckBox x:Name="ChkAppProtonVPN" Content="Proton VPN" Tag="Proton.ProtonVPN" ToolTip="VPN segura com plano gratuito ilimitado desenvolvida pela Proton. ID: Proton.ProtonVPN"/>
+                                            <CheckBox x:Name="ChkAppOpenVPN" Content="OpenVPN Client" Tag="OpenVPNTechnologies.OpenVPN" ToolTip="Cliente oficial e seguro de VPN do protocolo OpenVPN. ID: OpenVPNTechnologies.OpenVPN"/>
+                                            <CheckBox x:Name="ChkAppWireGuard" Content="WireGuard" Tag="WireGuard.WireGuard" ToolTip="Protocolo e cliente de VPN moderno de altíssima performance. ID: WireGuard.WireGuard"/>
+                                            <CheckBox x:Name="ChkAppSimplewall" Content="Simplewall" Tag="Henry++.simplewall" ToolTip="Firewall simples para bloquear tráfego de rede e telemetria do Windows. ID: Henry++.simplewall"/>
+                                            <CheckBox x:Name="ChkAppAdvancedIP" Content="Advanced IP Scanner" Tag="Famatech.AdvancedIPScanner" ToolTip="Varredura de rede local rápida e fácil de usar. ID: Famatech.AdvancedIPScanner"/>
+                                            <CheckBox x:Name="ChkAppAngryIP" Content="Angry IP Scanner" Tag="angryziber.AngryIPScanner" ToolTip="Scanner de endereços IP e portas open source multiplataforma. ID: angryziber.AngryIPScanner"/>
+                                            <CheckBox x:Name="ChkAppWireshark" Content="Wireshark" Tag="WiresharkFoundation.Wireshark" ToolTip="Analisador de protocolos de rede open source para auditorias. ID: WiresharkFoundation.Wireshark"/>
+                                            <CheckBox x:Name="ChkAppNmap" Content="Nmap Network Scanner" Tag="Insecure.Nmap" ToolTip="Mapeador de segurança de rede e scanner de portas. ID: Insecure.Nmap"/>
+                                            <CheckBox x:Name="ChkAppPuTTY" Content="PuTTY" Tag="SimonTatham.PuTTY" ToolTip="Cliente SSH, Telnet e Rlogin clássico para gerenciamento de servidores. ID: SimonTatham.PuTTY"/>
+                                            <CheckBox x:Name="ChkAppWinSCP" Content="WinSCP" Tag="WinSCP.WinSCP" ToolTip="Cliente SFTP e FTP gráfico para Windows. ID: WinSCP.WinSCP"/>
+                                            <CheckBox x:Name="ChkAppCPUZ" Content="CPU-Z" Tag="CPUID.CPU-Z" ToolTip="Exibe informações detalhadas sobre processador, placa-mãe e memória. ID: CPUID.CPU-Z"/>
+                                            <CheckBox x:Name="ChkAppGPUZ" Content="GPU-Z" Tag="TechPowerUp.GPU-Z" ToolTip="Exibe dados técnicos completos sobre sua placa de vídeo. ID: TechPowerUp.GPU-Z"/>
+                                            <CheckBox x:Name="ChkAppHWiNFO" Content="HWiNFO" Tag="HWiNFO.HWiNFO" ToolTip="Monitoramento de hardware avançado e relatório completo de sensores. ID: HWiNFO.HWiNFO"/>
+                                            <CheckBox x:Name="ChkAppHWMonitor" Content="HWMonitor" Tag="CPUID.HWMonitor" ToolTip="Monitora temperaturas, voltagens e velocidades de ventoinhas. ID: CPUID.HWMonitor"/>
+                                            <CheckBox x:Name="ChkAppDDU" Content="Display Driver Uninstaller" Tag="Wagnardsoft.DisplayDriverUninstaller" ToolTip="Remove completamente drivers de vídeo AMD/NVIDIA/Intel sem deixar resíduos. ID: Wagnardsoft.DisplayDriverUninstaller"/>
                                         </UniformGrid>
                                     </StackPanel>
                                 </Border>
@@ -2109,20 +2174,18 @@ $pbLogsProgress = $Window.FindName("PbLogsProgress")
 # Lista de elementos de checkboxes de aplicativos no XAML para mapeamento dinâmico
 $chkAppNames = @(
     "ChkAppSnappyDriver", "ChkAppVCRedist", "ChkAppDirectX", "ChkAppVCRedist2010x64", "ChkAppVCRedist2010x86", "ChkAppVCRedistv14x64", "ChkAppVCRedistv14x86", "ChkAppDotNet6", "ChkAppDotNet8", "ChkAppDotNet9", "ChkAppDotNet10", "ChkAppNVCleanstall", "ChkAppVulkanRT", "ChkAppJava17",
-    "ChkApp7Zip", "ChkAppNanaZip", "ChkAppPeaZip", "ChkAppWinRAR", "ChkAppPowerToys", "ChkAppBulkCrap", "ChkAppRevo", "ChkAppWiseUninstaller",
-    "ChkAppCrystalInfo", "ChkAppCrystalMark", "ChkAppEverything", "ChkAppFiles", "ChkAppNilesoftShell", "ChkAppRufus",
-    "ChkAppVentoy", "ChkAppUniGetUI", "ChkAppWizTree", "ChkAppTreeSize", "ChkAppTranslucentTB", "ChkAppAutoHotkey",
+    "ChkApp7Zip", "ChkAppNanaZip", "ChkAppPeaZip", "ChkAppWinRAR", "ChkAppPowerToys", "ChkAppBulkCrap", "ChkAppRevo", "ChkAppWiseUninstaller", "ChkAppCCleaner",
+    "ChkAppCrystalInfo", "ChkAppCrystalMark", "ChkAppEverything", "ChkAppFiles", "ChkAppTeraCopy", "ChkAppNilesoftShell", "ChkAppRufus",
+    "ChkAppVentoy", "ChkAppEtcher", "ChkAppUniGetUI", "ChkAppWizTree", "ChkAppTreeSize", "ChkAppWinDirStat", "ChkAppOpenShell", "ChkAppTranslucentTB", "ChkAppAutoHotkey",
     "ChkAppGlazeWM", "ChkAppOFGB", "ChkAppMSEdgeRedirect", "ChkAppHxD", "ChkAppDeskflow", "ChkAppFlux", "ChkAppEnteAuth",
-    "ChkAppKeePassXC", "ChkAppBitwarden", "ChkAppGoogleDrive", "ChkAppProtonDrive", "ChkAppProtonPass", "ChkAppProtonAuth",
-    "ChkApp1Password", "ChkAppBlurAutoClicker", "ChkAppOPAutoClicker", "ChkAppOpenRGB", "ChkAppSignalRGB", "ChkAppParsec",
-    "ChkAppVirtualBox", "ChkAppTeamViewer", "ChkAppTightVNC", "ChkAppTotalCommander", "ChkAppJPEGView",
-    "ChkAppAdvancedIP", "ChkAppAngryIP", "ChkAppCPUZ", "ChkAppGPUZ", "ChkAppHWiNFO", "ChkAppHWMonitor", "ChkAppDDU",
-    "ChkAppMullvadVPN", "ChkAppProtonVPN", "ChkAppOpenVPN", "ChkAppPuTTY", "ChkAppSimplewall", "ChkAppWinSCP", "ChkAppWireGuard",
-    "ChkAppWireshark", "ChkAppNmap",
-    "ChkAppZen", "ChkAppChrome", "ChkAppFirefox", "ChkAppBrave", "ChkAppEdge", "ChkAppVivaldi", "ChkAppOperaGX", "ChkAppTor", "ChkAppFloorp", "ChkAppQBit", "ChkAppTransmission",
-    "ChkAppVSCode", "ChkAppNotepadPlus", "ChkAppWindowsTerminal", "ChkAppGit", "ChkAppGitHub", "ChkAppPython", "ChkAppNodeJS", "ChkAppDocker", "ChkAppDBeaver", "ChkAppPostman",
-    "ChkAppDiscord", "ChkAppTelegram", "ChkAppZoom", "ChkAppTeams", "ChkAppSlack", "ChkAppSpotify", "ChkAppVLC", "ChkAppOBS", "ChkAppAudacity", "ChkAppHandBrake", "ChkAppGIMP", "ChkAppKLite",
-    "ChkAppShareX", "ChkAppBlender", "ChkAppSteam", "ChkAppEpic"
+    "ChkAppKeePassXC", "ChkAppBlurAutoClicker", "ChkAppOPAutoClicker", "ChkAppOpenRGB", "ChkAppSignalRGB", "ChkAppFanControl", "ChkAppAfterburner", "ChkAppRTSS", "ChkAppParsec",
+    "ChkAppVirtualBox", "ChkAppAnyDesk", "ChkAppTeamViewer", "ChkAppTightVNC", "ChkAppTotalCommander", "ChkAppJPEGView",
+    "ChkAppChrome", "ChkAppFirefox", "ChkAppBrave", "ChkAppEdge", "ChkAppOpera", "ChkAppOperaGX", "ChkAppVivaldi", "ChkAppZen", "ChkAppFloorp", "ChkAppTor", "ChkAppQBit", "ChkAppTransmission", "ChkAppFDM", "ChkAppYtDlp",
+    "ChkAppLibreOffice", "ChkAppSumatraPDF", "ChkAppAdobeReader", "ChkAppFoxitReader", "ChkAppCalibre", "ChkAppNotion", "ChkAppObsidian",
+    "ChkAppKrita", "ChkAppPaintDotNet", "ChkAppGIMP", "ChkAppInkscape", "ChkAppIrfanView", "ChkAppFastStone", "ChkAppGreenshot", "ChkAppFlameshot", "ChkAppScreenToGif", "ChkAppShareX", "ChkAppBlender", "ChkAppFigma", "ChkAppCura",
+    "ChkAppVSCode", "ChkAppCursor", "ChkAppClaude", "ChkAppNotepadPlus", "ChkAppSublimeText", "ChkAppWindowsTerminal", "ChkAppGit", "ChkAppGitHub", "ChkAppPython", "ChkAppNodeJS", "ChkAppDocker", "ChkAppDBeaver", "ChkAppPostman", "ChkAppWinMerge",
+    "ChkAppDiscord", "ChkAppTelegram", "ChkAppWhatsApp", "ChkAppSignal", "ChkAppZoom", "ChkAppTeams", "ChkAppSlack", "ChkAppThunderbird", "ChkAppSpotify", "ChkAppVLC", "ChkAppAIMP", "ChkAppFoobar2000", "ChkAppiTunes", "ChkAppStremio", "ChkAppPlex", "ChkAppJellyfin", "ChkAppOBS", "ChkAppAudacity", "ChkAppHandBrake", "ChkAppKLite", "ChkAppSteam", "ChkAppEpic",
+    "ChkAppMalwarebytes", "ChkAppAdwCleaner", "ChkAppBitwarden", "ChkApp1Password", "ChkAppProtonPass", "ChkAppProtonAuth", "ChkAppGoogleDrive", "ChkAppDropbox", "ChkAppOneDrive", "ChkAppProtonDrive", "ChkAppTailscale", "ChkAppMullvadVPN", "ChkAppProtonVPN", "ChkAppOpenVPN", "ChkAppWireGuard", "ChkAppSimplewall", "ChkAppAdvancedIP", "ChkAppAngryIP", "ChkAppWireshark", "ChkAppNmap", "ChkAppPuTTY", "ChkAppWinSCP", "ChkAppCPUZ", "ChkAppGPUZ", "ChkAppHWiNFO", "ChkAppHWMonitor", "ChkAppDDU"
 )
 
 $appCheckboxObjects = @()
